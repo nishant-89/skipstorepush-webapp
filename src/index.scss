@@ -1,0 +1,10 @@
+@use "./scss/global.scss" as *;
+
+#root {
+  height: 100%;
+}
+
+.moreActionBtn {
+  background: transparent;
+  border: 0;
+}

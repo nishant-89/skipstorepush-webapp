@@ -1,0 +1,159 @@
+@use "../../../../scss/variable.scss" as *;
+@use "../../../../scss/mixin.scss" as *;
+
+.ReleaseDrawerWrapper {
+  .DrawerHeader {
+    padding: 28px 20px 20px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .drawerTitle {
+      padding-right: 10px;
+      font-weight: 600;
+      font-size: 20px;
+      color: #3a4f5f;
+      word-break: break-word;
+    }
+    .closeDrawerButton {
+      padding-right: 0!important;
+      background-color: transparent;
+      border: 0;
+      outline: 0;
+      display: flex;
+      align-items: center;
+      img {
+        width: 12px;
+      }
+    }
+  }
+  .DrawerBodyWrapper {
+    padding: 0 20px 20px;
+    height: calc(100vh - 72px);
+    overflow-y: auto;
+    .formWrapper {
+      .contentBodySection {
+        margin-bottom: 20px;
+        @media screen and (max-width:1024px) {
+          margin-bottom: 12px;
+        }
+        .labelTxt {
+          margin-bottom: size(6);
+          display: block;
+          font-size: size(14) !important;
+          font-weight: 600 !important;
+          line-height: size(20);
+          color: var(--labelColor);
+        }
+        .formFieldWrapper {
+          display: flex;
+          gap: 8px;
+          .leftSection {
+            flex: 1;
+            .customInputWrapper {
+              flex: 1;
+              label {
+                margin-bottom: size(-9);
+                display: block;
+                font-size: size(14) !important;
+                font-weight: 600 !important;
+              }
+              .MuiTextField-root {
+                margin-top: 0 !important;
+              }
+              .MuiInputBase-input {
+                padding: 15px 15px;
+                font-family: var(--font);
+                font-size: size(16) !important;
+                font-weight: 400 !important;
+                line-height: size(24);
+                color: var(--tabActiveColor);
+              }
+              .errorMsg {
+                margin: 0;
+                font-size: size(12);
+                color: var(--colorError);
+              }
+            }
+          }
+          .rightSection {
+            width: 44px;
+            .copyButton {
+              width: 44px !important;
+              height: 44px !important;
+              min-width: 44px !important;
+              margin-bottom: 8px;
+            }
+          }
+        }
+      }
+      .addMoreSection {
+        margin-bottom: 28px;
+        padding: 28px 0 20px;
+        border-top: 1px solid #eff2f4;
+        border-bottom: 1px solid #eff2f4;
+        display: flex;
+        gap: 8px;
+        @media screen and (max-width:1024px) {
+          margin-bottom: 20px;
+          padding: 20px 0 12px;
+        }
+        .leftContent {
+          flex: 1;
+          .customInputWrapper {
+            flex: 1;
+            label {
+              margin-bottom: size(-9);
+              display: block;
+              font-size: size(14) !important;
+              font-weight: 600 !important;
+            }
+            .MuiTextField-root {
+              margin-top: 0 !important;
+            }
+            .MuiInputBase-input {
+              padding: 15px 15px;
+              font-family: var(--font);
+              font-size: size(16) !important;
+              font-weight: 400 !important;
+              line-height: size(24);
+              color: var(--tabActiveColor);
+            }
+            .errorMsg {
+              margin: 0;
+              font-size: size(12);
+              color: var(--colorError);
+            }
+          }
+        }
+        .rightContent {
+          width: 138px;
+          display: flex;
+          gap: 8px;
+          .removeButton {
+            width: 44px !important;
+            height: 44px !important;
+            min-width: 44px !important;
+            margin-bottom: 8px;
+          }
+          .createButton {
+            width: 86px !important;
+            height: 44px !important;
+            min-width: 86px !important;
+            margin-bottom: 8px;
+          }
+        }
+      }
+    }
+    .buttonWrapper {
+      display: flex;
+      justify-content: flex-start;
+      button{
+        width: 200px!important;
+        min-width: 200px!important;
+      }
+    }
+  }
+}

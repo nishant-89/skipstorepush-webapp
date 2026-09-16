@@ -1,0 +1,7 @@
+.userActionBtn {
+  &.active {
+    img {
+      rotate: 180deg;
+    }
+  }
+}

@@ -1,0 +1,100 @@
+@use "../../scss/variable.scss" as *;
+@use "../../scss/mixin.scss" as *;
+
+.cardBgWrapper {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 20px;
+  border: 0.5px solid #bdc4ca;
+}
+.AllAppsInnerWrapper {
+  .TopSection {
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    .searchWrapper {
+      .commonSearchWrapper.fullWidth {
+        width: 212px !important;
+
+        @media screen and (max-width: 1024px) {
+          width: 100% !important;
+        }
+      }
+    }
+    .addNewBtns {
+      width: 120px !important;
+    }
+  }
+  .tableSection {
+    .adminAccessTableWrapper {
+      &.p00 {
+        margin-top: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+      }
+    }
+    &.appTable {
+      thead {
+        .MuiTableRow-root {
+          background-color: transparent !important;
+        }
+      }
+      .MuiTableCell-root {
+        white-space: normal !important;
+        word-break: break-word !important;
+        .tableTitle {
+          white-space: normal !important;
+          word-break: break-word !important;
+        }
+        &:first-of-type {
+          width: 45% !important;
+          @media screen and (max-width: 1500px) {
+            width: 40% !important;
+          }
+          @media screen and (max-width: 1280px) {
+            width: 30% !important;
+          }
+        }
+        &:not(first-of-type) {
+          text-align: left !important;
+        }
+      }
+    }
+    .appListingNodataWrapper {
+      .notFoundwrap {
+        height: calc(100vh - 324px);
+        @media screen and (max-width: 1500px) {
+          height: calc(100vh - 314px);
+        }
+        @media screen and (max-width: 1280px) {
+          height: calc(100vh - 314px);
+        }
+        @media screen and (max-width: 1024px) {
+          height: calc(100vh - 309px);
+        }
+        .centerWrap {
+          h2 {
+            margin-bottom: 0 !important;
+          }
+        }
+      }
+    }
+    .appListingFirstNodataWrapper {
+      .notFoundwrap {
+        height: calc(100vh - 264px);
+        @media screen and (max-width: 1500px) {
+          height: calc(100vh - 254px);
+        }
+        @media screen and (max-width: 1280px) {
+          height: calc(100vh - 254px);
+        }
+        @media screen and (max-width: 1024px) {
+          height: calc(100vh - 247px);
+        }
+      }
+    }
+  }
+ 
+}

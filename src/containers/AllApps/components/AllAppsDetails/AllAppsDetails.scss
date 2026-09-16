@@ -1,0 +1,425 @@
+@use "../../../../scss/mixin.scss" as *;
+@use "../../../../scss/common.scss" as *;
+
+.cardBgWrapper {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 20px;
+  border: 0.5px solid #bdc4ca;
+}
+.AllAppsDetailMainWrapper {
+  .DetailsTabSection {
+    padding: 0;
+    background-color: #f9f9f9;
+    border: 0.5px solid var(--btnDisabled);
+    border-radius: 12px;
+    .MuiTouchRipple-root {
+      display: none !important;
+    }
+    .MuiTabs-root {
+      .MuiTabs-flexContainer {
+        gap: 40px !important;
+        .MuiButtonBase-root {
+          min-height: size(58);
+          height: size(58);
+          padding: 17px 0;
+          font-family: var(--font);
+          font-weight: 500;
+          line-height: size(24);
+          color: #60707d;
+          text-transform: capitalize;
+          transition: all 0.3s ease-in;
+          border-bottom: 3px solid transparent;
+          font-size: size(16);
+          @media screen and (max-width: 1024px) {
+            font-size: size(14);
+          }
+          &:first-child {
+            width: 74px;
+            min-width: 74px;
+            @media screen and (max-width: 768px) {
+              white-space: nowrap;
+            }
+          }
+          &:nth-of-type(2) {
+            width: 68px;
+            min-width: 68px;
+            white-space: nowrap;
+          }
+          &.Mui-selected {
+            color: #3a4f5f;
+            font-weight: 700;
+          }
+
+          &:hover {
+            color: #3a4f5f;
+            font-weight: 700;
+          }
+        }
+      }
+
+      .MuiTabs-indicator {
+        height: 3px;
+        background-color: #2a7bbb;
+      }
+    }
+
+    .tabContentWrapper {
+      padding: 20px 0 0;
+    }
+  }
+
+  .ReleaseMainWrapper {
+    .TopSection {
+      padding-bottom: 20px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+      .searchWrapper {
+        .commonSearchWrapper.fullWidth {
+          width: 212px !important;
+
+          @media screen and (max-width: 1024px) {
+            width: 100% !important;
+          }
+        }
+      }
+      .SettingBtn {
+        width: 40px !important;
+        min-width: 40px !important;
+        padding: 10px !important;
+        img {
+          width: 20px;
+        }
+      }
+    }
+    .tableSection {
+      .adminAccessTableWrapper {
+        &.p00 {
+          margin-top: 0 !important;
+          padding: 0 !important;
+          border: 0 !important;
+        }
+      }
+      &.releaseTable {
+        thead {
+          .MuiTableRow-root {
+            background-color: transparent !important;
+          }
+        }
+        .MuiTableCell-root {
+          &:first-of-type {
+            width: 20% !important;
+            white-space: normal !important;
+            @media screen and (max-width: 1280px) {
+              width: 25% !important;
+            }
+          }
+          &:nth-of-type(6) {
+            width: 150px !important;
+            min-width: 150px !important;
+          }
+          &:last-of-type {
+            width: 200px !important;
+            min-width: 200px !important;
+            @media screen and (max-width: 1280px) {
+              width: 180px !important;
+              min-width: 180px !important;
+            }
+          }
+          &:not(first-of-type) {
+            text-align: left !important;
+          }
+        }
+      }
+    }
+    .releaseNoDataWrap {
+      .notFoundwrap {
+        height: calc(100vh - 404px);
+        @media screen and (max-width: 1500px) {
+          height: calc(100vh - 394px);
+        }
+        @media screen and (max-width: 1280px) {
+          height: calc(100vh - 394px);
+        }
+        @media screen and (max-width: 1024px) {
+          height: calc(100vh - 389px);
+        }
+        .centerWrap {
+          h2 {
+            margin-bottom: 0 !important;
+          }
+        }
+      }
+    }
+  }
+  .SettingsMainWrapper {
+    .settingCardWrapper {
+      padding: 20px 20px 0;
+      background-color: #f9f9f9;
+      border-radius: 12px;
+      border: 0.5px solid #bdc4ca;
+      .cardHead {
+        padding-bottom: 20px;
+        display: flex;
+        align-items: center;
+        .cardImage {
+          width: 60px;
+          height: 60px;
+          border-radius: 8px;
+          overflow: hidden;
+          border: 0.5px solid #bdc4ca;
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+          }
+        }
+        .cardMiddleContent {
+          padding: 0 20px;
+          flex: 1;
+          .cardTitle {
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 24px;
+            color: #3a4f5f;
+            word-break: break-word;
+          }
+          &.noImage {
+            padding-left: 0 !important;
+          }
+        }
+        .actionButton {
+          width: 120px !important;
+          min-width: 120px !important;
+          flex-direction: row-reverse;
+          img {
+            transform: rotate(180deg);
+          }
+          &.rotateIcon {
+            img {
+              transform: rotate(0deg);
+            }
+          }
+        }
+      }
+      .detailRow {
+        margin: 0 -10px;
+        display: flex;
+        flex-wrap: wrap;
+        .detailCol {
+          max-width: 33.33%;
+          margin-bottom: 20px;
+          padding: 0 10px;
+          flex: 0 0 33.33%;
+          @media screen and (max-width: 1024px) {
+            max-width: 50%;
+            flex: 0 0 50%;
+          }
+        }
+        .key {
+          margin-bottom: 6px;
+          font-weight: 600;
+          font-size: 14px;
+          line-height: 20px;
+          color: #3a4f5f;
+          word-break: break-word;
+        }
+        .value {
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 24px;
+          color: #3a4f5f;
+          word-break: break-word;
+        }
+      }
+      // setting-skelton-css
+      &.skeltonWrapper {
+        .cardHead {
+          .cardImage {
+            border: 0;
+            img {
+              display: none;
+            }
+          }
+          .cardMiddleContent {
+            &.noImage {
+              padding-left: 0 !important;
+            }
+            .cardTitle {
+              width: 50% !important;
+              .skeleton-loader {
+                width: 50% !important;
+              }
+            }
+          }
+          .actionButton {
+            width: 120px !important;
+            min-width: 120px !important;
+            border: 0 !important;
+            background-color: #e0e0e0 !important;
+            box-shadow: none !important;
+          }
+        }
+        .detailRow {
+          .skeleton-loader {
+            width: 100% !important;
+          }
+        }
+      }
+    }
+  }
+  .collaboratorWrapper {
+    .collaboratorHeader {
+      padding: 20px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .headerTitle {
+        padding-right: 10px;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 24px;
+        color: #3a4f5f;
+        word-break: break-word;
+      }
+      .InviteBtn {
+        height: size(40) !important;
+        min-width: size(132) !important;
+        border-radius: 10px !important;
+        border: 1px solid #2a7bbb !important;
+        background-color: var(--btnColor) !important;
+        gap: size(10);
+        color: var(--white) !important;
+        font-family: var(--font) !important;
+        font-size: size(14) !important;
+        font-weight: 600 !important;
+        text-transform: capitalize !important;
+        box-shadow: -1px 0px 0px 0px #1322951a inset !important;
+        white-space: nowrap;
+      }
+      &.skeltonWrapper {
+        .headerTitle {
+          width: 50% !important;
+          margin-bottom: 0 !important;
+          .skeleton-loader {
+            width: 50% !important;
+          }
+        }
+        .InviteBtn {
+          width: size(132) !important;
+          min-width: size(132) !important;
+          border: 0 !important;
+          background-color: #e0e0e0 !important;
+          box-shadow: none !important;
+        }
+      }
+    }
+    .tableSection {
+      .adminAccessTableWrapper {
+        &.p00 {
+          margin-top: 0 !important;
+          padding: 0 !important;
+          border: 0 !important;
+        }
+      }
+      &.collaboratorTable {
+        thead {
+          .MuiTableRow-root {
+            background-color: transparent !important;
+          }
+        }
+        .MuiTableCell-root {
+          white-space: normal !important;
+          word-break: break-word !important;
+          width: 31% !important;
+          @media screen and (max-width: 1500px) {
+            width: 31% !important;
+          }
+          @media screen and (max-width: 1280px) {
+            width: 31% !important;
+          }
+          &:nth-of-type(3) {
+            width: 15% !important;
+            white-space: nowrap!important;
+          }
+          &:nth-of-type(4) {
+            width: 15% !important;
+            white-space: nowrap!important;
+          }
+          &:nth-of-type(5) {
+            width: 8% !important;
+          }
+          .tableTitle {
+            white-space: normal !important;
+            word-break: break-word !important;
+          }
+          &:not(first-of-type) {
+            text-align: left !important;
+          }
+        }
+      }
+      .collaboratorListingNodataWrapper {
+        .notFoundwrap {
+          .centerWrap {
+            h2 {
+              margin-bottom: 0 !important;
+            }
+          }
+        }
+      }
+      .owner-role {
+        font-weight: 700 !important;
+      }
+    }
+  }
+}
+
+.MuiMenu-root {
+  &.menuWrapperss {
+    .MuiMenu-paper {
+      min-width: 170px;
+      margin-top: size(10);
+      margin-left: 0 !important;
+      padding: size(10);
+      border-radius: size(12);
+      background-color: var(--white);
+      box-shadow:
+        0px 15px 15px -1px #0000000a,
+        0px 5.7px 12px -1px #0000000d,
+        0px 2.6px 8px -1px #0000000f,
+        0px 0.9px 4px -1px #00000014 !important;
+
+      .MuiList-root {
+        .MuiMenuItem-root {
+          border-radius: 8px;
+          padding: 10px 12px !important;
+          background: var(--white);
+          box-shadow: none;
+          font-family: var(--font) !important;
+          font-size: size(12) !important;
+          font-weight: 500;
+          line-height: size(15) !important;
+          color: var(--menuText) !important;
+          transition: all 0.3s ease-in;
+          justify-content: flex-start;
+          align-items: center;
+          @media screen and (max-width: 1440px) {
+            font-size: size(12) !important;
+          }
+          &.active,
+          &:hover {
+            color: #3a4f5f !important;
+            font-weight: 600 !important;
+            background-color: #d2e7ff !important;
+          }
+          &:not(:last-child) {
+            margin-bottom: size(4);
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,566 @@
+@use "../../../scss/mixin.scss" as *;
+@use "../../../scss/variable.scss" as *;
+
+.header {
+  width: 100%;
+  height: 80px;
+  padding: 23px 32px;
+  background-color: var(--headerBg);
+  border-bottom: 1px solid var(--headerBorder);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 999;
+  overflow: hidden;
+
+  .leftWrapper {
+    display: flex;
+    align-items: center;
+    .logo {
+      width: 92px;
+      img {
+        width: 100%;
+      }
+    }
+    .logoBox {
+      max-width: 100px;
+      margin-left: 12px;
+      padding: 4px 12px;
+      background-color: #ffffff;
+      border-radius: 30px;
+      .logoTxt {
+        max-width: 86px;
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .rightWrap {
+    .actionBtnWrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      .actionBtn {
+        padding: 0;
+        background: transparent;
+        border: 0;
+        outline: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+
+        .image {
+          width: 20px;
+          height: 20px;
+        }
+
+        .userImage {
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          background-color: #3a4f5f;
+          outline: 4px solid #c3daec;
+
+          .userText {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            color: white;
+            white-space: nowrap;
+          }
+        }
+
+        &.notificationRedDot {
+          position: relative;
+
+          &::before {
+            content: "";
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--colorError);
+            top: -2px;
+            right: -2px;
+            border-radius: 50%;
+            border: 1px solid white;
+          }
+        }
+      }
+    }
+  }
+}
+
+.menuWrapper .MuiMenuItem-root.actives {
+  font-weight: 600 !important;
+  color: var(--activeMenuText) !important;
+  background-color: var(--hoverBg) !important;
+}
+.MuiMenu-root {
+  &.menuWrapper {
+    .MuiMenu-paper {
+      min-width: 174px !important;
+      margin-top: size(15) !important;
+      margin-left: -12px !important;
+      padding: 8px;
+      border-radius: 12px;
+      background-color: var(--white);
+      box-shadow: 2px 2px 20px 4px rgba(167, 174, 186, 0.12) !important;
+
+      .MuiList-root {
+        .MuiMenuItem-root {
+          border-radius: 8px;
+          padding: 12px 12px !important;
+          background: var(--white);
+          box-shadow: none;
+          font-family: var(--font) !important;
+          font-size: size(12) !important;
+          font-weight: 500 !important;
+          line-height: 14px !important;
+          color: var(--menuText) !important;
+          transition: all 0.3s ease-in;
+          justify-content: flex-start;
+          align-items: center;
+
+          &.active,
+          &:hover {
+            font-weight: 600 !important;
+            color: var(--activeMenuText) !important;
+            background-color: var(--hoverBg) !important;
+          }
+
+          &:not(:last-child) {
+            margin-bottom: 4px;
+          }
+        }
+      }
+    }
+  }
+
+  &.markAllmenuWrapper {
+    .MuiMenu-paper {
+      min-width: 140px !important;
+      padding: 10px !important;
+      border-radius: 12px;
+      background-color: var(--white);
+      box-shadow:
+        0px 15px 15px -1px #0000000a,
+        0px 5.7px 12px -1px #0000000d,
+        0px 2.6px 8px -1px #0000000f,
+        0px 0.9px 4px -1px #00000014 !important;
+
+      .MuiList-root {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+
+        .MuiMenuItem-root {
+          border-radius: 8px;
+          padding: 10px 10px !important;
+          background: var(--white);
+          box-shadow: none;
+          font-family: var(--font) !important;
+          font-size: size(12) !important;
+          font-weight: 500 !important;
+          line-height: 14px !important;
+          color: var(--menuText) !important;
+          transition: all 0.3s ease-in;
+          justify-content: flex-start;
+          align-items: center;
+
+          &.active,
+          &:hover {
+            font-weight: 600 !important;
+            color: var(--activeMenuText) !important;
+            background-color: var(--hoverBg) !important;
+          }
+
+          &:not(:last-child) {
+            margin-bottom: 4px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.notificationHeaderPopup {
+  .MuiPaper-root {
+    border-radius: 12px;
+
+    .notificationPopup {
+      width: 325px;
+      max-height: 520px !important;
+      padding: 0 0 8px 0px;
+      border-radius: 12px;
+      overflow: hidden;
+
+      .heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        overflow: hidden;
+        padding: 20px 20px 8px 20px;
+
+        .subheading {
+          font-family: var(--font);
+          font-size: 12px;
+          font-weight: 700;
+          line-height: 14.4px;
+          color: var(--colorSecondary);
+        }
+
+        .mark {
+          font-family: var(--font);
+          font-size: 12px;
+          font-weight: 400;
+          line-height: 18px;
+          text-align: center;
+          color: var(--activeMenuText);
+          display: flex;
+          align-items: center;
+
+          .customCheck {
+            margin: 0;
+            border-radius: 12px;
+
+            .MuiFormControlLabel-root {
+              margin-left: -13px;
+              margin-right: 0;
+
+              .MuiButtonBase-root {
+                padding: 0px;
+                margin-right: 5px;
+              }
+
+              .MuiSvgIcon-root {
+                width: 0.8em;
+                height: 0.8em;
+              }
+            }
+
+            .multiselectCheckboxWrapper {
+              .MuiFormControlLabel-label {
+                font-weight: 400 !important;
+                font-size: 12px !important;
+                margin-left: 7px !important;
+              }
+            }
+
+            .MuiCheckbox-root {
+              &:after {
+                top: -9px !important;
+              }
+
+              &.Mui-checked::after {
+                top: -9px !important;
+              }
+            }
+
+            .notificationMulti {
+              .MuiFormControlLabel-root {
+                width: max-content;
+                margin: 0;
+                font-family: var(--font);
+                font-size: 12px;
+                font-weight: 400;
+                line-height: 18px;
+              }
+            }
+          }
+        }
+
+        .headRightSection {
+          display: flex;
+          align-items: center;
+
+          .notification_toggle_switch {
+            display: flex;
+            align-items: center;
+
+            .switchTxt {
+              padding-left: 8px;
+              margin: 0;
+              font-family: "Inter", sans-serif;
+              font-weight: 500;
+              font-size: 11px;
+              line-height: normal;
+              text-align: center;
+              color: #60707d;
+            }
+
+            .MuiSwitch-root {
+              width: 32px;
+              height: 18px;
+              padding: 0;
+
+              .MuiButtonBase-root {
+                + .MuiSwitch-track {
+                  background: #e5e8ea;
+                  opacity: 1;
+                }
+              }
+
+              .MuiButtonBase-root.Mui-checked {
+                .MuiSwitch-thumb {
+                  color: var(--white);
+                  padding: 0;
+                  margin: 0 -7px;
+                  box-shadow: none;
+                }
+
+                + .MuiSwitch-track {
+                  background: var(--colorPrimary);
+                  opacity: 1;
+                }
+              }
+
+              .MuiSwitch-thumb {
+                box-shadow:
+                  0px 1px 2px 0px #1018280f,
+                  0px 1px 3px 0px #1018281a;
+                width: 14px;
+                height: 14px;
+                border-radius: 50%;
+              }
+
+              .MuiSwitch-track {
+                width: 32px;
+                height: 18px;
+                border-radius: 11px;
+
+                .MuiSwitch-switchBase {
+                  padding: 0;
+                }
+
+                .MuiSwitch-thumb {
+                  width: 14px;
+                  height: 14px;
+                  border-radius: 50%;
+                  background: #ffffff;
+                }
+              }
+
+              .MuiTouchRipple-root {
+                display: none;
+              }
+            }
+
+            .MuiSwitch-switchBase {
+              padding: 2px 2px;
+
+              &.Mui-disabled + .MuiSwitch-track {
+                opacity: 0.6;
+                cursor: not-allowed;
+                box-shadow:
+                  0px 1px 2px 0px #1018280f,
+                  0px 1px 3px 0px #1018281a;
+              }
+
+              &:hover {
+                background-color: transparent;
+              }
+            }
+          }
+        }
+      }
+
+      .markAllSection {
+        .actionMenuButton {
+          min-width: fit-content;
+          padding: 5px;
+          margin-left: 15px;
+          border: 0;
+          outline: 0;
+          transition: all 0.3s ease-in;
+
+          &:hover {
+            background-color: var(--hoverBg);
+          }
+        }
+      }
+    }
+
+    .notificationWrapper {
+      box-shadow: none;
+      max-height: 385px;
+      overflow: auto;
+      padding: 0 20px 8px 20px;
+      height: fit-content;
+
+      li {
+        .item_list {
+          display: block;
+          padding: 20px 0px 10px 0px;
+          border-bottom: 1px solid var(--borderGray);
+
+          .flex_item {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+
+            .descriptionBox {
+              width: 250px;
+
+              .ticketNumber {
+                margin-bottom: 2px;
+                font-family: var(--font);
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 19px;
+                letter-spacing: -0.02em;
+                color: var(--colorSecondary);
+                word-break: break-word;
+                display: flex;
+                align-items: flex-start;
+
+                &.bold {
+                  font-weight: 600;
+                }
+              }
+
+              .ticketDescription {
+                font-family: var(--font);
+                font-size: 13px;
+                font-weight: 400;
+                line-height: 18.2px;
+                color: var(--modalInfoText);
+                display: block;
+                word-wrap: break-word;
+                margin-top: 3px;
+              }
+
+              .dotbutton {
+                width: 20px;
+                height: 20px;
+                min-width: 20px !important;
+                padding: 0;
+                margin-left: 6px;
+                border-radius: 50%;
+                background-color: transparent;
+                border: 0;
+                outline: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: all 0.1s ease-in;
+                position: relative;
+                top: -2px;
+
+                .bluedot {
+                  min-width: 6px !important;
+                  height: 6px;
+                  padding: 0;
+                  border-radius: 50%;
+                  background-color: #2a7bbb;
+                }
+
+                &:hover {
+                  background-color: #2a7bba1a;
+                }
+              }
+            }
+
+            .crossBtn {
+              cursor: pointer;
+              width: 16px;
+              height: 16px;
+              margin: -2px 0 0 0;
+              padding: 2px;
+
+              img {
+                max-width: 100%;
+              }
+            }
+          }
+
+          .viewdetailsWrapper {
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .view_deatils {
+              display: inline-block;
+              font-family: var(--font);
+              font-size: 12px;
+              font-weight: 600;
+              line-height: 18px;
+              color: var(--btnColor);
+              word-break: break-word;
+              text-decoration: underline;
+              cursor: pointer;
+            }
+
+            .dateTimeTxt {
+              margin: 0;
+              font-weight: 500;
+              font-size: 12px;
+              line-height: 130%;
+              color: #85929c;
+            }
+          }
+        }
+
+        &:first-child {
+          margin-top: -10px;
+        }
+
+        &.no-data {
+          margin-top: 10px;
+        }
+
+        &:last-child {
+          .item_list {
+            border-bottom: none;
+          }
+        }
+      }
+
+      .notificationNodata {
+        .notFoundwrap {
+          height: 243px;
+
+          @media screen and (max-width: 1500px) {
+            height: 243px;
+          }
+
+          @media screen and (max-width: 1280px) {
+            height: 243px;
+          }
+
+          img {
+            width: 140px;
+          }
+
+          h2 {
+            margin: 10px 0 0 0;
+            font-size: 16px;
+            font-weight: 600;
+          }
+
+          .centerWrap {
+            padding: 0 !important;
+          }
+        }
+      }
+
+      .notificationLoading {
+        margin: 10px 0;
+        font-size: 14px;
+        color: var(--colorPrimaryDark);
+        font-weight: 600;
+        text-align: center;
+      }
+    }
+  }
+}

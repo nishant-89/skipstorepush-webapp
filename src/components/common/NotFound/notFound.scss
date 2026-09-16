@@ -1,0 +1,43 @@
+@use "../../../scss/mixin.scss" as *;
+@use "../../../scss/variable.scss" as *;
+
+.notFoundwrap {
+    padding: size(21);
+    border-radius: size(24);
+    text-align: center;
+
+    .centerWrap {
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        background: var(--headerBg);
+        border-radius: size(24);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        h2 {
+            max-width: size(300);
+            margin: 5px auto 20px auto;
+            font-size: size(20);
+            font-weight: 600;
+            color: var(--colorSecondary);
+            line-height: size(21);
+        }
+
+        p {
+            max-width: size(352);
+            font-size: size(14);
+            font-weight: 400;
+            color: var(--keyText);
+            line-height: size(21);
+        }
+    }
+}
+
+.btnWrap {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}

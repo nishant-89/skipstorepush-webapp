@@ -1,0 +1,47 @@
+@use "../../../scss/mixin.scss" as *;
+@use "../../../scss/variable.scss" as *;
+
+.commonSearchWrapper {
+  width: size(234);
+  &.fullWidth {
+    width: size(234);
+  }
+  .MuiInputBase-root {
+    width: 100%;
+    height: size(40);
+    font-size: size(14) !important;
+
+    &::placeholder {
+      font-size: size(14) !important;
+    }
+    &::before {
+      content: none;
+    }
+    &::after {
+      &::after {
+        content: none;
+      }
+    }
+    .searchInput {
+      .MuiOutlinedInput-notchedOutline {
+        border: 0.75px solid var(--borderGray) !important;
+        border-radius: size(4) !important;
+      }
+      .MuiOutlinedInput-input {
+        padding: 10px 10px 10px 0px !important;
+        padding-left: 0 !important;
+        font-family: var(--font) !important;
+        color: #3a4f5f;
+        font-size: size(14) !important;
+        font-weight: 700 !important;
+        text-transform: capitalize;
+        &::placeholder {
+          color: var(--disableBg) !important;
+          font-size: size(14) !important;
+          font-weight: 500 !important;
+          opacity: 0.4;
+        }
+      }
+    }
+  }
+}

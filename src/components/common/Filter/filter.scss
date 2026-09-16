@@ -1,0 +1,428 @@
+@use "../../../scss/mixin.scss" as *;
+.filterBadge {
+  .MuiBadge-badge {
+    margin: 5px 5px 0 0;
+    height: 11px;
+    border-radius: 50%;
+    width: 11px;
+    border: 1px solid #f9f9fc;
+    background-color: #f26258;
+  }
+}
+
+.filterMainWrapper {
+  min-width: size(352);
+  width: size(352);
+  padding: size(24);
+  .customSelect .MuiSelect-select {
+    font-size: 14px !important;
+  }
+  .topHead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .title {
+      margin: 0;
+      padding: 0;
+      font-size: size(12);
+      font-weight: 700;
+      font-family: var(--font);
+      color: var(--infoText);
+    }
+  }
+  .innerWrapper {
+    .labelTitle {
+      margin-top: 12px;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 24px;
+      color: #3a4f5f;
+    }
+    .checkboxSection {
+      max-height: 150px;
+      overflow-y: auto;
+      .filterCheckboxGroup {
+        margin: 8px 0 12px 11px;
+        display: flex;
+        flex-direction: column;
+        gap: size(12);
+        .MuiFormControlLabel-label {
+          font-size: size(14) !important;
+          margin-left: size(8) !important;
+          font-family: var(--font) !important;
+          font-weight: 500 !important;
+          color: #3a4f5f !important;
+          word-break: break-word;
+        }
+        .MuiFormControlLabel-root {
+          width: fit-content !important;
+          margin-right: 0 !important;
+        }
+      }
+      .MuiCheckbox-root {
+        svg {
+          display: none;
+        }
+        &::after {
+          width: size(18);
+          height: size(18);
+          position: absolute;
+          top: 0;
+          content: "";
+          background-image: url("src/assets/images/checkbox.svg") !important;
+          background-repeat: no-repeat !important;
+          background-size: size(16) !important;
+        }
+        &.Mui-checked {
+          position: relative;
+          &::after {
+            width: size(18);
+            height: size(18);
+            position: absolute;
+            top: 0;
+            content: "";
+            background-image: url("src/assets/images/checkbox-checked.svg") !important;
+            background-repeat: no-repeat !important;
+            background-size: size(16) !important;
+          }
+        }
+        .MuiTouchRipple-root {
+          display: none !important;
+        }
+      }
+    }
+    .filterCheckboxWrapper {
+      .title {
+        font-size: size(14);
+        font-weight: 600;
+        font-family: var(--font);
+        color: var(--colorSecondary);
+        margin-bottom: size(4);
+        &:first-child {
+          margin-top: size(12);
+        }
+      }
+      .filterCheckboxGroup {
+        margin: 0 0 20px 11px;
+        display: flex;
+        flex-direction: column;
+        gap: size(10);
+        .MuiFormControlLabel-label {
+          font-size: size(14);
+          margin-left: size(7);
+          font-weight: 400;
+          font-family: var(--font);
+        }
+        .MuiFormControlLabel-root {
+          width: fit-content;
+        }
+      }
+      .MuiCheckbox-root {
+        svg {
+          display: none;
+        }
+        &::after {
+          width: size(18);
+          height: size(18);
+          position: absolute;
+          top: 1px;
+          content: "";
+          background-image: url("src/assets/images/checkbox.svg") !important;
+          background-repeat: no-repeat !important;
+          background-size: size(16) !important;
+        }
+        &.Mui-checked {
+          position: relative;
+          &::after {
+            width: size(18);
+            height: size(18);
+            position: absolute;
+            top: 1px;
+            content: "";
+            background-image: url("src/assets/images/checkbox-checked.svg") !important;
+            background-repeat: no-repeat !important;
+            background-size: size(16) !important;
+          }
+        }
+        .MuiTouchRipple-root {
+          display: none !important;
+        }
+      }
+    }
+    .dateCreationTitle {
+      margin-bottom: size(7);
+      h4 {
+        margin: 0;
+        font-weight: 600;
+        color: var(--colorSecondary);
+      }
+    }
+    .dateRegistration {
+      display: flex;
+      &.mb0 {
+        .form-field {
+          margin-bottom: 0 !important;
+        }
+      }
+      .form-field {
+        position: relative;
+        width: 140px;
+        border: 1px solid var(--borderGray);
+        border-radius: 8px;
+        height: 40px;
+        line-height: 37px;
+        cursor: pointer;
+        p {
+          margin: 0;
+          height: 100%;
+          font-size: 14px;
+          color: var(--colorSecondary);
+          padding-left: 30px;
+          &.placeholder {
+            color: #abb3ba;
+          }
+        }
+        &::before {
+          position: absolute;
+          content: url("src/assets/images/calendar.svg");
+          top: 50%;
+          left: 6px;
+          transform: translateY(-37%);
+        }
+        &:first-child {
+          &::after {
+            position: absolute;
+            content: "";
+            width: 8px;
+            height: 2px;
+            background: var(--colorSecondary);
+            top: 50%;
+            right: -14px;
+            transform: translateY(-50%);
+          }
+        }
+        + .form-field {
+          margin-left: 22px;
+        }
+      }
+    }
+  }
+  .MuiInputBase-root {
+    font-size: 14px !important;
+  }
+  .MuiInputBase-root::placeholder,
+  input::placeholder {
+    font-size: 14px !important;
+    font-weight: 400;
+    color: #abb3ba;
+  }
+  .bottomWrapper {
+    margin-top: 12px;
+    @include flex;
+    justify-content: flex-end;
+    gap: size(10);
+  }
+  &.organisationFilterWrapper {
+    .topHead {
+      margin-bottom: size(15);
+    }
+  }
+  .MuiInputBase-input {
+    font-size: 14px !important;
+  }
+  .DobBox {
+    font-size: size(14);
+    .noborder {
+      font-size: 14px;
+      &::placeholder {
+        font-size: 14px;
+      }
+    }
+    .text {
+      margin: 0;
+      font-size: size(14);
+      color: var(--borderGrayBg);
+    }
+    .placeholder {
+      font-size: size(14);
+    }
+  }
+}
+
+.customSelect {
+  .MuiFormControl-root {
+    width: 100%;
+  }
+  .MuiSelect-select {
+    font-family: var(--font) !important;
+    font-size: 16px !important;
+  }
+}
+
+.resetBtn {
+  font-size: size(12);
+  font-weight: 600;
+  background-color: transparent !important;
+  padding: 0 !important;
+  text-decoration: underline !important;
+  color: var(--colorPrimary);
+  min-width: fit-content !important;
+  line-height: normal;
+  &:hover {
+    background-color: transparent !important;
+  }
+  .MuiTouchRipple-root {
+    display: none !important;
+  }
+}
+
+// =========Date Range Picker==========//
+.datePicker_customer {
+  right: 0px;
+  background: var(--white);
+  border: 1px solid #eaecf0;
+  padding: 9px 0 0 0;
+  border-radius: 12px;
+  width: size(656);
+  z-index: 3;
+  .filterMainWrapper {
+    width: 100% !important;
+    min-width: 100% !important;
+    padding: 17px 10px 16px;
+    .bottomWrapper {
+      margin-top: 0;
+    }
+  }
+  .rdrDateRangePickerWrapper {
+    width: 100%;
+    .rdrDefinedRangesWrapper {
+      border-right: none;
+    }
+    .rdrCalendarWrapper {
+      width: 100%;
+      .rdrNextPrevButton {
+        border: 1.5px solid #3a4f5f;
+        background: transparent;
+      }
+      .rdrMonthAndYearWrapper {
+        padding-top: 0px;
+        padding-bottom: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        .rdrMonthPicker {
+          select {
+            font-weight: 600;
+          }
+        }
+        .rdrYearPicker {
+          select {
+            font-weight: 600;
+          }
+        }
+      }
+      .rdrDateDisplayWrapper {
+        background: transparent;
+        padding: 0 10px 0px;
+        .rdrDateDisplayItem {
+          position: relative;
+          border: 1px solid var(--borderGrayBg);
+          background: transparent;
+          box-shadow: 0px 1px 2px 0px #1018280d;
+          border-radius: 8px;
+          input {
+            color: var(--colorSecondary);
+            font-weight: 500;
+            height: size(44);
+          }
+          &::before {
+            position: absolute;
+            content: url("src/assets/images/calendar.svg");
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+          }
+          &:first-child {
+            &::after {
+              position: absolute;
+              content: "";
+              width: 8px;
+              height: 2px;
+              background: var(--colorSecondary);
+              top: 50%;
+              transform: translateY(-50%);
+              right: -16px;
+            }
+          }
+          + .rdrDateDisplayItem {
+            margin-left: 2.033em;
+          }
+        }
+      }
+      .rdrMonths {
+        padding: 0 0px 10px;
+        border-bottom: 1px solid #eaecf0;
+        .rdrMonthName {
+          color: var(--colorSecondary);
+        }
+        .rdrWeekDays {
+          .rdrWeekDay {
+            color: var(--colorSecondary);
+            font-size: size(14);
+            font-family: "Inter", sans-serif;
+            font-weight: 500;
+          }
+        }
+        .rdrDays {
+          button {
+            height: 40px;
+            .rdrInRange {
+              background: #c3daec66;
+              & ~ .rdrDayNumber {
+                span {
+                  color: var(--inputColor);
+                }
+              }
+            }
+            .rdrStartEdge,
+            .rdrEndEdge {
+              top: 5px;
+              bottom: 5px;
+              color: var(--white);
+              left: 0;
+              right: 0;
+              background: var(--colorPrimary);
+            }
+            .rdrDayNumber {
+              top: 0;
+              width: 100%;
+              height: 100%;
+              span {
+                font-family: "Inter", sans-serif;
+                font-size: size(14);
+                font-weight: 400;
+                &::after {
+                  background: none;
+                }
+              }
+            }
+          }
+        }
+        .rdrMonth {
+          position: relative;
+          &:first-of-type {
+            &::after {
+              position: absolute;
+              content: "";
+              top: 0;
+              right: 0;
+              height: 100%;
+              border: 1px solid #eaecf0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// =========Date Range Picker==========//

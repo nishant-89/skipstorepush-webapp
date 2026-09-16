@@ -1,0 +1,38 @@
+.mainContentWrapper {
+   padding: size(20) !important;
+    margin-top: 0 !important;
+   
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    .notFoundwrap {
+      .centerWrap {
+        max-width: size(352);
+        margin: auto;
+
+        height: 100%;
+        h2 {
+          max-width: size(300);
+          margin: 5px auto 8px auto;
+          font-size: size(20);
+          font-weight: 600;
+          color: var(--colorSecondary);
+          line-height: size(21);
+        }
+
+        p {
+          font-size: size(14);
+          font-weight: 400;
+          color: var(--tabTextColor);
+          line-height: size(24);
+          margin: 0 0 20px;
+        }
+        button + button {
+          margin-left: 12px;
+        }
+      }
+    }
+  }
+

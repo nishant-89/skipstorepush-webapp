@@ -1,0 +1,86 @@
+@use './mixin.scss' as *;
+
+h1,
+h2,
+h3,
+h4,
+p {
+    margin: size(0);
+}
+
+.mt-20 {
+    margin-top: size(20);
+}
+
+.mb-20 {
+    margin-bottom: size(20);
+}
+
+.mb-15 {
+    margin-bottom: size(15);
+}
+
+.mb-12 {
+    margin-bottom: size(12);
+}
+
+.mb-5 {
+    margin-bottom: size(5);
+}
+
+.mr-10 {
+    margin-right: size(10)
+}
+
+.f_600 {
+    font-weight: 600;
+}
+
+.f_700 {
+    font-weight: 700;
+}
+
+.fs_16 {
+    font-size: size(16);
+}
+.fs_14 {
+    font-size: size(14);
+}
+
+.fs_15 {
+    font-size: size(15);
+}
+
+.titleColor {
+    color: var(--colorSecondary);
+}
+
+.appText {
+    color: var(--appText);
+}
+
+.flex {
+    display: flex;
+}
+
+.js-between {
+    justify-content: space-between;
+}
+
+.al-center {
+    align-items: center;
+}
+
+.colorSecondary {
+    color: var(--colorSecondary);
+}
+
+.border {
+    border: 1px solid var(--borderGray);
+    padding: size(16);
+    border-radius: size(12);
+}
+
+.border-bottom {
+    border-bottom: 1px solid var(--borderGray);
+}

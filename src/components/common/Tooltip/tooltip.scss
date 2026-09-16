@@ -1,0 +1,34 @@
+@use "../../../scss/variable.scss" as *;
+
+.tooltipTitle {
+  font-family: "Inter", sans-serif !important;
+  line-height: 15px !important;
+  @media (max-width: 768px) {
+    max-width: 100px;
+  }
+}
+.MuiPopper-root {
+  top: 20px !important;
+}
+.MuiTooltip-tooltip {
+  background-color: #0e1f2c !important;
+  border-radius: 12px !important;
+  padding: 15px !important;
+  box-shadow: 6px 6px 54px 0px #0000000d;
+  font-family: "Inter", sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  line-height: 15px !important;
+  margin-top: -34px !important;
+}
+.MuiTooltip-arrow::before {
+  background-color: #000 !important;
+}
+
+.MuiTooltip-arrow {
+  left: -4px !important;
+  height: 1.4em !important;
+  width: 1em !important;
+  top: -3px !important;
+  margin-left: -5px !important;
+}

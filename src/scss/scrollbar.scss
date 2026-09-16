@@ -1,0 +1,23 @@
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  
+
+  &::-webkit-scrollbar-track {
+    width: 4px;
+    height: 10px;
+    background: red;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #eee;
+    opacity: 0.5;
+    width: 4;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+}

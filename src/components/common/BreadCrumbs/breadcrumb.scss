@@ -1,0 +1,99 @@
+@use "../../../scss/mixin.scss" as *;
+@use'../../../scss/variable.scss' as *;
+.breadcrumbsWrap {
+    padding: 0;
+    margin-bottom: size(20);
+    
+    .mainTitle {
+        margin: 0;
+        font-size: size(30);
+        font-weight: 700;
+        line-height: 140%;
+        color: var(--colorSecondary);
+        // text-transform: capitalize;
+        .infoIcon {
+            margin-left: size(12);
+            margin-bottom: size(5);
+            display: inline-block;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+    }
+
+    .breadcrumbList {
+        margin-bottom: size(20);
+        display: flex;
+        gap: size(10);
+
+        .bredcrumbContent {
+            .breadcrumbLink {
+                font-family: var(--font);
+                font-size: size(14);
+                font-weight: 600;
+                line-height: size(20);
+                text-decoration: none;
+                color: (--tabActiveColor);
+                &.active {
+                    color: #85929c;
+                    font-weight: 500;
+                }
+            }
+            &:last-child {
+               
+                .breadcrumbLink {
+                    color: var(--tabActiveColor);
+                    cursor: default;
+                }
+            }
+            .separator {
+                margin-left: size(8);
+                color: #bdc4ca;
+                display: inline-block;
+                vertical-align: middle;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1500px) {
+    .breadcrumbsWrap {
+        .mainTitle {
+            font-size: size(30);
+            line-height: size(30);
+            font-weight: 700;
+            .infoIcon {
+                margin-left: size(8);
+                margin-bottom: size(4);
+            }
+        }
+        .breadcrumbList {
+            margin-bottom: size(20);
+            gap: size(10);
+            .bredcrumbContent {
+                
+                .separator {
+                    margin-left: size(8);
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width: 1024px) {
+    .breadcrumbsWrap {
+        .mainTitle {
+            font-size: size(24);
+            line-height: 25px;
+        }
+        .breadcrumbList {
+            gap: size(4);
+            .bredcrumbContent {
+                .breadcrumbLink {
+                    font-size: size(13);
+                }
+                .separator {
+                    margin-left: size(4);
+                }
+            }
+        }
+    }
+}

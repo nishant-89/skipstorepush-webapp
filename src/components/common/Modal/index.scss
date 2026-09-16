@@ -1,0 +1,305 @@
+@use "../../../scss/variable.scss" as *;
+@use "../../../scss/mixin.scss" as *;
+
+.modalBox {
+  width: 400px;
+  max-width: 100%;
+  max-height: calc(100vh - 40px);
+  clip-path: border-box;
+  overflow-y: auto;
+  border: none;
+  outline: none;
+  border-radius: 12px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  box-shadow: none;
+
+  &.transferOwnershipModal {
+    width: 500px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+
+    .modalWrap .textWrap p {
+      max-width: unset;
+    }
+  }
+
+  .modalWrap {
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    .textWrap {
+      h2 {
+        margin: 16px 0 8px;
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 24.38px;
+        margin-bottom: 12px;
+        color: var(--colorSecondary);
+        &.m3 {
+          margin-left: -3px;
+          margin-right: -3px;
+        }
+        &.m6 {
+          margin-left: -6px;
+          margin-right: -6px;
+        }
+        &.accessKeyTitle {
+          margin: 0 0 6px;
+        }
+        &.mb6 {
+          margin-bottom: 6px;
+        }
+      }
+
+      p {
+        margin: 0 auto 0 auto;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+        color: #60707d;
+
+        &.countText {
+          max-width: 100%;
+          margin: 2px 0 0 !important;
+          text-align: right;
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 20px;
+          color: #475467;
+        }
+      }
+
+      .copyCodetext {
+        margin-top: 15px;
+      }
+
+      .wordBreak {
+        word-break: break-all;
+      }
+
+      .copyLink {
+        max-width: 395px;
+        margin: auto;
+        margin-top: 24px;
+        padding: 10px;
+        border: 1px solid #d4d7e3;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        & > img {
+          cursor: pointer;
+        }
+
+        & > p {
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 24px;
+          margin: 0;
+          color: #152d40;
+        }
+      }
+
+      .removeDeviceModal {
+        .deviceDetails {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          border: 0.5px solid var(--borderGray);
+          padding: 12px;
+          border-radius: 8px;
+          margin-bottom: 14px;
+
+          .deviceIcon {
+            width: 48px;
+            height: 48px;
+
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+
+          .details {
+            width: calc(100% - 48px);
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            align-items: flex-start;
+
+            .name {
+              color: var(--colorSecondary);
+              font-size: 18px;
+              font-weight: 600;
+            }
+
+            .type {
+              color: var(--colorSecondary);
+              font-size: 14px;
+              max-width: 100%;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+
+          &.mt16 {
+            margin-top: 16px;
+          }
+        }
+
+        .col {
+          border: 0.5px solid var(--borderGray);
+          padding: 12px;
+          border-radius: 8px;
+          text-align: left;
+
+          .lastLogin {
+            margin: 0 0 2px 0;
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--keyText);
+          }
+
+          .value {
+            margin: 0;
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--colorSecondary);
+          }
+        }
+
+        &:has(p) {
+          font-size: 30px;
+        }
+      }
+    }
+
+    .buttonArea {
+      padding: 20px 0 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      align-items: center;
+      &.pt12 {
+        padding-top: 12px !important;
+      }
+    }
+  }
+}
+
+.popupTextarea {
+  width: 100% !important;
+  min-height: 94px !important;
+  border: 1px solid #d4d7e3;
+  border-radius: 12px;
+  padding: 10px;
+  margin-top: 20px;
+  resize: none;
+  max-height: 114px;
+  overflow-y: auto !important;
+  color: #3a4f5f;
+  font-size: 16px;
+  outline: 0;
+  clip-path: border-box;
+  &::placeholder {
+    font-size: 16px;
+  }
+  &.h250 {
+    min-height: 250px !important;
+    @media screen and (max-width: 1366px) {
+      min-height: 200px !important;
+    }
+    @media screen and (max-width: 1100px) {
+      min-height: 130px !important;
+    }
+  }
+}
+
+.alignLeft.textWrap {
+  text-align: left;
+}
+
+.modalIcon {
+  padding: 0 20px;
+}
+
+.modalWrap.alignLeft {
+  text-align: left;
+}
+
+.transferOwnershipModal {
+  .ownershipCard {
+    margin-bottom: 10px;
+    padding: 10px !important;
+    background-color: #f8f9f9;
+
+    &:last-of-type {
+      margin-bottom: 0px !important;
+    }
+
+    .key {
+      margin: 0;
+      font-size: 14px !important;
+      font-weight: 400 !important;
+      line-height: 24px !important;
+      color: #6c8ba6 !important;
+      text-align: left !important;
+    }
+
+    .value {
+      margin: 0 !important;
+      font-size: 16px !important;
+      font-weight: 400 !important;
+      line-height: 24px !important;
+      text-align: left !important;
+      color: #3a4f5f !important;
+    }
+  }
+
+  .textAreaWrapper {
+    .form-field.textarea {
+      padding-top: 0 !important;
+      textarea {
+        outline: 0;
+        color: #3a4f5f;
+      }
+      .countText {
+        max-width: 100%;
+        margin: 2px 0 0 !important;
+        text-align: right;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+        color: #60707d;
+      }
+    }
+  }
+
+  .ownershipInfoWrapper {
+    padding-top: size(16);
+
+    .modalDescription {
+      max-width: unset !important;
+      margin: unset !important;
+      margin: 0 0 10px 0 !important;
+    }
+  }
+
+  .countText {
+    margin-bottom: 15px;
+    width: fit-content;
+    display: block;
+    margin-left: auto;
+    font-size: 12px;
+    color: #5d6d84;
+  }
+}
