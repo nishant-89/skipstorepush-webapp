@@ -22,7 +22,6 @@ const NoInternetFound = LazyLoader(
   lazy(() => import("src/components/common/NoInternetFound"))
 );
 
-// code-push-routing-start
 const Login = LazyLoader(lazy(() => import("src/containers/Login")));
 const AllApps = LazyLoader(lazy(() => import("src/containers/AllApps")));
 const AllAppsDetails = LazyLoader(
@@ -33,7 +32,6 @@ const ReleaseDetails = LazyLoader(
 );
 
 const routesConfig = [
-  // code-push-routing
   { path: ROUTES.ALL_APPS, isPrivate: true, component: AllApps },
   { path: ROUTES.ALL_APPS_DETAILS, isPrivate: true, component: AllAppsDetails },
   { path: ROUTES.RELEASE_DETAILS, isPrivate: true, component: ReleaseDetails },
