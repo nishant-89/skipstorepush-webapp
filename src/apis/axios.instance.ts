@@ -13,7 +13,6 @@ import store from "src/redux/store";
 import { detectBrowserType, getDeviceId, getDeviceType } from "./apiValidator";
 
 import ROUTES from "src/routes/routesPaths";
-import { apiRoutes } from "src/utils/common/constants";
 
 /**
  * Creates an Axios instance with a base URL, timeout, and default headers.
@@ -27,7 +26,6 @@ interface ResponseData {
 }
 
 const apiBaseUrl = process.env.VITE_BASE_URL;
-const basicAuth = process.env.VITE_BASIC_AUTH;
 const subscriptionKey = process.env.VITE_SUBSCRIPTION_KEY;
 
 // eslint-disable-next-line
@@ -83,8 +81,8 @@ $axios.interceptors.request.use(
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
 
-    if (config.url === `/${apiRoutes.UploadLogo}`) {
-      config.headers.Authorization = `Basic ${basicAuth}`;
+    if (typeof FormData !== "undefined" && config.data instanceof FormData) {
+      config.headers.delete("Content-Type");
     }
     return config;
   },

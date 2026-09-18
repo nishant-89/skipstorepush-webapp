@@ -113,6 +113,29 @@ const patchDataApi = ({
   }
 };
 
+const postFormDataApi = ({
+  path = "no-path-provided",
+  data,
+}: {
+  path?: string;
+  data: FormData;
+}) => {
+  try {
+    return new Promise((resolve, reject) => {
+      $axios
+        .post(getApiUrl({ path }), data)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  } catch (error) {
+    return (error as Error).message;
+  }
+};
+
 const postDataWithHeadersApi = <T>({
   path = "no-path-provided",
   data = {},
@@ -176,6 +199,7 @@ const deleteApi = ({ path = "no-path-provided", data = {} }) => {
 export {
   getDataApi,
   postDataApi,
+  postFormDataApi,
   putDataApi,
   deleteDataApi,
   deleteApi,

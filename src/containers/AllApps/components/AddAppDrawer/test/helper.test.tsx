@@ -4,14 +4,13 @@ import { useAllAppsHelper } from "../helper";
 import * as api from "src/apis/api";
 import { showAlert } from "src/utils/alert";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
+import { apiRoutes } from "src/utils/common/constants";
 
 jest.mock("src/apis/api", () => ({
   postDataApi: jest.fn(),
+  postFormDataApi: jest.fn(),
   patchDataApi: jest.fn(),
 }));
-
-jest.mock("axios");
 jest.mock("src/utils/alert", () => ({
   showAlert: jest.fn(),
 }));
@@ -97,11 +96,11 @@ describe("useAllAppsHelper", () => {
       })
     );
 
-    const largeFile = new File(["a".repeat(11 * 1024 * 1024)], "large.png", {
+    const largeFile = new File(["a".repeat(6 * 1024 * 1024)], "large.png", {
       type: "image/png",
     });
 
-    Object.defineProperty(largeFile, "size", { value: 11 * 1024 * 1024 });
+    Object.defineProperty(largeFile, "size", { value: 6 * 1024 * 1024 });
 
     act(() => {
       result.current.handleFile(largeFile);
@@ -109,7 +108,7 @@ describe("useAllAppsHelper", () => {
 
     expect(showAlert).toHaveBeenCalledWith(
       2,
-      "File too large. Maximum size is 10MB."
+      "File too large. Maximum size is 5MB."
     );
   });
 
@@ -147,22 +146,23 @@ describe("useAllAppsHelper", () => {
   });
 
   it("should handle submit with image upload and call handleAdd", async () => {
-    const mockPresignedUrl = "http://presigned.url";
-    const previewUrl = "http://preview.url/icon.png";
+    const previewUrl = "http://localhost:3000/api/uploads/icon.png";
 
-    (api.postDataApi as jest.Mock).mockResolvedValueOnce({
+    (api.postFormDataApi as jest.Mock).mockResolvedValueOnce({
       success: true,
-      statusCode: 200,
+      statusCode: 201,
       data: {
-        presignedUrl: mockPresignedUrl,
-        previewUrl,
+        url: previewUrl,
+        fileName: "icon.png",
+        originalName: "icon.png",
+        mimeType: "image/png",
+        size: 5,
       },
     });
 
-    (axios.put as jest.Mock).mockResolvedValueOnce({ status: 201 });
-
     (api.postDataApi as jest.Mock).mockResolvedValueOnce({
-      statusCode: 200,
+      statusCode: 201,
+      message: "App added successfully",
     });
 
     const { result } = renderHook(() =>
@@ -186,12 +186,26 @@ describe("useAllAppsHelper", () => {
       });
     });
 
-    expect(api.postDataApi).toHaveBeenCalledTimes(2);
+    expect(api.postFormDataApi).toHaveBeenCalledWith(
+      expect.objectContaining({
+        path: apiRoutes.UploadLogo,
+        data: expect.any(FormData),
+      })
+    );
+    const uploadCall = (api.postFormDataApi as jest.Mock).mock.calls[0][0];
+    expect(uploadCall.data.get("file")).toBe(file);
+    expect(api.postDataApi).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          appIcon: previewUrl,
+        }),
+      })
+    );
     expect(mockDispatch).toHaveBeenCalled();
   });
 
   it("should handle submit failure", async () => {
-    (api.postDataApi as jest.Mock).mockRejectedValueOnce(
+    (api.postFormDataApi as jest.Mock).mockRejectedValueOnce(
       new Error("Upload failed")
     );
 

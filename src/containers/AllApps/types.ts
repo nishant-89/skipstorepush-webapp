@@ -134,6 +134,19 @@ export type AppDetailItem = {
   isOwner: boolean;
 };
 
+export type UploadFileResponse = {
+  statusCode: number;
+  success: boolean;
+  message: string;
+  data?: {
+    url?: string;
+    fileName?: string;
+    originalName?: string;
+    mimeType?: string;
+    size?: number;
+  };
+};
+
 export type addPayloadType = {
   name: string;
   osType: string;

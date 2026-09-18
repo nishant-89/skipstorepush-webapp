@@ -19,5 +19,5 @@ export const apiRoutes = {
   Promote: "api/releases/promote",
   Rollout: "api/releases/rollout",
   ReleaseDetail: "api/releases",
-  UploadLogo: "car-wash/v1/upload/app-icon",
+  UploadLogo: "api/uploads",
 };

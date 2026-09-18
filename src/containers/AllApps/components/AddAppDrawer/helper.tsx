@@ -1,22 +1,21 @@
 import { useRef, useCallback, useState, useEffect } from "react";
 import { FormikHelpers } from "formik";
 import { showAlert } from "src/utils/alert";
-import { patchDataApi, postDataApi } from "src/apis/api";
-import {
-  apiRoutes,
-  getErrorMessage,
-  UPLOADED_IMAGE_MODULE,
-  UPLOADED_IMAGE_TYPE,
-} from "src/utils/common/constants";
+import { patchDataApi, postDataApi, postFormDataApi } from "src/apis/api";
+import { apiRoutes, getErrorMessage } from "src/utils/common/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "src/redux/slices/globalSlice";
 import { handleRefresh } from "src/containers/redux/slices/allApp";
 import { handleRefresh as handleReleaseRefresh } from "src/containers/redux/slices/release";
 import { RootState } from "src/redux/rootReducers";
-import axios from "axios";
 
 import { AppResponse, FormValues, initialValues } from "./constant";
-import { addPayloadType, AppDetailItem, uploadPayloadType } from "../../types";
+import {
+  addPayloadType,
+  AppDetailItem,
+  uploadPayloadType,
+  UploadFileResponse,
+} from "../../types";
 
 interface HelperProps {
   onClose: () => void;
@@ -77,7 +76,7 @@ export const useAllAppsHelper = ({
       "image/jpg",
       "image/svg+xml",
     ];
-    const maxSize = 10 * 1024 * 1024; // 10MB
+    const maxSize = 5 * 1024 * 1024; // 5MB
 
     if (!validTypes.includes(file.type)) {
       showAlert(2, "Unsupported file type.");
@@ -85,7 +84,7 @@ export const useAllAppsHelper = ({
     }
 
     if (file.size > maxSize) {
-      showAlert(2, "File too large. Maximum size is 10MB.");
+      showAlert(2, "File too large. Maximum size is 5MB.");
       return;
     }
 
@@ -108,6 +107,7 @@ export const useAllAppsHelper = ({
   // handle image remove
   const handleRemoveImage = useCallback(() => {
     setUploadedImage(null);
+    setUploadFile(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -117,38 +117,25 @@ export const useAllAppsHelper = ({
   const handleSubmit = async (values: FormValues) => {
     dispatch(setLoading(true));
     try {
-      if (uploadFile?.name) {
-        const response: any = await postDataApi({
-          path: apiRoutes.UploadLogo,
-          data: {
-            file_name: uploadFile?.name,
-            file_type: UPLOADED_IMAGE_TYPE.LOGO,
-            module_type: UPLOADED_IMAGE_MODULE.CODE_PUSH,
-          },
-        });
-        if (
-          response &&
-          response?.success === true &&
-          response?.statusCode === 200
-        ) {
-          if (response?.data?.presignedUrl) {
-            const uploadResponse = await axios.put(
-              response?.data?.presignedUrl,
-              uploadFile,
-              {
-                headers: {
-                  "x-ms-blob-type": "BlockBlob",
-                  "Content-Type": uploadFile?.type,
-                },
-              }
-            );
+      if (uploadFile instanceof File) {
+        const formData = new FormData();
+        formData.append("file", uploadFile);
 
-            if (uploadResponse && uploadResponse.status === 201) {
-              editMode
-                ? handleUpdate(values, response?.data?.previewUrl)
-                : handleAdd(values, response?.data?.previewUrl);
-            }
-          }
+        const response = (await postFormDataApi({
+          path: apiRoutes.UploadLogo,
+          data: formData,
+        })) as UploadFileResponse;
+
+        if (
+          response?.success === true &&
+          response?.statusCode === 201 &&
+          response?.data?.url
+        ) {
+          editMode
+            ? handleUpdate(values, response.data.url)
+            : handleAdd(values, response.data.url);
+        } else {
+          dispatch(setLoading(false));
         }
       } else {
         editMode ? handleUpdate(values) : handleAdd(values);

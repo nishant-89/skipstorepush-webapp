@@ -21,16 +21,6 @@ export enum BrowserType {
   MOBILE = "Mobile",
 }
 
-export enum UPLOADED_IMAGE_TYPE {
-  IMAGE = 1,
-  VIDEO = 2,
-  LOGO = 3,
-}
-
-export enum UPLOADED_IMAGE_MODULE {
-  CODE_PUSH = "codepush",
-}
-
 export const regex = {
   Emojis: /([\u2700-\u27BF]|[\uE000-\uF8FF]|[\uD83C-\uDBFF\uDC00-\uDFFF])+/g,
 };
