@@ -1,7 +1,7 @@
 
  
  .MuiSwitch-track {
-    background-color: #E8E8E8 !important;
+    background-color: var(--color-bg-surface) !important;
     opacity: 1 !important;
     border-radius: 20px !important;
     transition: all .3s ease;
@@ -24,7 +24,7 @@
     transition: all .3s ease;
 }
 .MuiSwitch-switchBase {
-    color: #fff !important;
+    color: var(--color-text-primary) !important;
     box-shadow: none !important;
     padding: 0 !important; 
     transform: translate(5px, 5px) !important;
@@ -34,13 +34,13 @@
         transition: all .3s ease;
     }
     .MuiSwitch-track {
-        background-color: #E51F4E !important;
+        background-color: var(--color-error) !important;
         transition: all .3s ease;
         
     }
 }
 
 .Mui-checked+.MuiSwitch-track {
-    background-color: #E51F4E !important;
+    background-color: var(--color-error) !important;
     transition: all .3s ease;
 }

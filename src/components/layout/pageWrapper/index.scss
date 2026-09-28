@@ -33,9 +33,8 @@
       margin-left: auto;
       overflow-y: auto;
       padding: size(20);
-      background-image: url("src/assets/images/main-bg.png");
-      background-repeat: no-repeat;
-      background-size: cover;
+      background-image: none;
+      background-color: var(--color-bg-primary);
     }
   }
 }

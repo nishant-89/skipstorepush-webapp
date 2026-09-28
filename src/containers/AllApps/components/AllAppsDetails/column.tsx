@@ -35,7 +35,10 @@ export const getReleaseColumns = (
     sorting: false,
     headerName: "Status",
     renderCell: (param: RELEASE_RESPONSE_TYPE) => {
-      const statusColor = param.status === "LIVE" ? "#17B26A" : "#F79009";
+      const statusColor =
+        param.status === "LIVE"
+          ? "var(--color-accent-success)"
+          : "var(--color-warn)";
       return (
         <div
           style={{

@@ -34,6 +34,16 @@ export const sideNavItems: NavItem[] = [
       },
     ],
   },
+  {
+    name: "My Account",
+    path: ROUTES.MY_ACCOUNT,
+    isHidden: true,
+  },
+  {
+    name: "Help",
+    path: ROUTES.HELP,
+    isHidden: true,
+  },
 ];
 
 const checkChildActive = (path: string, childrens: NavItem[]) => {
@@ -45,7 +55,7 @@ const checkChildActive = (path: string, childrens: NavItem[]) => {
 const SideNav = () => {
   const navigate = useNavigate();
   const path = window.location.pathname;
-  const list = sideNavItems;
+  const list = sideNavItems.filter((item) => !item.isHidden);
 
   return (
     <div className="sideNav">

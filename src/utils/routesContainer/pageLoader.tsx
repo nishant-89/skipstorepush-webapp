@@ -10,7 +10,7 @@ const LoaderWrapper = styled("div")({
   zIndex: 99999,
   width: "100%",
   height: "100vh",
-  backgroundColor: "rgba(0,0,0,0.1)",
+  backgroundColor: "var(--color-overlay)",
 });
 
 // ==============================|| LOADER ||============================== //

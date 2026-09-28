@@ -16,6 +16,8 @@ jest.mock("src/routes/routesPaths", () => ({
   ALL_APPS: "/all-apps",
   ALL_APPS_DETAILS: "/all-apps-details",
   RELEASE_DETAILS: "/release-details",
+  MY_ACCOUNT: "/my-account",
+  HELP: "/help",
 }));
 
 // Mock the constants
@@ -139,9 +141,11 @@ describe("SideNav Component", () => {
   it("should render all navigation items from sideNavItems config", () => {
     renderSideNav();
 
-    sideNavItems.forEach((item) => {
-      expect(screen.getByText(item.name)).toBeInTheDocument();
-    });
+    sideNavItems
+      .filter((item) => !item.isHidden)
+      .forEach((item) => {
+        expect(screen.getByText(item.name)).toBeInTheDocument();
+      });
   });
 
   it("should handle navigation with keyboard events", () => {

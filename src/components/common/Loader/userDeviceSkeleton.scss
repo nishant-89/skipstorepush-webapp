@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 15px;
-  border: 1px solid #d4d7e3;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   margin-bottom: 20px;
   gap: 20px;
@@ -25,7 +25,7 @@
     .col {
       padding-right: 25px;
       margin-right: 25px;
-      border-right: 1px solid #d4d7e3;
+      border-right: 1px solid var(--color-border);
 
       @media screen and (max-width: 1024px) {
         padding-right: 15px;
@@ -36,7 +36,7 @@
         margin: 0 0 5px 0;
         font-size: 12px;
         font-weight: 500;
-        color: #84a0b8;
+        color: var(--color-text-secondary);
       }
 
       .value {
@@ -57,7 +57,7 @@
       gap: 10px;
 
       @media(max-width: 991px) {
-        border-top: 1px solid #eee;
+        border-top: 1px solid var(--color-border);
         padding-top: 20px;
       }
 
@@ -94,7 +94,6 @@
             font-size: 16px;
           }
         }
-
         .type {
           padding-right: 8px;
           color: var(--colorSecondary);

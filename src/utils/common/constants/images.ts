@@ -19,7 +19,7 @@ import MobileDevice from "src/assets/images/phone.svg";
 import TabletDevice from "src/assets/images/tablet.svg";
 import DeviceIcon from "src/assets/images/deviceIcon.svg";
 import AddNoBorder from "src/assets/images/addNoborder.svg";
-import notFound from "src/assets/images/notfound.svg";
+import notFound from "src/assets/images/notfound.png";
 import sessionTimeout from "src/assets/images/sessionTimeout.svg";
 import CircleCheck from "src/assets/images/circlecheck.svg";
 import UserNavIcon from "src/assets/images/usersIcon.svg";

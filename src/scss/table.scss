@@ -5,7 +5,7 @@
   margin-top: size(20);
   padding: size(15);
   border-radius: size(12);
-  border: 0.5px solid #bdc4ca;
+  border: 0.5px solid var(--color-border);
   background: var(--cardBackground);
   &.p0 {
     padding: 0;
@@ -123,17 +123,17 @@
     }
   }
   .MuiTableRow-head {
-    background-color: var(--white) !important;
+    background-color: var(--color-bg-surface) !important;
   }
   .MuiTableRow-root {
     border-bottom: 1px solid var(--tableBorder);
-    background-color: #f8f9f9 !important;
+    background-color: var(--color-bg-surface) !important;
     &:nth-of-type(odd) {
-      background-color: #f4f4f8 !important;
+      background-color: var(--color-bg-surface) !important;
     }
 
     &:first-of-type {
-      background-color: var(--white);
+      background-color: var(--color-bg-surface);
     }
   }
 
@@ -152,7 +152,7 @@
     padding: size(15.21) size(16);
     font-size: size(14);
     font-weight: 500;
-    color: #3a4f5f;
+    color: var(--color-text-primary);
     font-family: "Inter", sans-serif !important;
   }
 
@@ -229,7 +229,7 @@
 
 .adminAccessTableWrapper {
   background-color: var(--cardBackground);
-  border: 0.5px solid #bdc4ca;
+  border: 0.5px solid var(--color-border);
   border-radius: 12px;
   padding: 20px;
   &.activityTable {
@@ -257,7 +257,7 @@
 
     .totalCount {
       margin: 0;
-      color: #85929c;
+      color: var(--color-text-secondary);
     }
   }
 

@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import Header from "../Header";
 import SideNav from "../SideNav";
 import LogoutModal from "src/components/common/Modal/logoutModal";
+import { fetchProfileDataRequest } from "src/containers/redux/slices/profile";
 
 import "./index.scss";
 
@@ -11,6 +13,11 @@ interface Props {
 
 export default function PageContainer({ children }: Readonly<Props>) {
   const [isLogoutOpen, setIsLogoutOpen] = useState<boolean>(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchProfileDataRequest());
+  }, [dispatch]);
 
   const handleLogoutOpen = () => {
     setIsLogoutOpen(true);

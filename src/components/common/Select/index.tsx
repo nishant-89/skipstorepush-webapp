@@ -107,7 +107,7 @@ const SelectComponent: React.FC<SelectComponentProps> = ({
           renderValue={(selected) => {
             if (!selected) {
               return (
-                <span style={{ color: "#abb3ba", fontWeight: "400" }}>
+                <span style={{ color: "var(--color-text-secondary)", fontWeight: "400" }}>
                   {placeholder}
                 </span>
               );
@@ -128,7 +128,7 @@ const SelectComponent: React.FC<SelectComponentProps> = ({
             ))
           ) : (
             <MenuItem disabled>
-              <span style={{ color: "#000000" }}>
+              <span style={{ color: "var(--color-text-primary)" }}>
                 {loading ? "Loading..." : "No data"}
               </span>
             </MenuItem>

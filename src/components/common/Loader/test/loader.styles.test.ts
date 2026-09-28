@@ -15,7 +15,7 @@ describe("loader.styles", () => {
 
   it("loaderContainer zIndex should be a function and background should be correct", () => {
     expect(typeof styles.loaderContainer.zIndex).toBe("function");
-    expect(styles.loaderContainer.background).toBe("rgba(0,0,0.0.5)");
+    expect(styles.loaderContainer.background).toBe("var(--color-overlay)");
   });
 
   it("zIndex function should return theme.zIndex.drawer + 1", () => {

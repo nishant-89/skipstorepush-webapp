@@ -20,7 +20,7 @@ const NoData = ({
       <div className="centerWrap">
         <div className="contentWrap">
           <figure className="imageWrapper">
-            <img src={notFound} alt="Not Found" />
+            <img src={notFound} style={{height: '150px'}} alt="Not Found" />
           </figure>
           <h2 data-testid="no-data">{title ?? "No Data Found"}</h2>
           {subtitle && <p className="subTitle">{subtitle}</p>}

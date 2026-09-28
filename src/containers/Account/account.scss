@@ -1,0 +1,80 @@
+@use "../../scss/variable.scss" as *;
+@use "../../scss/mixin.scss" as *;
+
+.accountPage {
+  .accountCard {
+    max-width: 860px;
+  }
+
+  .profileHeader {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+
+    .profileImage {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: var(--color-bg-primary);
+    }
+
+    h2 {
+      margin: 0;
+      color: var(--color-text-primary);
+      font-size: 20px;
+    }
+
+    .authBadge {
+      margin: 6px 0 0;
+      color: var(--color-accent);
+      font-weight: 600;
+      font-size: 13px;
+    }
+  }
+
+  .profileGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 24px;
+    margin: 0 0 24px;
+
+    dt {
+      color: var(--color-text-secondary);
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    dd {
+      margin: 0;
+      color: var(--color-text-primary);
+      font-weight: 500;
+      word-break: break-word;
+    }
+
+    .sessionId {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+      font-size: 13px;
+      font-weight: 400;
+    }
+  }
+
+  .profileActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+}
+
+.changePasswordFields {
+  text-align: left;
+  margin-top: 16px;
+}
+
+@media screen and (max-width: 768px) {
+  .accountPage .profileGrid {
+    grid-template-columns: 1fr;
+  }
+}

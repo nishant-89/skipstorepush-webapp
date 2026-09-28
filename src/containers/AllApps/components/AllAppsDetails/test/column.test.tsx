@@ -65,7 +65,7 @@ describe("getReleaseColumns", () => {
 
     expect(getByText("LIVE")).toBeInTheDocument();
     const dot = container.querySelector("span");
-    expect(dot).toHaveStyle("background-color: #17B26A");
+    expect(dot).toHaveStyle("background-color: var(--color-accent-success)");
   });
 
   it("should render status as 'Rollback' if status is ROLLED_BACK", () => {
@@ -224,7 +224,7 @@ describe("getReleaseColumns", () => {
     // The code will render PAUSED (uppercase)
     expect(getByText("PAUSED")).toBeInTheDocument();
     const dot = container.querySelector("span");
-    expect(dot).toHaveStyle("background-color: #F79009");
+    expect(dot).toHaveStyle("background-color: var(--color-warn)");
   });
 
   it("should throw if status is undefined (capitalizeFirstLetter called with undefined)", () => {

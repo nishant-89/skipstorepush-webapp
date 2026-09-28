@@ -11,6 +11,8 @@ const ROUTES = {
   ALL_APPS_DETAILS: "/all-apps/details/:id",
   RELEASE_DETAILS: "/all-apps/details/:id/release/:releaseId",
   INVITATION: "/invitations/:id",
+  MY_ACCOUNT: "/my-account",
+  HELP: "/help",
 };
 
 export default ROUTES;

@@ -11,7 +11,7 @@ const NotFound = () => {
     <div className="notFoundwrap">
       <div className="centerWrap">
         <div className="contentWrap">
-          <img src={notFound} alt="Not Found" />
+          <img src={notFound} style={{height: '200px'}} alt="Not Found" />
           <h2>Page Not Found</h2>
           <p className="subTitle">
             The page you are looking for doesn't exist or has been moved.

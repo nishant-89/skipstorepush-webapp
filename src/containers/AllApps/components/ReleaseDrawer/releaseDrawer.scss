@@ -14,7 +14,7 @@
       padding-right: 10px;
       font-weight: 600;
       font-size: 20px;
-      color: #3a4f5f;
+      color: var(--color-text-primary);
       word-break: break-word;
     }
     .closeDrawerButton {
@@ -92,8 +92,8 @@
       .addMoreSection {
         margin-bottom: 28px;
         padding: 28px 0 20px;
-        border-top: 1px solid #eff2f4;
-        border-bottom: 1px solid #eff2f4;
+        border-top: 1px solid var(--color-border);
+        border-bottom: 1px solid var(--color-border);
         display: flex;
         gap: 8px;
         @media screen and (max-width:1024px) {

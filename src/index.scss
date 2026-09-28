@@ -2,6 +2,32 @@
 
 #root {
   height: 100%;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+}
+
+.MuiPaper-root {
+  background-color: var(--color-bg-surface) !important;
+  color: var(--color-text-primary) !important;
+  background-image: none !important;
+}
+
+.MuiInputBase-input,
+.MuiSelect-select {
+  color: var(--color-text-primary) !important;
+}
+
+.MuiLinearProgress-root {
+  background-color: var(--color-accent-muted) !important;
+}
+
+.MuiLinearProgress-bar {
+  background-color: var(--color-accent) !important;
+}
+
+.Toastify__toast {
+  background: var(--color-bg-surface) !important;
+  color: var(--color-text-primary) !important;
 }
 
 .moreActionBtn {

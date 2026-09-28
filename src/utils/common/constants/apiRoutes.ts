@@ -20,4 +20,6 @@ export const apiRoutes = {
   Rollout: "api/releases/rollout",
   ReleaseDetail: "api/releases",
   UploadLogo: "api/uploads",
+  ChangePassword: "api/user/change-password",
+  Faqs: "api/user/faq",
 };

@@ -44,21 +44,63 @@ export const capitalizeFirstLetter = (str: string): string => {
   return str?.charAt(0)?.toUpperCase() + str?.slice(1)?.toLowerCase();
 };
 
+const MONTHS_SHORT = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sept",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
+export const getOrdinalDay = (day: number): string => {
+  const remainder = day % 100;
+  if (remainder >= 11 && remainder <= 13) {
+    return `${day}th`;
+  }
+  switch (day % 10) {
+    case 1:
+      return `${day}st`;
+    case 2:
+      return `${day}nd`;
+    case 3:
+      return `${day}rd`;
+    default:
+      return `${day}th`;
+  }
+};
+
 export const formatDateTime = (dateStr: string): string => {
   try {
-    if (dateStr) {
-      const date = new Date(dateStr);
-
-      return new Intl.DateTimeFormat("en-US", {
-        month: "2-digit",
-        day: "2-digit",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      }).format(date);
+    if (!dateStr) {
+      return "";
     }
-    return "";
+
+    const date = new Date(dateStr);
+    if (Number.isNaN(date.getTime())) {
+      return "";
+    }
+
+    const month = MONTHS_SHORT[date.getMonth()];
+    const day = getOrdinalDay(date.getDate());
+    const year = date.getFullYear();
+    const time = new Intl.DateTimeFormat("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    }).format(date);
+    const timeZone =
+      new Intl.DateTimeFormat("en-US", { timeZoneName: "short" })
+        .formatToParts(date)
+        .find((part) => part.type === "timeZoneName")?.value || "";
+
+    return `${month} ${day} ${year} ${time}${timeZone ? ` ${timeZone}` : ""}`;
   } catch (error) {
     console.log(error);
     return "";

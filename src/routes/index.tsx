@@ -30,11 +30,15 @@ const AllAppsDetails = LazyLoader(
 const ReleaseDetails = LazyLoader(
   lazy(() => import("src/containers/AllApps/components/ReleaseDetails"))
 );
+const Account = LazyLoader(lazy(() => import("src/containers/Account")));
+const Help = LazyLoader(lazy(() => import("src/containers/Help")));
 
 const routesConfig = [
   { path: ROUTES.ALL_APPS, isPrivate: true, component: AllApps },
   { path: ROUTES.ALL_APPS_DETAILS, isPrivate: true, component: AllAppsDetails },
   { path: ROUTES.RELEASE_DETAILS, isPrivate: true, component: ReleaseDetails },
+  { path: ROUTES.MY_ACCOUNT, isPrivate: true, component: Account },
+  { path: ROUTES.HELP, isPrivate: true, component: Help },
   { path: ROUTES.INVITATION, isPrivate: true, component: Invite },
   {
     path: ROUTES.LOGIN,

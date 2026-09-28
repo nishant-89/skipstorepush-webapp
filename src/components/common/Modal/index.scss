@@ -14,7 +14,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #fff;
+  background-color: var(--color-bg-surface);
   box-shadow: none;
 
   &.transferOwnershipModal {
@@ -63,7 +63,7 @@
         font-size: 14px;
         font-weight: 400;
         line-height: 20px;
-        color: #60707d;
+        color: var(--color-text-secondary);
 
         &.countText {
           max-width: 100%;
@@ -72,7 +72,7 @@
           font-size: 14px;
           font-weight: 400;
           line-height: 20px;
-          color: #475467;
+          color: var(--color-text-secondary);
         }
       }
 
@@ -89,7 +89,7 @@
         margin: auto;
         margin-top: 24px;
         padding: 10px;
-        border: 1px solid #d4d7e3;
+        border: 1px solid var(--color-border);
         border-radius: 4px;
         display: flex;
         align-items: center;
@@ -104,7 +104,7 @@
           font-weight: 400;
           line-height: 24px;
           margin: 0;
-          color: #152d40;
+          color: var(--color-text-primary);
         }
       }
 
@@ -199,14 +199,14 @@
 .popupTextarea {
   width: 100% !important;
   min-height: 94px !important;
-  border: 1px solid #d4d7e3;
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 10px;
   margin-top: 20px;
   resize: none;
   max-height: 114px;
   overflow-y: auto !important;
-  color: #3a4f5f;
+  color: var(--color-text-primary);
   font-size: 16px;
   outline: 0;
   clip-path: border-box;
@@ -240,7 +240,7 @@
   .ownershipCard {
     margin-bottom: 10px;
     padding: 10px !important;
-    background-color: #f8f9f9;
+    background-color: var(--color-bg-surface);
 
     &:last-of-type {
       margin-bottom: 0px !important;
@@ -251,7 +251,7 @@
       font-size: 14px !important;
       font-weight: 400 !important;
       line-height: 24px !important;
-      color: #6c8ba6 !important;
+      color: var(--color-text-secondary) !important;
       text-align: left !important;
     }
 
@@ -261,7 +261,7 @@
       font-weight: 400 !important;
       line-height: 24px !important;
       text-align: left !important;
-      color: #3a4f5f !important;
+      color: var(--color-text-primary) !important;
     }
   }
 
@@ -270,7 +270,7 @@
       padding-top: 0 !important;
       textarea {
         outline: 0;
-        color: #3a4f5f;
+        color: var(--color-text-primary);
       }
       .countText {
         max-width: 100%;
@@ -279,7 +279,7 @@
         font-size: 14px;
         font-weight: 400;
         line-height: 20px;
-        color: #60707d;
+        color: var(--color-text-secondary);
       }
     }
   }
@@ -300,6 +300,6 @@
     display: block;
     margin-left: auto;
     font-size: 12px;
-    color: #5d6d84;
+    color: var(--color-text-secondary);
   }
 }

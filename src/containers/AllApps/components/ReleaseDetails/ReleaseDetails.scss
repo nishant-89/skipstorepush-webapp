@@ -3,16 +3,16 @@
 
 .cardBgWrapper {
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: var(--color-bg-surface);
   border-radius: 20px;
-  border: 0.5px solid #bdc4ca;
+  border: 0.5px solid var(--color-border);
 }
 .ReleasesDetailMainWrapper {
   .topSection {
     padding: 20px 20px 0;
-    background-color: #f9f9f9;
+    background-color: var(--color-bg-surface);
     border-radius: 12px;
-    border: 0.5px solid #bdc4ca;
+    border: 0.5px solid var(--color-border);
     .headingSection {
       padding-bottom: 20px;
       display: flex;
@@ -23,7 +23,7 @@
         font-weight: 700;
         font-size: 16px;
         line-height: 24px;
-        color: #3a4f5f;
+        color: var(--color-text-primary);
         word-break: break-word;
       }
     }
@@ -47,7 +47,7 @@
           font-weight: 700;
           font-size: 16px;
           line-height: 24px;
-          color: #3a4f5f;
+          color: var(--color-text-primary);
           word-break: break-word;
         }
       }
@@ -56,7 +56,7 @@
         min-width: 120px !important;
         height: 40px !important;
         border: 0 !important;
-        background-color: #e0e0e0 !important;
+        background-color: var(--color-bg-surface) !important;
         box-shadow: none !important;
         border-radius: 10px !important;
       }
@@ -70,9 +70,9 @@
   .rooloutSection {
     margin-top: 20px;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: var(--color-bg-surface);
     border-radius: 12px;
-    border: 0.5px solid #bdc4ca;
+    border: 0.5px solid var(--color-border);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -104,24 +104,24 @@
           font-weight: 700;
           font-size: 16px;
           line-height: 24px;
-          color: #3a4f5f;
+          color: var(--color-text-primary);
           word-break: break-word;
         }
         .progressValue {
           font-weight: 700;
           font-size: 16px;
           line-height: 24px;
-          color: #2a7bbb;
+          color: var(--color-accent);
           word-break: break-word;
         }
       }
       .progressbarOuterSection {
         height: 8px;
         border-radius: 4px;
-        background-color: rgba(42, 123, 187, 0.2);
+        background-color: var(--color-accent-muted);
         display: flex;
         .progressBarStepper {
-          background-color: #2a7bbb;
+          background-color: var(--color-accent);
           width: 200px;
           width: 10%;
           height: 8px;
@@ -132,7 +132,7 @@
           height: 24px;
           margin-left: -1px;
           margin-top: -8px;
-          background-color: #2a7bbb;
+          background-color: var(--color-accent);
           border-radius: 50%;
         }
       }
@@ -141,11 +141,11 @@
           .MuiSlider-rail {
             height: 8px;
             border-radius: 4px;
-            background-color: #2a7bbb;
+            background-color: var(--color-accent);
             opacity: 0.2;
           }
           .MuiSlider-track {
-            border: 4px solid #2a7bbb;
+            border: 4px solid var(--color-accent);
             height: 8px;
             border-radius: 4px;
           }
@@ -156,7 +156,7 @@
               box-shadow: none !important;
               width: 24px !important;
               height: 24px !important;
-              background-color: #2a7bbb;
+              background-color: var(--color-accent);
             }
             &::after {
               width: 24px !important;
@@ -188,7 +188,7 @@
         min-width: 120px !important;
         height: 40px !important;
         border: 0 !important;
-        background-color: #e0e0e0 !important;
+        background-color: var(--color-bg-surface) !important;
         box-shadow: none !important;
         border-radius: 10px !important;
       }
@@ -215,7 +215,7 @@
           font-size: 11px;
           line-height: normal;
           text-align: center;
-          color: #60707d;
+          color: var(--color-text-secondary);
         }
 
         .MuiSwitch-root {
@@ -225,29 +225,29 @@
 
           .MuiButtonBase-root {
             + .MuiSwitch-track {
-              background: #bdc4ca;
+              background: var(--color-border);
               opacity: 1;
             }
           }
 
           .MuiButtonBase-root.Mui-checked {
             .MuiSwitch-thumb {
-              color: #ffffff;
+              color: var(--color-text-primary);
               padding: 0;
               margin: 0;
               box-shadow: none;
             }
 
             + .MuiSwitch-track {
-              background: #2a7bbb;
+              background: var(--color-accent);
               opacity: 1;
             }
           }
 
           .MuiSwitch-thumb {
             box-shadow:
-              0px 1px 2px 0px #1018280f,
-              0px 1px 3px 0px #1018281a;
+              0px 1px 2px 0px var(--color-overlay),
+              0px 1px 3px 0px var(--color-overlay);
             width: 20px;
             height: 20px;
             border-radius: 50%;
@@ -266,7 +266,7 @@
               width: 20px;
               height: 20px;
               border-radius: 50%;
-              background: #ffffff;
+              background: var(--color-bg-surface);
             }
           }
 
@@ -282,8 +282,8 @@
             opacity: 0.4 !important;
             cursor: not-allowed !important;
             box-shadow:
-              0px 1px 2px 0px #1018280f,
-              0px 1px 3px 0px #1018281a;
+              0px 1px 2px 0px var(--color-overlay),
+              0px 1px 3px 0px var(--color-overlay);
           }
 
           &:hover {
@@ -301,21 +301,21 @@
       font-weight: 600;
       font-size: 14px;
       line-height: 20px;
-      color: #3a4f5f;
+      color: var(--color-text-primary);
       word-break: break-word;
     }
     .value {
       font-weight: 400;
       font-size: 16px;
       line-height: 24px;
-      color: #3a4f5f;
+      color: var(--color-text-primary);
       word-break: break-word;
     }
   }
   .releaseNotesSection {
     margin-top: 20px;
     padding: 20px;
-    border: 0.5px solid #bdc4ca;
+    border: 0.5px solid var(--color-border);
     border-radius: 12px;
 
     .releaseHeadingWrapper {
@@ -328,7 +328,7 @@
         font-weight: 700;
         font-size: 16px;
         line-height: 24px;
-        color: #3a4f5f;
+        color: var(--color-text-primary);
         word-break: break-word;
       }
 
@@ -338,22 +338,22 @@
         height: size(40) !important;
 
         border-radius: 10px !important;
-        border: 1px solid #2a7bbb !important;
-        background-color: #f8f9f9 !important;
+        border: 1px solid var(--color-accent) !important;
+        background-color: var(--color-bg-surface) !important;
         gap: size(10);
-        color: #2a7bbb !important;
+        color: var(--color-accent) !important;
         font-family: var(--font) !important;
         font-size: size(14) !important;
         font-weight: 600 !important;
         text-transform: capitalize !important;
-        box-shadow: -1px 0px 0px 0px #1322951a inset !important;
+        box-shadow: -1px 0px 0px 0px var(--color-accent-muted) inset !important;
         white-space: nowrap;
       }
     }
     .releaseNotesContentWrapper {
       font-size: 16px;
       line-height: 24px;
-      color: #152d40;
+      color: var(--color-text-primary);
       white-space: pre-wrap;
       max-height: 300px;
       overflow-y: auto;
@@ -366,14 +366,14 @@
       font-weight: 400;
       font-size: 16px;
       line-height: 24px;
-      color: #152d40;
+      color: var(--color-text-primary);
     }
     .contentTitle {
       margin-bottom: 8px;
       font-weight: 400;
       font-size: 16px;
       line-height: 24px;
-      color: #152d40;
+      color: var(--color-text-primary);
     }
 
     .releaseBodySection {
@@ -383,7 +383,7 @@
           font-weight: 400;
           font-size: 16px;
           line-height: 24px;
-          color: #3a4f5f;
+          color: var(--color-text-primary);
           list-style: none;
 
           position: relative;
@@ -393,7 +393,7 @@
             width: 3px;
             height: 3px;
             border-radius: 50%;
-            background-color: #3a4f5f;
+            background-color: var(--color-text-primary);
             position: absolute;
             left: -15px;
             top: 50%;
@@ -417,7 +417,7 @@
           min-width: 120px !important;
           height: 40px !important;
           border: 0 !important;
-          background-color: #e0e0e0 !important;
+          background-color: var(--color-bg-surface) !important;
           box-shadow: none !important;
           border-radius: 10px !important;
         }
@@ -427,7 +427,7 @@
         min-width: 120px !important;
         height: 40px !important;
         border: 0 !important;
-        background-color: #e0e0e0 !important;
+        background-color: var(--color-bg-surface) !important;
         box-shadow: none !important;
         border-radius: 10px !important;
       }
@@ -436,7 +436,7 @@
   .skeleton-loader {
     width: 100%;
     height: 28px;
-    background-color: #e0e0e0;
+    background-color: var(--color-bg-surface);
     border-radius: 4px;
     animation: pulse 1.5s infinite ease-in-out;
 
@@ -447,13 +447,13 @@
 
   @keyframes pulse {
     0% {
-      background-color: #e0e0e0;
+      background-color: var(--color-bg-surface);
     }
     50% {
-      background-color: #f5f5f5;
+      background-color: var(--color-bg-primary);
     }
     100% {
-      background-color: #e0e0e0;
+      background-color: var(--color-bg-surface);
     }
   }
 }
@@ -465,18 +465,18 @@
       margin-left: 0 !important;
       padding: size(10);
       border-radius: size(12);
-      background-color: var(--white);
+      background-color: var(--color-bg-surface);
       box-shadow:
-        0px 15px 15px -1px #0000000a,
-        0px 5.7px 12px -1px #0000000d,
-        0px 2.6px 8px -1px #0000000f,
-        0px 0.9px 4px -1px #00000014 !important;
+        0px 15px 15px -1px var(--color-overlay),
+        0px 5.7px 12px -1px var(--color-overlay),
+        0px 2.6px 8px -1px var(--color-overlay),
+        0px 0.9px 4px -1px var(--color-overlay) !important;
 
       .MuiList-root {
         .MuiMenuItem-root {
           border-radius: 8px;
           padding: 10px 12px !important;
-          background: var(--white);
+          background: var(--color-bg-surface);
           box-shadow: none;
           font-family: var(--font) !important;
           font-size: size(12) !important;
@@ -491,9 +491,9 @@
           }
           &.active,
           &:hover {
-            color: #3a4f5f !important;
+            color: var(--color-text-primary) !important;
             font-weight: 600 !important;
-            background-color: #d2e7ff !important;
+            background-color: var(--color-accent-muted) !important;
           }
           &:not(:last-child) {
             margin-bottom: size(4);
@@ -507,9 +507,9 @@
 // roolback-tooltip-slider-popper-styling
 .rollbackTooltipSliderPopper {
   .MuiTooltip-tooltip {
-    background-color: #2a7bbb !important;
+    background-color: var(--color-accent) !important;
     border-radius: 8px !important;
-    color: #ffffff !important;
+    color: var(--color-text-primary) !important;
     padding: 8px 11px !important;
     font-family: "Inter", sans-serif !important;
     font-weight: 600 !important;
@@ -517,7 +517,7 @@
     line-height: 18px !important;
     text-align: center !important;
     .MuiTooltip-arrow {
-      color: #2a7bbb !important;
+      color: var(--color-accent) !important;
     }
   }
 }

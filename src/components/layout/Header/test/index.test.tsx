@@ -11,20 +11,6 @@ jest.mock("src/utils/common/constants", () => ({
   UserPlaceholderIcon: "mocked-user-placeholder.svg",
 }));
 
-// Mock the AccessKeyModal component
-jest.mock("src/components/common/Modal/accessKeyModal", () => {
-  return function MockAccessKeyModal({ open, onClose, title }: any) {
-    return open ? (
-      <div data-testid="access-key-modal">
-        <div>{title}</div>
-        <button onClick={onClose} data-testid="close-modal-btn">
-          Close
-        </button>
-      </div>
-    ) : null;
-  };
-});
-
 // Mock Material-UI components to properly render menu items
 jest.mock("@mui/material", () => ({
   Menu: ({ open, children }: any) => {
@@ -45,9 +31,26 @@ jest.mock("@mui/material", () => ({
   ),
 }));
 
+jest.mock("react-redux", () => ({
+  useSelector: jest.fn((selector) =>
+    selector({
+      profile: { data: null },
+      auth: { user: {} },
+    })
+  ),
+}));
+
+const mockNavigate = jest.fn();
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useNavigate: () => mockNavigate,
+}));
+
 // Mock the routes
 jest.mock("src/routes/routesPaths", () => ({
   ALL_APPS: "/all-apps",
+  MY_ACCOUNT: "/my-account",
+  HELP: "/help",
 }));
 
 // Wrapper component for Router
@@ -60,6 +63,7 @@ describe("Header Component", () => {
 
   beforeEach(() => {
     mockHandleLogoutOpen.mockClear();
+    mockNavigate.mockClear();
   });
 
   const renderHeader = () => {
@@ -124,40 +128,21 @@ describe("Header Component", () => {
     });
   });
 
-  it("should test access key modal opening and closing (line 82)", async () => {
+  it("should test access key is not in the header menu", async () => {
     renderHeader();
 
     const profileButton = screen.getByRole("button");
     const userImage = profileButton.querySelector("#basic-button");
-
-    // The modal should initially be closed
-    expect(screen.queryByTestId("access-key-modal")).not.toBeInTheDocument();
-
-    // Click to open menu
     fireEvent.click(userImage!);
 
-    // Wait for menu to appear
     await waitFor(() => {
       expect(screen.getByRole("menu")).toBeInTheDocument();
     });
 
-    // Click on Access Key menu item to open modal
-    const accessKeyMenuItem = screen.getByTestId("menu-item-access-key");
-    fireEvent.click(accessKeyMenuItem);
-
-    // Verify modal opens
-    await waitFor(() => {
-      expect(screen.getByTestId("access-key-modal")).toBeInTheDocument();
-    });
-
-    // Test line 82: onClose={() => setAccessModal(false)}
-    const closeButton = screen.getByTestId("close-modal-btn");
-    fireEvent.click(closeButton);
-
-    // Verify modal closes (line 82 was executed)
-    await waitFor(() => {
-      expect(screen.queryByTestId("access-key-modal")).not.toBeInTheDocument();
-    });
+    expect(screen.queryByText("Access Key")).not.toBeInTheDocument();
+    expect(screen.getByText("My Account")).toBeInTheDocument();
+    expect(screen.getByText("Help")).toBeInTheDocument();
+    expect(screen.getByText("Logout")).toBeInTheDocument();
   });
 
   it("should navigate to all apps when logo is clicked", () => {
@@ -246,29 +231,6 @@ describe("Header Component", () => {
     // This ensures the integration is working for lines 30-31
   });
 
-  it("should test modal onClose functionality (line 82)", () => {
-    renderHeader();
-
-    // Test the onClose prop functionality directly
-    // Line 82: onClose={() => setAccessModal(false)}
-
-    // The modal component receives this onClose function
-    // We can test it by checking the function signature and behavior
-
-    const mockOnClose = jest.fn();
-
-    // Verify that a function like line 82 would work correctly
-    const testOnClose = () => {
-      // This simulates line 82: setAccessModal(false)
-      mockOnClose();
-    };
-
-    testOnClose();
-    expect(mockOnClose).toHaveBeenCalledTimes(1);
-
-    // This confirms that the onClose pattern used in line 82 works correctly
-  });
-
   it("should handle component lifecycle correctly", () => {
     const { unmount } = renderHeader();
 
@@ -306,37 +268,25 @@ describe("Header Component", () => {
     expect(mockHandleLogoutOpen).toHaveBeenCalledTimes(1);
   });
 
-  // Additional test to specifically cover line 82 with direct modal interaction
-  it("should execute onClose when access key modal is closed (line 82)", async () => {
+  it("navigates to my account and help from the menu", async () => {
     renderHeader();
 
     const profileButton = screen.getByRole("button");
     const userImage = profileButton.querySelector("#basic-button");
-
-    // Open menu
     fireEvent.click(userImage!);
 
-    // Wait for menu to appear with access key option
     await waitFor(() => {
-      expect(screen.getByText("Access Key")).toBeInTheDocument();
+      expect(screen.getByTestId("menu-item-my-account")).toBeInTheDocument();
     });
 
-    // Click access key to open modal
-    const accessKeyButton = screen.getByText("Access Key");
-    fireEvent.click(accessKeyButton);
+    fireEvent.click(screen.getByTestId("menu-item-my-account"));
+    expect(mockNavigate).toHaveBeenCalledWith("/my-account");
 
-    // Wait for modal to open
+    fireEvent.click(userImage!);
     await waitFor(() => {
-      expect(screen.getByTestId("access-key-modal")).toBeInTheDocument();
+      expect(screen.getByTestId("menu-item-help")).toBeInTheDocument();
     });
-
-    // Click close button to trigger line 82: onClose={() => setAccessModal(false)}
-    const closeButton = screen.getByTestId("close-modal-btn");
-    fireEvent.click(closeButton);
-
-    // Verify modal closes (line 82 executed)
-    await waitFor(() => {
-      expect(screen.queryByTestId("access-key-modal")).not.toBeInTheDocument();
-    });
+    fireEvent.click(screen.getByTestId("menu-item-help"));
+    expect(mockNavigate).toHaveBeenCalledWith("/help");
   });
 });

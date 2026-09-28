@@ -1,22 +1,25 @@
 import React from "react";
 import { Menu, MenuItem } from "@mui/material";
+import { useSelector } from "react-redux";
+import { useNavigate, Link } from "react-router-dom";
 import {
   skipstore,
   CodePushLogoImage,
   UserPlaceholderIcon,
 } from "src/utils/common/constants";
 import "../Header/header.scss";
-import AccessKeyModal from "src/components/common/Modal/accessKeyModal";
-import { Link } from "react-router-dom";
 import ROUTES from "src/routes/routesPaths";
+import { RootState } from "src/redux/rootReducers";
 
 interface HeaderProps {
   handleLogoutOpen: () => void;
 }
 const Header: React.FC<HeaderProps> = ({ handleLogoutOpen }: HeaderProps) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [accessModal, setAccessModal] = React.useState<boolean>(false);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
+  const profile = useSelector((state: RootState) => state.profile.data);
+  const avatarSrc = profile?.profileImage || UserPlaceholderIcon;
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -30,9 +33,14 @@ const Header: React.FC<HeaderProps> = ({ handleLogoutOpen }: HeaderProps) => {
     handleLogoutOpen();
   };
 
-  const handleAccesskey = () => {
+  const handleMyAccount = () => {
     handleClose();
-    setAccessModal(true);
+    navigate(ROUTES.MY_ACCOUNT);
+  };
+
+  const handleHelp = () => {
+    handleClose();
+    navigate(ROUTES.HELP);
   };
 
   return (
@@ -60,7 +68,7 @@ const Header: React.FC<HeaderProps> = ({ handleLogoutOpen }: HeaderProps) => {
               aria-expanded={open ? "true" : undefined}
               onClick={handleClick}
             >
-              <img src={UserPlaceholderIcon} alt="Icon" />
+              <img className="avtarImg" src={avatarSrc} alt="Icon" />
             </figure>
           </button>
 
@@ -71,16 +79,12 @@ const Header: React.FC<HeaderProps> = ({ handleLogoutOpen }: HeaderProps) => {
             open={open}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleAccesskey}>Access Key</MenuItem>
+            <MenuItem onClick={handleMyAccount}>My Account</MenuItem>
+            <MenuItem onClick={handleHelp}>Help</MenuItem>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </div>
       </div>
-      <AccessKeyModal
-        open={accessModal}
-        title={"Access Key"}
-        onClose={() => setAccessModal(false)}
-      />
     </header>
   );
 };

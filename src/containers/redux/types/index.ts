@@ -24,31 +24,24 @@ export type AuthResponse = {
 };
 
 // profile
+export type AuthType = "GITHUB" | "BASIC";
+
+export interface ProfileSession {
+  sessionId: string;
+  createdDate: string;
+}
+
 export interface Profile {
-  id: string;
-  first_name: string;
-  last_name: string;
+  id: number;
+  azureUserId?: string;
+  oauthId?: string;
   email: string;
-  phone_number: string;
-  is_2FA_enabled: boolean;
-  status: string | number;
-  user_type: string | number;
-  organization_id: string;
-  organization_name: string;
-  organization_site_id?: string | null;
-  organization_site_name?: string | null;
-  access_group_id?: string | null;
-  access_group_name?: string | null;
-  access_group_status?: string | number;
-  domain: string;
-  pos_api_key: string | null;
-  pos_api_id: string | null;
-  datawarehouse_key: string | null;
-  client_type: string | number | null;
-  is_pos_configured: boolean | null;
-  is_access_group_updated?: boolean | null;
-  reminder_2FA?: boolean | null;
-  master_domain?: string | null;
+  fullName: string;
+  profileImage?: string;
+  authType: AuthType;
+  createdDate: string;
+  lastLogin?: string;
+  session?: ProfileSession | null;
 }
 
 export interface ProfileDataState {
@@ -63,6 +56,51 @@ export interface ProfileResponse {
   message: string;
   data: Profile;
   error: object;
+}
+
+export interface FaqItem {
+  id: string;
+  question: string;
+  answer: string;
+}
+
+export interface FaqGroup {
+  id: string;
+  title: string;
+  items: FaqItem[];
+}
+
+export interface FaqStillStuck {
+  message: string;
+  docsUrl: string;
+  supportEmail: string;
+}
+
+export interface FaqData {
+  groups: FaqGroup[];
+  search: string;
+  totalItems: number;
+  isEmpty: boolean;
+  emptyMessage: string | null;
+  stillStuck: FaqStillStuck;
+}
+
+export interface FaqResponse {
+  statusCode: number;
+  success: boolean;
+  message: string;
+  data: FaqData;
+}
+
+export interface ChangePasswordPayload {
+  currentPassword: string;
+  newPassword: string;
+}
+
+export interface ChangePasswordResponse {
+  statusCode: number;
+  success: boolean;
+  message: string;
 }
 
 // all apps

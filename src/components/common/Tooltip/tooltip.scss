@@ -11,10 +11,10 @@
   top: 20px !important;
 }
 .MuiTooltip-tooltip {
-  background-color: #0e1f2c !important;
+  background-color: var(--color-bg-primary) !important;
   border-radius: 12px !important;
   padding: 15px !important;
-  box-shadow: 6px 6px 54px 0px #0000000d;
+  box-shadow: 6px 6px 54px 0px var(--color-overlay);
   font-family: "Inter", sans-serif !important;
   font-size: 10px !important;
   font-weight: 500 !important;
@@ -22,7 +22,7 @@
   margin-top: -34px !important;
 }
 .MuiTooltip-arrow::before {
-  background-color: #000 !important;
+  background-color: var(--color-bg-primary) !important;
 }
 
 .MuiTooltip-arrow {
