@@ -60,4 +60,27 @@ describe("InputField Component", () => {
     render(<InputField {...defaultProps} />);
     expect(screen.getByPlaceholderText("Enter your name")).toBeInTheDocument();
   });
+
+  it("toggles password visibility without moving the caret", () => {
+    render(
+      <InputField
+        {...defaultProps}
+        type="password"
+        name="password"
+        label="Password"
+        value="12345678"
+        showPasswordToggle
+      />
+    );
+    const input = screen.getByLabelText("Password") as HTMLInputElement;
+    input.focus();
+    input.setSelectionRange(4, 4);
+    fireEvent.click(screen.getByLabelText("Show password"));
+    expect(input).toHaveAttribute("type", "text");
+    expect(input.selectionStart).toBe(4);
+    expect(input.selectionEnd).toBe(4);
+    fireEvent.click(screen.getByLabelText("Hide password"));
+    expect(input).toHaveAttribute("type", "password");
+    expect(input.selectionStart).toBe(4);
+  });
 });

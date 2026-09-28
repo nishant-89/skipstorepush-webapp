@@ -31,18 +31,18 @@ const ButtonComp: React.FC<ButtonProps> = ({
   isActive = false,
 }) => {
   return (
-    <Button
-      type={type}
-      variant={variant}
-      onClick={onClick}
-      disabled={disabled}
-      className={`button ${isActive && "active"} ${className}`}
-    >
-      {isIcon ? (
-        <>
-          <img src={icon} alt="rear-icon" /> {label}
-        </>
-      ) : (
+        <Button
+          type={type}
+          variant={variant}
+          onClick={onClick}
+          disabled={disabled}
+          className={`button ${isActive && "active"} ${className}`}
+        >
+          {isIcon ? (
+            <>
+              <img src={icon} alt="" /> {label}
+            </>
+          ) : (
         <>
           {label} {isRearIcon ? <img src={rearIcon} alt="rear-icon" /> : ""}
         </>

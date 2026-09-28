@@ -1,6 +1,7 @@
 const ROUTES = {
   USERS: "/",
   LOGIN: "/login",
+  REGISTER: "/register",
 
   NOT_FOUND: "*",
   PAGENOTFOUND: "/PageNotFound",

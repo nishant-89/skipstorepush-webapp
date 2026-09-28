@@ -1,8 +1,8 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import LoginComponent from "../index"; // adjust the path if needed
+import { MemoryRouter } from "react-router-dom";
+import LoginComponent from "../index";
 import { useLoginHelper } from "../helper";
 
-// Mock external imports
 jest.mock("src/utils/common/constants", () => ({
   skipstore: "logo.png",
   GithubIcon: () => <svg data-testid="github-icon" />,
@@ -12,28 +12,37 @@ interface MockButtonProps {
   label: string;
   onClick?: () => void;
   icon?: React.ElementType;
+  type?: string;
 }
 
 jest.mock("src/components/common/Button", () => ({
   __esModule: true,
-  default: ({ label, onClick, icon: Icon }: MockButtonProps) => (
-    <button onClick={onClick}>
+  default: ({ label, onClick, icon: Icon, type }: MockButtonProps) => (
+    <button type={type === "submit" ? "submit" : "button"} onClick={onClick}>
       {Icon && <Icon />}
       {label}
     </button>
   ),
 }));
 
-// Mock the useLoginHelper hook
 const mockHandleClick = jest.fn();
-jest.mock("../helper", () => ({
-  useLoginHelper: jest.fn(),
-}));
+const mockHandleEmailLogin = jest.fn();
+const mockHandleForgotPassword = jest.fn();
+jest.mock("../helper", () => {
+  const actual = jest.requireActual("../helper");
+  return {
+    ...actual,
+    useLoginHelper: jest.fn(),
+  };
+});
 
 describe("LoginComponent", () => {
   beforeEach(() => {
     (useLoginHelper as jest.Mock).mockReturnValue({
       handleClick: mockHandleClick,
+      handleEmailLogin: mockHandleEmailLogin,
+      handleForgotPassword: mockHandleForgotPassword,
+      loginFormValues: { email: "", password: "" },
     });
   });
 
@@ -41,30 +50,46 @@ describe("LoginComponent", () => {
     jest.clearAllMocks();
   });
 
+  const renderLogin = () =>
+    render(
+      <MemoryRouter>
+        <LoginComponent />
+      </MemoryRouter>
+    );
+
   it("renders logo, heading, and description", () => {
-    render(<LoginComponent />);
+    renderLogin();
     expect(screen.getByAltText("skipstore")).toHaveAttribute("src", "logo.png");
-    expect(screen.getByText("Create Account or Sign In")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Sign in" })).toBeInTheDocument();
     expect(
-      screen.getByText("Log in with one of these services to get started.")
+      screen.getByText("Use your email and password, or continue with GitHub.")
     ).toBeInTheDocument();
   });
 
-  it("renders GitHub button with icon and label", () => {
-    render(<LoginComponent />);
+  it("renders email login fields and GitHub button", () => {
+    renderLogin();
+    expect(screen.getByLabelText("Email")).toBeInTheDocument();
+    expect(screen.getByLabelText("Password")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Sign in" })).toBeInTheDocument();
     expect(screen.getByText("Continue with GitHub")).toBeInTheDocument();
-    expect(screen.getByTestId("github-icon")).toBeInTheDocument();
+    expect(screen.getByText("Forgot password")).toBeInTheDocument();
+    expect(screen.getByText("Register new user")).toBeInTheDocument();
   });
 
   it("calls handleClick when GitHub button is clicked", () => {
-    render(<LoginComponent />);
-    const button = screen.getByText("Continue with GitHub");
-    fireEvent.click(button);
+    renderLogin();
+    fireEvent.click(screen.getByText("Continue with GitHub"));
     expect(mockHandleClick).toHaveBeenCalledTimes(1);
   });
 
+  it("calls handleForgotPassword when forgot password is clicked", () => {
+    renderLogin();
+    fireEvent.click(screen.getByText("Forgot password"));
+    expect(mockHandleForgotPassword).toHaveBeenCalledTimes(1);
+  });
+
   it("renders footer text correctly", () => {
-    render(<LoginComponent />);
+    renderLogin();
     expect(
       screen.getByText(/© Copyright 2026 skipstorepush.tech/i)
     ).toBeInTheDocument();

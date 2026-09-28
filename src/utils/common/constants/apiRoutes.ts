@@ -22,4 +22,8 @@ export const apiRoutes = {
   UploadLogo: "api/uploads",
   ChangePassword: "api/user/change-password",
   Faqs: "api/user/faq",
+  Register: "api/user/register",
+  SendOtp: "api/user/send-otp",
+  VerifyOtp: "api/user/verify-otp",
+  BasicLogin: "api/user/basic/login",
 };

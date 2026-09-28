@@ -23,6 +23,7 @@ const NoInternetFound = LazyLoader(
 );
 
 const Login = LazyLoader(lazy(() => import("src/containers/Login")));
+const Register = LazyLoader(lazy(() => import("src/containers/Register")));
 const AllApps = LazyLoader(lazy(() => import("src/containers/AllApps")));
 const AllAppsDetails = LazyLoader(
   lazy(() => import("src/containers/AllApps/components/AllAppsDetails"))
@@ -44,6 +45,11 @@ const routesConfig = [
     path: ROUTES.LOGIN,
     isPrivate: false,
     component: Login,
+  },
+  {
+    path: ROUTES.REGISTER,
+    isPrivate: false,
+    component: Register,
   },
 
   { path: ROUTES.NOT_FOUND, isPrivate: true, component: NotFound },

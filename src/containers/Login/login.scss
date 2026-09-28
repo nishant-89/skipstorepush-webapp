@@ -2,34 +2,38 @@
 @use "../../scss/mixin.scss" as *;
 
 .loginWrap {
-  height: 100vh;
-  padding: 20px;
+  min-height: 100vh;
+  width: 100%;
+  padding: 48px 32px 32px;
   background: linear-gradient(45deg, var(--color-bg-primary) 0%, var(--color-bg-surface) 100%);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: flex-start;
+  overflow: visible;
 
   .loginWrapInner {
-    width: size(562);
-    height: size(512);
-    padding: 60px 93px 56px 56px;
+    width: 720px;
+    max-width: 100%;
+    margin: auto 0;
+    padding: 48px 56px 40px;
     background-color: var(--color-bg-surface);
-    border-radius: size(12);
-    overflow-y: auto;
-    clip-path: border-box;
+    border-radius: size(16);
+    overflow: visible;
   }
 
   .textWrap {
-    height: 100%;
+    min-height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
 
     .topSection {
+      width: 100%;
+
       .loginLogoSec {
         width: 121px;
-        margin-bottom: 48px;
+        margin-bottom: 32px;
         img {
           width: 100%;
         }
@@ -46,23 +50,39 @@
         font-size: 16px;
         line-height: 150%;
         color: var(--color-text-secondary);
+
+        strong {
+          font-weight: 700;
+          color: var(--color-text-primary);
+        }
       }
       .buttonSection {
-        margin-top: 36px;
+        margin-top: 8px;
         .githubButton {
           width: 100% !important;
-          height: 50px !important;
-          gap: 16px !important;
+          min-height: 50px !important;
+          gap: 12px !important;
           padding: 12px 20px !important;
-          background-color: var(--color-bg-surface) !important;
+          background-color: var(--color-bg-primary) !important;
           border: 1px solid var(--color-border) !important;
-          box-shadow: 0px 1px 2px 0px var(--color-overlay) !important;
+          box-shadow: none !important;
           border-radius: 10px !important;
           font-weight: 600 !important;
           font-size: 14px !important;
           line-height: 20px !important;
           color: var(--color-text-primary) !important;
-          justify-content: flex-start !important;
+          justify-content: center !important;
+          text-transform: none !important;
+
+          img {
+            width: 24px;
+            height: 24px;
+            display: block;
+            flex-shrink: 0;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+          }
+
           &.Mui-disabled {
             opacity: 0.6;
             cursor: not-allowed;
@@ -71,11 +91,186 @@
       }
     }
     .bottomSection {
+      margin-top: 32px;
       .copyRightText {
         font-weight: 400;
         font-size: 16px;
         line-height: 130%;
         color: var(--color-text-secondary);
+      }
+    }
+  }
+
+  .authForm {
+    width: 100%;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+
+    .input-field {
+      width: 100%;
+
+      label {
+        display: block;
+        margin-bottom: 4px;
+        color: var(--color-text-primary);
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .MuiTextField-root {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+
+      .passwordToggle {
+        color: var(--color-text-secondary) !important;
+      }
+    }
+
+    .otpLabel {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--color-text-primary);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .fieldError {
+      margin: 0;
+      color: var(--color-error);
+      font-size: 12px;
+      line-height: 20px;
+    }
+
+    .fieldErrorSlot {
+      min-height: 20px;
+      margin: 8px 0 12px;
+    }
+  }
+
+  .otpBoxes {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 0;
+
+    input {
+      width: 56px;
+      height: 56px;
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      background: var(--color-bg-primary);
+      color: var(--color-text-primary);
+      text-align: center;
+      font-size: 22px;
+      font-weight: 600;
+      outline: none;
+
+      &:focus {
+        border-color: var(--color-accent);
+      }
+
+      &.hasError {
+        border-color: var(--color-error);
+      }
+    }
+  }
+
+  .authInlineActions {
+    display: flex;
+    justify-content: flex-end;
+    margin: 4px 0 16px;
+  }
+
+  .textLinkBtn {
+    background: none;
+    border: 0;
+    padding: 0;
+    color: var(--color-accent);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .primaryAuthButton {
+    width: 100% !important;
+    height: 50px !important;
+    margin-bottom: 8px !important;
+    background-color: var(--color-accent) !important;
+    color: var(--color-bg-primary) !important;
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+
+    &.Mui-disabled {
+      opacity: 0.45 !important;
+      background-color: var(--color-text-secondary) !important;
+      color: var(--color-bg-primary) !important;
+      cursor: not-allowed !important;
+    }
+  }
+
+  .authDivider {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 16px 0;
+
+    &::before,
+    &::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--color-border);
+    }
+
+    span {
+      color: var(--color-text-secondary);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+  }
+
+  .authSwitch {
+    width: 100%;
+    margin: 16px 0 0;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+
+    a,
+    .textLinkBtn {
+      color: var(--color-accent);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .loginWrap {
+    padding: 24px 16px;
+
+    .loginWrapInner {
+      padding: 32px 20px 24px;
+    }
+
+    .otpBoxes {
+      gap: 8px;
+
+      input {
+        width: 44px;
+        height: 48px;
+        font-size: 18px;
       }
     }
   }
