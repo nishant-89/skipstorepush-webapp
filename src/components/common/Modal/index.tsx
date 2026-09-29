@@ -47,14 +47,18 @@ const CustomModal = ({
       className="modalBackdrop"
     >
       <div className="modalBox">
+        <div className="modalAccent" />
         <div className={`modalWrap ${mainClass}`}>
           <div className="textWrap">
-            <img src={icon} alt="modal icon" />
+            {icon ? (
+              <div className="modalIconWell">
+                <img src={icon} alt="" />
+              </div>
+            ) : null}
             <h2 id="modal-modal-title">{title}</h2>
             {descriptionElement ? descriptionElement : <p>{description}</p>}
             {children}
           </div>
-          {/* add class in api header modal pt10 */}
           <div className={`buttonArea ${paddingClass ? "pt12" : ""}`}>
             {isSecondaryButton && (
               <Button variant="outlined" onClick={onSecondaryClick}>

@@ -4,9 +4,14 @@ import { RootReducerType, RootState } from "src/redux/rootReducers";
 
 import { fetchAllAppRequest, handleRefresh } from "../redux/slices/allApp";
 import { handleEnvironment } from "../redux/slices/release";
+import { readSavedAppFilters, writeSavedAppFilters } from "src/utils/savedFilters";
+
+export const osFilterLabel = (value: string) =>
+  value === "IOS" ? "iOS" : value === "ANDROID" ? "Android" : value;
 
 export const useAllAppsHelper = () => {
   const dispatch = useDispatch();
+  const [savedFilters] = useState(readSavedAppFilters);
   // Redux state selectors
   const { filteredData, loading, isRefresh, count } = useSelector(
     (state: RootState) => state?.allApps
@@ -14,14 +19,18 @@ export const useAllAppsHelper = () => {
 
   const { user } = useSelector((state: RootReducerType) => state.auth);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [isRedIndicator, setIsRedIndicator] = useState<boolean>(false);
+  const [isRedIndicator, setIsRedIndicator] = useState(
+    savedFilters.os.length > 0
+  );
   const handleOpenDrawer = () => setIsDrawerOpen(true);
   const handleCloseDrawer = () => setIsDrawerOpen(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [term, setTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(savedFilters.search);
+  const [term, setTerm] = useState(savedFilters.search);
   const [mainPage, setMainPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+  const [selectedFilters, setSelectedFilters] = useState<string[]>(
+    savedFilters.os
+  );
 
   // handle apps fetch
   useEffect(() => {
@@ -54,16 +63,27 @@ export const useAllAppsHelper = () => {
     setRowsPerPage(newRowsPerPage);
   };
 
-  //hide show filter
-  const shouldShowSearchAndFilter = () => {
-    return !(
-      selectedFilters?.length === 0 &&
-      !searchTerm?.trim() &&
-      filteredData?.length === 0
-    );
+  useEffect(() => {
+    writeSavedAppFilters({
+      os: selectedFilters,
+      search: searchTerm.trim(),
+    });
+  }, [selectedFilters, searchTerm]);
+
+  const clearOsFilter = (value: string) => {
+    const next = selectedFilters.filter((item) => item !== value);
+    setSelectedFilters(next);
+    setIsRedIndicator(next.length > 0);
   };
 
-  const showFilter = shouldShowSearchAndFilter();
+  const clearAllSavedFilters = () => {
+    setSelectedFilters([]);
+    setIsRedIndicator(false);
+    setSearchTerm("");
+    setTerm("");
+  };
+
+  const showFilter = true;
 
   // clear filter env when redirecting from all apps
   useEffect(() => {
@@ -94,5 +114,7 @@ export const useAllAppsHelper = () => {
     showFilter,
     user,
     setMainPage,
+    clearOsFilter,
+    clearAllSavedFilters,
   };
 };

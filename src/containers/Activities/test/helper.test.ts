@@ -68,6 +68,7 @@ describe("activity formatters", () => {
 describe("useActivitiesHelper", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    window.localStorage.clear();
   });
 
   it("loads the first page of activities", async () => {

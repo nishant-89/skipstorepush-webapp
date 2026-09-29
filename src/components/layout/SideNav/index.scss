@@ -2,19 +2,20 @@
 @use "../../../scss/variable.scss" as *;
 
 .sideNav {
-  height: calc(100vh - 80px);
-  width: size(266);
-  padding: size(24) size(20) size(24) size(0);
+  height: calc(100vh - var(--shell-header-height));
+  width: var(--shell-nav-width);
+  padding: 20px 16px 24px 16px;
   position: fixed;
-  top: size(80);
+  top: var(--shell-header-height);
   background: var(--headerBg);
+  border-right: 1px solid var(--headerBorder);
 
   @media screen and (max-width: 1280px) {
-    top: size(80);
+    top: var(--shell-header-height);
   }
 
   .sideWrap {
-    padding-left: size(20);
+    padding-left: 0;
 
     .sideToggle {
       position: absolute;
@@ -29,15 +30,17 @@
       list-style: none;
 
       li {
-        margin-bottom: 4px;
-        padding: size(12);
+        margin-bottom: 6px;
+        padding: 10px 12px;
         font-size: size(16);
         font-weight: 500;
         line-height: 24px;
         text-align: left;
         color: var(--color-text-primary);
         cursor: pointer;
-        transition: all 0.3s ease-in;
+        transition: all 0.2s ease-in;
+        border-radius: var(--radius-md);
+        border-left: 3px solid transparent;
 
         img {
           filter: brightness(0) invert(1);
@@ -47,8 +50,9 @@
         &:hover {
           color: var(--color-accent);
           background: var(--hoverBg);
-          border-radius: size(8);
+          border-radius: var(--radius-md);
           font-weight: 600;
+          border-left-color: var(--color-accent);
 
           img {
             opacity: 1;
@@ -183,7 +187,7 @@
     width: size(76);
     padding: 1.5rem 12px 80px 0rem;
     position: fixed;
-    top: 80px;
+    top: var(--shell-header-height);
     left: 0;
     transition: 100ms cubic-bezier(0.4, 0, 0.6, 1);
     z-index: 99;
@@ -200,7 +204,7 @@
     }
     &:hover {
       padding: 1.5rem 12px 80px 0rem;
-      width: size(266);
+      width: var(--shell-nav-width);
       transition: 100ms cubic-bezier(0.4, 0, 0.6, 1);
 
       .navText {
@@ -301,5 +305,18 @@
   .sideNav .MuiAccordion-root .MuiAccordionSummary-root p {
     margin: 0;
     white-space: nowrap;
+  }
+}
+
+html[data-theme="light"] {
+  .sideNav li img {
+    filter: brightness(0);
+    opacity: 0.7;
+  }
+
+  .sideNav li.active img,
+  .sideNav li:hover img {
+    opacity: 1;
+    filter: brightness(0) invert(0.72) sepia(1) saturate(400%) hue-rotate(110deg);
   }
 }

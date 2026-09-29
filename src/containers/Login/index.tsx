@@ -96,7 +96,7 @@ const LoginComponent = () => {
       <div className="buttonSection">
         <ButtonComp
           className="githubButton"
-          variant="contained"
+          variant="outlined"
           label="Continue with GitHub"
           onClick={handleClick}
           isIcon

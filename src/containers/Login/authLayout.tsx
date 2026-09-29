@@ -1,5 +1,6 @@
 import { skipstore } from "src/utils/common/constants";
 import { ReactNode } from "react";
+import ThemeToggle from "src/components/common/ThemeToggle";
 
 interface AuthLayoutProps {
   title: string;
@@ -10,6 +11,9 @@ interface AuthLayoutProps {
 const AuthLayout = ({ title, description, children }: AuthLayoutProps) => {
   return (
     <div className="loginWrap">
+      <div className="authThemeSlot">
+        <ThemeToggle />
+      </div>
       <div className="loginWrapInner">
         <div className="textWrap">
           <div className="topSection">

@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import { getDataApi } from "src/apis/api";
 import { showAlert } from "src/utils/alert";
 import { apiRoutes, getErrorMessage } from "src/utils/common/constants";
+import {
+  readSavedActivitiesSearch,
+  writeSavedActivitiesSearch,
+} from "src/utils/savedFilters";
 import { ActivitiesResponse, ActivityItem } from "./types";
 
 export const formatActivityLabel = (value?: string) => {
@@ -55,8 +59,8 @@ export const useActivitiesHelper = () => {
   const [loading, setLoading] = useState(true);
   const [mainPage, setMainPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [term, setTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(readSavedActivitiesSearch);
+  const [term, setTerm] = useState(readSavedActivitiesSearch);
 
   useEffect(() => {
     const loadActivities = async () => {
@@ -90,6 +94,7 @@ export const useActivitiesHelper = () => {
   const handleSearch = (value: string) => {
     setMainPage(0);
     setSearchTerm(value);
+    writeSavedActivitiesSearch(value.trim());
   };
 
   const handleChangePage = (newPage: number) => {

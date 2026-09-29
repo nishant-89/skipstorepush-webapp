@@ -10,6 +10,13 @@
   justify-content: center;
   align-items: flex-start;
   overflow: visible;
+  position: relative;
+
+  .authThemeSlot {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+  }
 
   .loginWrapInner {
     width: 720px;
@@ -17,7 +24,8 @@
     margin: auto 0;
     padding: 48px 56px 40px;
     background-color: var(--color-bg-surface);
-    border-radius: size(16);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
     overflow: visible;
   }
 
@@ -66,7 +74,7 @@
           background-color: var(--color-bg-primary) !important;
           border: 1px solid var(--color-border) !important;
           box-shadow: none !important;
-          border-radius: 10px !important;
+          border-radius: var(--radius-btn) !important;
           font-weight: 600 !important;
           font-size: 14px !important;
           line-height: 20px !important;
@@ -202,7 +210,8 @@
     margin-bottom: 8px !important;
     background-color: var(--color-accent) !important;
     color: var(--color-bg-primary) !important;
-    border-radius: 10px !important;
+    border: 1px solid var(--color-accent) !important;
+    border-radius: var(--radius-btn) !important;
     font-weight: 600 !important;
     text-transform: none !important;
 
@@ -210,6 +219,7 @@
       opacity: 0.45 !important;
       background-color: var(--color-text-secondary) !important;
       color: var(--color-bg-primary) !important;
+      border: 1px solid var(--color-border) !important;
       cursor: not-allowed !important;
     }
   }
@@ -274,4 +284,26 @@
       }
     }
   }
+}
+
+html[data-theme="light"] {
+  .githubButton {
+    img {
+      filter: brightness(0) !important;
+    }
+  }
+
+  .primaryAuthButton {
+    color: var(--on-accent) !important;
+
+    &.Mui-disabled {
+      color: var(--on-accent) !important;
+    }
+  }
+}
+
+.loginWrap .githubButton.MuiButton-root {
+  background-color: var(--color-bg-primary) !important;
+  color: var(--color-text-primary) !important;
+  border: 1px solid var(--color-border) !important;
 }

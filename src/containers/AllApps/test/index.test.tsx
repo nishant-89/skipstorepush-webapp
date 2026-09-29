@@ -74,6 +74,7 @@ jest.mock("src/components/common/Filter/allAppFilter", () => ({
 
 jest.mock("../helper", () => ({
   useAllAppsHelper: jest.fn(),
+  osFilterLabel: (value: string) => value,
 }));
 
 // Setup mock values
@@ -95,6 +96,8 @@ const mockHelperValues = {
   setSelectedFilters: jest.fn(),
   setIsRedIndicator: jest.fn(),
   isRedIndicator: false,
+  clearOsFilter: jest.fn(),
+  clearAllSavedFilters: jest.fn(),
   showFilter: true,
   searchTerm: "",
   user: { userName: "Test User" },

@@ -81,13 +81,13 @@ describe("Header Component", () => {
     // Use getAllByAltText for multiple icons
     const icons = screen.getAllByAltText("Icon");
     expect(icons).toHaveLength(2);
-    expect(screen.getByRole("button")).toBeInTheDocument();
+    expect(screen.getByLabelText("Open account menu")).toBeInTheDocument();
   });
 
   it("should test handleClick function and line 22 setAnchorEl", () => {
     renderHeader();
 
-    const profileButton = screen.getByRole("button");
+    const profileButton = screen.getByLabelText("Open account menu");
     const userImage = profileButton.querySelector("#basic-button");
 
     // Initially, aria-expanded should not exist (undefined in component)
@@ -104,7 +104,7 @@ describe("Header Component", () => {
   it("should test handleLogout function execution (lines 30-31)", async () => {
     renderHeader();
 
-    const profileButton = screen.getByRole("button");
+    const profileButton = screen.getByLabelText("Open account menu");
     const userImage = profileButton.querySelector("#basic-button");
 
     // Click to open menu first
@@ -131,7 +131,7 @@ describe("Header Component", () => {
   it("should test access key is not in the header menu", async () => {
     renderHeader();
 
-    const profileButton = screen.getByRole("button");
+    const profileButton = screen.getByLabelText("Open account menu");
     const userImage = profileButton.querySelector("#basic-button");
     fireEvent.click(userImage!);
 
@@ -152,15 +152,22 @@ describe("Header Component", () => {
     expect(logoLink).toHaveAttribute("href", "/all-apps");
   });
 
+  it("toggles the color theme", () => {
+    renderHeader();
+    const toggle = screen.getByLabelText("Switch to light theme");
+    fireEvent.click(toggle);
+    expect(screen.getByLabelText("Switch to dark theme")).toBeInTheDocument();
+  });
+
   it("should have proper CSS classes and structure", () => {
     renderHeader();
 
     expect(screen.getByRole("banner")).toHaveClass("header");
-    expect(screen.getByRole("button")).toHaveClass("actionBtn");
+    expect(screen.getByLabelText("Open account menu")).toHaveClass("actionBtn");
 
     // Check for proper structure
     const userImageFigure = screen
-      .getByRole("button")
+      .getByLabelText("Open account menu")
       .querySelector("#basic-button");
     expect(userImageFigure).toHaveClass("userImage");
     expect(userImageFigure).toHaveAttribute("aria-haspopup", "true");
@@ -169,7 +176,7 @@ describe("Header Component", () => {
   it("should handle click events and state changes", () => {
     renderHeader();
 
-    const profileButton = screen.getByRole("button");
+    const profileButton = screen.getByLabelText("Open account menu");
     const userImage = profileButton.querySelector("#basic-button");
 
     // Test initial state - aria-expanded should not exist
@@ -188,7 +195,7 @@ describe("Header Component", () => {
   it("should handle accessibility properly", () => {
     renderHeader();
 
-    const profileButton = screen.getByRole("button");
+    const profileButton = screen.getByLabelText("Open account menu");
     const userImageFigure = profileButton.querySelector("#basic-button");
 
     expect(userImageFigure).toHaveAttribute("aria-haspopup", "true");
@@ -198,7 +205,7 @@ describe("Header Component", () => {
   it("should test component state management for line 22", () => {
     renderHeader();
 
-    const profileButton = screen.getByRole("button");
+    const profileButton = screen.getByLabelText("Open account menu");
     const userImage = profileButton.querySelector("#basic-button");
 
     // Initially closed - aria-expanded should not exist
@@ -234,7 +241,7 @@ describe("Header Component", () => {
   it("should handle component lifecycle correctly", () => {
     const { unmount } = renderHeader();
 
-    const profileButton = screen.getByRole("button");
+    const profileButton = screen.getByLabelText("Open account menu");
     const userImage = profileButton.querySelector("#basic-button");
 
     // Test that clicking works before unmount
@@ -249,7 +256,7 @@ describe("Header Component", () => {
   it("should execute handleLogout function when logout menu item is clicked (lines 30-31)", async () => {
     renderHeader();
 
-    const profileButton = screen.getByRole("button");
+    const profileButton = screen.getByLabelText("Open account menu");
     const userImage = profileButton.querySelector("#basic-button");
 
     // Open menu
@@ -271,7 +278,7 @@ describe("Header Component", () => {
   it("navigates to my account and help from the menu", async () => {
     renderHeader();
 
-    const profileButton = screen.getByRole("button");
+    const profileButton = screen.getByLabelText("Open account menu");
     const userImage = profileButton.querySelector("#basic-button");
     fireEvent.click(userImage!);
 

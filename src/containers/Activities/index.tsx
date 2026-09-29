@@ -58,14 +58,16 @@ const Activities = () => {
       <div className="cardBgWrapper AllAppsMainWrapper">
         <div className="AllAppsInnerWrapper">
           <div className="TopSection">
-            <div className="searchWrapper">
-              <DebounceSearch
-                onSearch={setSearchTerm}
-                placeholder="Search"
-                setSearchTerm={setTerm}
-                searchTerm={term}
-                alphanumericOnly={false}
-              />
+            <div className="toolbarActions">
+              <div className="searchWrapper">
+                <DebounceSearch
+                  onSearch={setSearchTerm}
+                  placeholder="Search"
+                  setSearchTerm={setTerm}
+                  searchTerm={term}
+                  alphanumericOnly={false}
+                />
+              </div>
             </div>
           </div>
           <div className="tableSection appTable">

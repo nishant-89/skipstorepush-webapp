@@ -159,12 +159,26 @@ input:-webkit-autofill:active {
   }
 }
 
+.MuiButton-root {
+  border-radius: var(--radius-btn) !important;
+  transition:
+    font-size 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease !important;
+
+  &:hover:not(:disabled):not(.Mui-disabled) {
+    font-size: calc(1em + 0.75px) !important;
+  }
+}
+
 .MuiButton-text {
   text-transform: capitalize !important;
   font-family: var(--font) !important;
   font-weight: 600 !important;
   font-size: size(12) !important;
   color: var(--btnColor) !important;
+  border: 1px solid var(--color-border) !important;
   &:disabled {
     color: var(--borderGray) !important;
     opacity: 0.8;
@@ -174,8 +188,8 @@ input:-webkit-autofill:active {
 .MuiButton-outlined {
   height: size(40) !important;
   min-width: size(120) !important;
-  border-radius: size(10) !important;
-  border: 1px solid var(--borderGray) !important;
+  border-radius: var(--radius-btn) !important;
+  border: 1px solid var(--color-border) !important;
   gap: size(10);
   font-size: size(14) !important;
   font-family: var(--font) !important;
@@ -185,18 +199,18 @@ input:-webkit-autofill:active {
   box-shadow: 0px 1px 2px 0px var(--color-overlay) !important;
   &:disabled {
     color: var(--color-border) !important;
-    border: 1px solid var(--borderGray) !important;
+    border: 1px solid var(--color-border) !important;
   }
 }
 
 .MuiButton-contained {
   height: size(40) !important;
   min-width: size(120) !important;
-  border-radius: 10px !important;
+  border-radius: var(--radius-btn) !important;
   border: 1px solid var(--color-accent) !important;
   background-color: var(--btnColor) !important;
   gap: size(10);
-  color: var(--white) !important;
+  color: var(--on-accent) !important;
   font-family: var(--font) !important;
   font-size: size(14) !important;
   font-weight: 600 !important;
@@ -208,8 +222,15 @@ input:-webkit-autofill:active {
   }
   &:disabled {
     background-color: var(--borderGray) !important;
-    border: 0 !important;
+    border: 1px solid var(--color-border) !important;
   }
+}
+
+.MuiButton-root:hover:not(:disabled):not(.Mui-disabled),
+.MuiButton-text:hover:not(:disabled):not(.Mui-disabled),
+.MuiButton-outlined:hover:not(:disabled):not(.Mui-disabled),
+.MuiButton-contained:hover:not(:disabled):not(.Mui-disabled) {
+  font-size: calc(1em + 0.75px) !important;
 }
 
 .bbtn {
@@ -218,7 +239,7 @@ input:-webkit-autofill:active {
   background-color: var(--btnPrimary) !important;
   color: var(--white) !important;
   gap: size(8);
-  border-radius: size(10) !important;
+  border-radius: var(--radius-btn) !important;
   font-size: size(14) !important;
   font-weight: 600 !important;
   line-height: size(20) !important;
@@ -839,11 +860,12 @@ label {
   font-size: 14px !important;
   font-weight: 500 !important;
   border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-btn) !important;
   color: var(--colorSecondary) !important;
   gap: size(6) !important;
   &.active {
     background: var(--color-accent-muted) !important;
-    border: 1px solid transparent !important;
+    border: 1px solid var(--color-accent) !important;
     color: var(--color-accent) !important;
     img {
       filter: invert(39%) sepia(86%) saturate(608%) hue-rotate(169deg)
@@ -1096,7 +1118,7 @@ input[type="number"] {
 }
 
 .innerLayoutMainWrapper {
-  height: calc(100vh - 80px);
+  height: calc(100vh - var(--shell-header-height));
 }
 
 textarea::placeholder {

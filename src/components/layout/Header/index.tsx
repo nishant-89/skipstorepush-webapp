@@ -7,6 +7,7 @@ import {
   CodePushLogoImage,
   UserPlaceholderIcon,
 } from "src/utils/common/constants";
+import ThemeToggle from "src/components/common/ThemeToggle";
 import "../Header/header.scss";
 import ROUTES from "src/routes/routesPaths";
 import { RootState } from "src/redux/rootReducers";
@@ -51,6 +52,10 @@ const Header: React.FC<HeaderProps> = ({ handleLogoutOpen }: HeaderProps) => {
             <img src={skipstore} alt="Logo" />
           </Link>
         </figure>
+        <div className="productMark">
+          <span className="productName">Skipstore</span>
+          <span className="productMeta">OTA console</span>
+        </div>
         <div className="logoBox">
           <figure className="logoTxt">
             <img src={CodePushLogoImage} alt="Icon" />
@@ -59,14 +64,19 @@ const Header: React.FC<HeaderProps> = ({ handleLogoutOpen }: HeaderProps) => {
       </div>
       <div className="rightWrap">
         <div className="actionBtnWrap">
-          <button className="actionBtn ">
+          <ThemeToggle />
+          <button
+            type="button"
+            className="actionBtn"
+            aria-label="Open account menu"
+            onClick={handleClick}
+          >
             <figure
               className="userImage"
               id="basic-button"
               aria-controls={open ? "basic-menu" : undefined}
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
-              onClick={handleClick}
             >
               <img className="avtarImg" src={avatarSrc} alt="Icon" />
             </figure>

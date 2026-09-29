@@ -6,7 +6,7 @@
 
   .RootInnerMainWrapper {
     width: 100%;
-    height: calc(100% - 80px);
+    height: calc(100% - var(--shell-header-height));
     display: flex;
     align-items: flex-start;
     transition: all 0.3s ease-in;
@@ -19,20 +19,20 @@
 
     &.expands {
       .innerLayoutMainWrapper {
-        width: calc(100% - 266px);
+        width: calc(100% - var(--shell-nav-width));
       }
 
       .sideNav {
         display: block;
-        width: size(266);
+        width: var(--shell-nav-width);
       }
     }
 
     .innerLayoutMainWrapper {
-      width: calc(100% - 266px);
+      width: calc(100% - var(--shell-nav-width));
       margin-left: auto;
       overflow-y: auto;
-      padding: size(20);
+      padding: 28px 32px 40px;
       background-image: none;
       background-color: var(--color-bg-primary);
     }

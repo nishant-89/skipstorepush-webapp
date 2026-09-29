@@ -8,7 +8,7 @@ import NoData from "src/components/common/NoData";
 import AllAppFilterPopUp from "src/components/common/Filter/allAppFilter";
 
 import AddAppDrawer from "./components/AddAppDrawer/addAppDrawer";
-import { useAllAppsHelper } from "./helper";
+import { osFilterLabel, useAllAppsHelper } from "./helper";
 import { allAppsColumns } from "./column";
 
 import "./AllApps.scss";
@@ -33,9 +33,10 @@ const AllApps = () => {
     setSelectedFilters,
     setIsRedIndicator,
     isRedIndicator,
-    showFilter,
     searchTerm,
     user,
+    clearOsFilter,
+    clearAllSavedFilters,
   } = useAllAppsHelper();
 
   const renderTableContent = () => {
@@ -86,9 +87,8 @@ const AllApps = () => {
 
       <div className="cardBgWrapper AllAppsMainWrapper">
         <div className="AllAppsInnerWrapper">
-          {/* render filter section */}
-          {showFilter && (
-            <div className="TopSection">
+          <div className="TopSection">
+            <div className="toolbarActions">
               <div className="searchWrapper">
                 <DebounceSearch
                   onSearch={setSearchTerm}
@@ -104,7 +104,6 @@ const AllApps = () => {
                 setIsRedIndicator={setIsRedIndicator}
                 isRedIndicator={isRedIndicator}
               />
-
               <Button
                 className="addNewBtns"
                 variant="contained"
@@ -114,7 +113,34 @@ const AllApps = () => {
                 onClick={handleOpenDrawer}
               />
             </div>
-          )}
+          </div>
+          {selectedFilters.length > 0 || searchTerm.trim() ? (
+            <div className="savedFilterRow">
+              {selectedFilters.map((filter) => (
+                <button
+                  key={filter}
+                  type="button"
+                  className="savedFilterChip"
+                  onClick={() => clearOsFilter(filter)}
+                >
+                  {osFilterLabel(filter)}
+                  <span aria-hidden="true">×</span>
+                </button>
+              ))}
+              {searchTerm.trim() ? (
+                <span className="savedFilterChip isSearch">
+                  “{searchTerm.trim()}”
+                </span>
+              ) : null}
+              <button
+                type="button"
+                className="clearSavedFilters"
+                onClick={clearAllSavedFilters}
+              >
+                Clear saved
+              </button>
+            </div>
+          ) : null}
           {/* render table section */}
           <div className="tableSection appTable">
             <div className="adminAccessTableWrapper tableWrapper bgWhite p00">
