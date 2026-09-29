@@ -2,7 +2,7 @@ import Breadcrumbs from "src/components/common/BreadCrumbs";
 import Button from "src/components/common/Button";
 import { UserPlaceholderIcon } from "src/utils/common/constants";
 import { formatDateTime } from "src/utils/common/helpers";
-import { useAccountHelper } from "./helper";
+import { useAccountHelper, PROFILE_IMAGE_ACCEPT } from "./helper";
 import ChangePasswordModal from "./changePasswordModal";
 import AccessKeyModal from "src/components/common/Modal/accessKeyModal";
 import "./account.scss";
@@ -19,10 +19,13 @@ const Account = () => {
     githubProfileUrl,
     isPasswordModalOpen,
     isAccessKeyModalOpen,
+    fileInputRef,
     openAccessKeyModal,
     closeAccessKeyModal,
     openPasswordModal,
     closePasswordModal,
+    openProfileImagePicker,
+    handleProfileImageChange,
   } = useAccountHelper();
 
   return (
@@ -30,14 +33,36 @@ const Account = () => {
       <Breadcrumbs title="My Account" loading={loading} />
       <div className="cardBgWrapper accountCard">
         <div className="profileHeader">
-          <img
-            className="profileImage"
-            src={data?.profileImage || UserPlaceholderIcon}
-            alt="Profile"
+          <input
+            ref={fileInputRef}
+            className="profileImageInput"
+            type="file"
+            accept={PROFILE_IMAGE_ACCEPT}
+            onChange={handleProfileImageChange}
           />
+          <button
+            type="button"
+            className="profileImageButton"
+            onClick={openProfileImagePicker}
+            aria-label="Change profile photo"
+          >
+            <img
+              className="profileImage"
+              src={data?.profileImage || UserPlaceholderIcon}
+              alt=""
+            />
+            <span className="profileImageOverlay">Change</span>
+          </button>
           <div>
             <h2>{data?.fullName || "—"}</h2>
             <p className="authBadge">{authLabel(data?.authType)}</p>
+            <button
+              type="button"
+              className="textLinkBtn"
+              onClick={openProfileImagePicker}
+            >
+              Change photo
+            </button>
           </div>
         </div>
 
@@ -62,7 +87,7 @@ const Account = () => {
             <dt>Last login</dt>
             <dd>{data?.lastLogin ? formatDateTime(data.lastLogin) : "—"}</dd>
           </div>
-          <div>
+          {/* <div>
             <dt>Current session started</dt>
             <dd>
               {data?.session?.createdDate
@@ -73,7 +98,7 @@ const Account = () => {
           <div>
             <dt>Session ID</dt>
             <dd className="sessionId">{data?.session?.sessionId || "—"}</dd>
-          </div>
+          </div> */}
           <div>
             <dt>Account active since</dt>
             <dd>
@@ -85,7 +110,7 @@ const Account = () => {
         <div className="profileActions">
           {accessKey ? (
             <Button
-              label="Copy Access Key"
+              label="Access Key"
               variant="outlined"
               onClick={openAccessKeyModal}
             />

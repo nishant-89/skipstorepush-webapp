@@ -1,4 +1,4 @@
-import { formatDateTime, getOrdinalDay } from "src/utils/common/helpers";
+import { formatDateTime, formatTimeZoneName, getOrdinalDay } from "src/utils/common/helpers";
 
 describe("getOrdinalDay", () => {
   it("returns the expected English ordinals", () => {
@@ -16,6 +16,15 @@ describe("getOrdinalDay", () => {
   });
 });
 
+describe("formatTimeZoneName", () => {
+  it("uses IST for India Standard Time instead of GMT+5:30", () => {
+    const date = new Date(2026, 8, 8, 18, 30, 0);
+    const spy = jest.spyOn(date, "getTimezoneOffset").mockReturnValue(-330);
+    expect(formatTimeZoneName(date)).toBe("IST");
+    spy.mockRestore();
+  });
+});
+
 describe("formatDateTime", () => {
   it("formats local dates as Month Dth YYYY h:mm AM/PM TZ", () => {
     const localDate = new Date(2026, 8, 8, 18, 30, 0);
@@ -25,10 +34,7 @@ describe("formatDateTime", () => {
       minute: "2-digit",
       hour12: true,
     }).format(localDate);
-    const timeZone =
-      new Intl.DateTimeFormat("en-US", { timeZoneName: "short" })
-        .formatToParts(localDate)
-        .find((part) => part.type === "timeZoneName")?.value || "";
+    const timeZone = formatTimeZoneName(localDate);
 
     expect(formatted).toBe(
       `Sept 8th 2026 ${time}${timeZone ? ` ${timeZone}` : ""}`

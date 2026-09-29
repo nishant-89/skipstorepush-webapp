@@ -195,7 +195,7 @@
     font-family: var(--font) !important;
     font-size: size(14);
     font-weight: 500;
-    color: var(--btnBlackBg);
+    color: var(--color-text-primary);
 
     .MuiSvgIcon-root {
       color: var(--colorPrimary) !important;
@@ -210,7 +210,7 @@
     font-family: var(--font) !important;
     font-size: size(14);
     font-weight: 500;
-    color: var(--btnBlackBg);
+    color: var(--color-text-primary);
   }
 
   .MuiTablePagination-actions {

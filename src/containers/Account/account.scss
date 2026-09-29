@@ -12,12 +12,57 @@
     gap: 16px;
     margin-bottom: 24px;
 
+    .profileImageInput {
+      display: none;
+    }
+
+    .profileImageButton {
+      position: relative;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
     .profileImage {
       width: 72px;
       height: 72px;
       border-radius: 50%;
       object-fit: cover;
+      display: block;
       background: var(--color-bg-primary);
+    }
+
+    .profileImageOverlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--color-overlay);
+      color: var(--color-text-primary);
+      font-size: 12px;
+      font-weight: 600;
+      opacity: 0;
+    }
+
+    .profileImageButton:hover .profileImageOverlay,
+    .profileImageButton:focus-visible .profileImageOverlay {
+      opacity: 1;
+    }
+
+    .textLinkBtn {
+      margin-top: 8px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--color-accent);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
     }
 
     h2 {

@@ -314,7 +314,7 @@ select::placeholder {
       font-family: var(--font);
       font-size: size(14) !important;
       font-weight: 500 !important;
-      color: var(--btnBlackBg) !important;
+      color: var(--color-text-primary) !important;
       justify-content: flex-start;
       align-items: center;
       line-height: size(24);
@@ -353,7 +353,7 @@ select::placeholder {
   font-family: var(--font);
   font-size: size(14);
   font-weight: 500;
-  color: var(--btnBlackBg);
+  color: var(--color-text-primary);
   justify-content: center;
   align-items: center;
   &.placeholderText {

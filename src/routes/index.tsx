@@ -24,6 +24,9 @@ const NoInternetFound = LazyLoader(
 
 const Login = LazyLoader(lazy(() => import("src/containers/Login")));
 const Register = LazyLoader(lazy(() => import("src/containers/Register")));
+const ForgotPassword = LazyLoader(
+  lazy(() => import("src/containers/ForgotPassword"))
+);
 const AllApps = LazyLoader(lazy(() => import("src/containers/AllApps")));
 const AllAppsDetails = LazyLoader(
   lazy(() => import("src/containers/AllApps/components/AllAppsDetails"))
@@ -31,11 +34,13 @@ const AllAppsDetails = LazyLoader(
 const ReleaseDetails = LazyLoader(
   lazy(() => import("src/containers/AllApps/components/ReleaseDetails"))
 );
+const Activities = LazyLoader(lazy(() => import("src/containers/Activities")));
 const Account = LazyLoader(lazy(() => import("src/containers/Account")));
 const Help = LazyLoader(lazy(() => import("src/containers/Help")));
 
 const routesConfig = [
   { path: ROUTES.ALL_APPS, isPrivate: true, component: AllApps },
+  { path: ROUTES.MY_ACTIVITIES, isPrivate: true, component: Activities },
   { path: ROUTES.ALL_APPS_DETAILS, isPrivate: true, component: AllAppsDetails },
   { path: ROUTES.RELEASE_DETAILS, isPrivate: true, component: ReleaseDetails },
   { path: ROUTES.MY_ACCOUNT, isPrivate: true, component: Account },
@@ -50,6 +55,11 @@ const routesConfig = [
     path: ROUTES.REGISTER,
     isPrivate: false,
     component: Register,
+  },
+  {
+    path: ROUTES.FORGOT_PASSWORD,
+    isPrivate: false,
+    component: ForgotPassword,
   },
 
   { path: ROUTES.NOT_FOUND, isPrivate: true, component: NotFound },

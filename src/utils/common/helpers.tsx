@@ -76,6 +76,23 @@ export const getOrdinalDay = (day: number): string => {
   }
 };
 
+export const formatTimeZoneName = (date: Date): string => {
+  if (-date.getTimezoneOffset() === 330) {
+    return "IST";
+  }
+
+  const timeZone =
+    new Intl.DateTimeFormat("en-US", { timeZoneName: "short" })
+      .formatToParts(date)
+      .find((part) => part.type === "timeZoneName")?.value || "";
+
+  if (/^(GMT|UTC)\+0?5:30$/.test(timeZone)) {
+    return "IST";
+  }
+
+  return timeZone;
+};
+
 export const formatDateTime = (dateStr: string): string => {
   try {
     if (!dateStr) {
@@ -95,10 +112,7 @@ export const formatDateTime = (dateStr: string): string => {
       minute: "2-digit",
       hour12: true,
     }).format(date);
-    const timeZone =
-      new Intl.DateTimeFormat("en-US", { timeZoneName: "short" })
-        .formatToParts(date)
-        .find((part) => part.type === "timeZoneName")?.value || "";
+    const timeZone = formatTimeZoneName(date);
 
     return `${month} ${day} ${year} ${time}${timeZone ? ` ${timeZone}` : ""}`;
   } catch (error) {

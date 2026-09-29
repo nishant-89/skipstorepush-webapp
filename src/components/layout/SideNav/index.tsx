@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "src/routes/routesPaths";
-import { AllappsSidebarIcon } from "src/utils/common/constants";
+import { ActivitiesSidebarIcon, AllappsSidebarIcon } from "src/utils/common/constants";
 
 import "./index.scss";
 
@@ -33,6 +33,11 @@ export const sideNavItems: NavItem[] = [
         ],
       },
     ],
+  },
+  {
+    name: "My Activities",
+    path: ROUTES.MY_ACTIVITIES,
+    icon: ActivitiesSidebarIcon,
   },
   {
     name: "My Account",

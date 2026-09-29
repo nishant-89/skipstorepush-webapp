@@ -33,13 +33,16 @@ jest.mock("src/utils/alert", () => ({
 
 jest.mock("react-router-dom", () => ({
   useLocation: jest.fn(() => ({ state: null, search: "" })),
+  useNavigate: () => mockNavigate,
 }));
 
 const mockDispatch = jest.fn();
+const mockNavigate = jest.fn();
 
 describe("useLoginHelper", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    mockNavigate.mockClear();
     (useDispatch as unknown as jest.Mock).mockReturnValue(mockDispatch);
     (useLocation as unknown as jest.Mock).mockReturnValue({
       state: null,
@@ -134,14 +137,13 @@ describe("useLoginHelper", () => {
     expect(result.current.loginFormValues.email).toBe("ada@example.com");
   });
 
-  it("shows a coming soon alert for forgot password", () => {
+  it("navigates to forgot password with the typed email", () => {
     const { result } = renderHook(() => useLoginHelper());
     act(() => {
-      result.current.handleForgotPassword();
+      result.current.handleForgotPassword("ada@example.com");
     });
-    expect(showAlert).toHaveBeenCalledWith(
-      1,
-      "Forgot password will be available soon."
-    );
+    expect(mockNavigate).toHaveBeenCalledWith("/forgot-password", {
+      state: { email: "ada@example.com" },
+    });
   });
 });

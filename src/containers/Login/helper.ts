@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { postDataApi } from "src/apis/api";
@@ -13,6 +13,7 @@ import { setLoading } from "src/redux/slices/globalSlice";
 import { showAlert } from "src/utils/alert";
 import { apiRoutes, getErrorMessage } from "src/utils/common/constants";
 import { Redirect } from "./constant";
+import ROUTES from "src/routes/routesPaths";
 
 export type LoginFormValues = {
   email: string;
@@ -33,6 +34,7 @@ export const loginValidationSchema = Yup.object({
 
 export const useLoginHelper = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const routerLocation = useLocation();
   const prefilledEmail =
     routerLocation.state &&
@@ -99,8 +101,10 @@ export const useLoginHelper = () => {
     }
   };
 
-  const handleForgotPassword = () => {
-    showAlert(1, "Forgot password will be available soon.");
+  const handleForgotPassword = (email?: string) => {
+    navigate(ROUTES.FORGOT_PASSWORD, {
+      state: { email: email?.trim() || "" },
+    });
   };
 
   return {

@@ -16,6 +16,7 @@ jest.mock("src/routes/routesPaths", () => ({
   ALL_APPS: "/all-apps",
   ALL_APPS_DETAILS: "/all-apps-details",
   RELEASE_DETAILS: "/release-details",
+  MY_ACTIVITIES: "/my-activities",
   MY_ACCOUNT: "/my-account",
   HELP: "/help",
 }));
@@ -23,6 +24,7 @@ jest.mock("src/routes/routesPaths", () => ({
 // Mock the constants
 jest.mock("src/utils/common/constants", () => ({
   AllappsSidebarIcon: "mocked-all-apps-icon.svg",
+  ActivitiesSidebarIcon: "mocked-activities-icon.svg",
 }));
 
 // Mock window.location.pathname
@@ -113,6 +115,14 @@ describe("SideNav Component", () => {
     fireEvent.click(navItem);
 
     expect(mockNavigate).toHaveBeenCalledWith("/all-apps");
+  });
+
+  it("should navigate to My Activities", () => {
+    renderSideNav();
+
+    fireEvent.click(screen.getByText("My Activities"));
+
+    expect(mockNavigate).toHaveBeenCalledWith("/my-activities");
   });
 
   it("should navigate when clicking on the div container", () => {

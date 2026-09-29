@@ -37,6 +37,7 @@ import DeleteModalIcon from "src/assets/images/delete-icon.svg";
 import GithubIcon from "src/assets/images/githubIcon.svg";
 import CodePushLogoImage from "src/assets/images/code-push-logo-image.svg";
 import AllappsSidebarIcon from "src/assets/images/homeNavItem.svg";
+import ActivitiesSidebarIcon from "src/assets/images/activitiesNavItem.svg";
 import CloseImageIcon from "src/assets/images/close-image-icon.svg";
 import ProfileImageIcon from "src/assets/images/demo-image-icon.svg";
 import CopyIcon from "src/assets/images/copy-icon.svg";
@@ -90,6 +91,7 @@ export {
   GithubIcon,
   CodePushLogoImage,
   AllappsSidebarIcon,
+  ActivitiesSidebarIcon,
   CopyIcon,
   PauseIcon,
   RoolbackIcon,

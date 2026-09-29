@@ -75,7 +75,7 @@ const LoginComponent = () => {
               <button
                 type="button"
                 className="textLinkBtn"
-                onClick={handleForgotPassword}
+                onClick={() => handleForgotPassword(values.email)}
               >
                 Forgot password
               </button>
