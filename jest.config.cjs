@@ -21,6 +21,7 @@ module.exports = {
   moduleNameMapper: {
     "\\.(css|less|sass|scss)$": "identity-obj-proxy",
     "^src/(.*)$": "<rootDir>/src/$1",
+    "^lucide-react$": "<rootDir>/src/__mocks__/lucideReactMock.tsx",
     "^.+\\.svg$": "<rootDir>/src/__mocks__/svgMock.js",
     "\\.(svg|jpg|jpeg|png|gif)$": "jest-transform-stub",
     "^.+\\.png$": "<rootDir>/src/__mocks__/pngMock.js",

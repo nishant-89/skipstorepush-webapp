@@ -168,7 +168,7 @@ input:-webkit-autofill:active {
     color 0.2s ease !important;
 
   &:hover:not(:disabled):not(.Mui-disabled) {
-    font-size: calc(1em + 0.75px) !important;
+    font-size: calc(1em + 0.5px) !important;
   }
 }
 
@@ -230,7 +230,7 @@ input:-webkit-autofill:active {
 .MuiButton-text:hover:not(:disabled):not(.Mui-disabled),
 .MuiButton-outlined:hover:not(:disabled):not(.Mui-disabled),
 .MuiButton-contained:hover:not(:disabled):not(.Mui-disabled) {
-  font-size: calc(1em + 0.75px) !important;
+  font-size: calc(1em + 0.5px) !important;
 }
 
 .bbtn {
@@ -1068,7 +1068,7 @@ input[type="number"] {
       }
     }
     .innerLayoutMainWrapper {
-      width: calc(100% - 76px);
+      width: 100%;
     }
   }
 }

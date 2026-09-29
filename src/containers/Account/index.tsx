@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Breadcrumbs from "src/components/common/BreadCrumbs";
 import Button from "src/components/common/Button";
 import { UserPlaceholderIcon } from "src/utils/common/constants";
@@ -5,6 +6,7 @@ import { formatDateTime } from "src/utils/common/helpers";
 import { useAccountHelper, PROFILE_IMAGE_ACCEPT } from "./helper";
 import ChangePasswordModal from "./changePasswordModal";
 import AccessKeyModal from "src/components/common/Modal/accessKeyModal";
+import LogoutModal from "src/components/common/Modal/logoutModal";
 import "./account.scss";
 
 const authLabel = (authType?: string) =>
@@ -27,6 +29,7 @@ const Account = () => {
     openProfileImagePicker,
     handleProfileImageChange,
   } = useAccountHelper();
+  const [isLogoutOpen, setIsLogoutOpen] = useState(false);
 
   return (
     <div className="accountPage">
@@ -129,6 +132,11 @@ const Account = () => {
               onClick={openPasswordModal}
             />
           ) : null}
+          <Button
+            label="Logout"
+            variant="outlined"
+            onClick={() => setIsLogoutOpen(true)}
+          />
         </div>
       </div>
       <AccessKeyModal
@@ -139,6 +147,10 @@ const Account = () => {
       <ChangePasswordModal
         open={isPasswordModalOpen}
         onClose={closePasswordModal}
+      />
+      <LogoutModal
+        isOpen={isLogoutOpen}
+        handleClose={() => setIsLogoutOpen(false)}
       />
     </div>
   );

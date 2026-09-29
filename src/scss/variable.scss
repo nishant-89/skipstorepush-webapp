@@ -16,9 +16,11 @@ $color-warn: #fbbf24;
 
 $light-bg-primary: #f1f5f9;
 $light-bg-surface: #ffffff;
-$light-text-primary: #414243;
-$light-text-secondary: #475569;
-$light-border: #cdcdcd;
+$light-text-primary: #0f172a;
+$light-text-secondary: #64748b;
+$light-accent: #059669;
+$light-accent-secondary: #0891b2;
+$light-border: #94a3b8;
 $light-error: #e11d48;
 $light-warn: #d97706;
 
@@ -119,8 +121,10 @@ html[data-theme="light"] {
   --color-bg-surface: #{$light-bg-surface};
   --color-text-primary: #{$light-text-primary};
   --color-text-secondary: #{$light-text-secondary};
-  --color-accent-muted: rgba($color-accent, 0.14);
-  --color-accent-secondary-muted: rgba($color-accent-secondary, 0.14);
+  --color-accent: #{$light-accent};
+  --color-accent-secondary: #{$light-accent-secondary};
+  --color-accent-muted: rgba($light-accent, 0.14);
+  --color-accent-secondary-muted: rgba($light-accent-secondary, 0.14);
   --color-border: #{$light-border};
   --color-overlay: rgba($light-text-primary, 0.45);
   --color-error: #{$light-error};
