@@ -8,7 +8,7 @@ jest.mock("src/utils/common/constants", () => ({
 }));
 
 jest.mock("src/routes/routesPaths", () => ({
-  ALL_APPS: "/all-apps",
+  DASHBOARD: "/dashboard",
 }));
 
 describe("Header Component", () => {
@@ -27,9 +27,9 @@ describe("Header Component", () => {
     expect(screen.queryByLabelText("Open account menu")).not.toBeInTheDocument();
   });
 
-  it("navigates to all apps when logo is clicked", () => {
+  it("navigates to dashboard when logo is clicked", () => {
     renderHeader();
-    expect(screen.getByRole("link")).toHaveAttribute("href", "/all-apps");
+    expect(screen.getByRole("link")).toHaveAttribute("href", "/dashboard");
   });
 
   it("toggles the color theme", () => {

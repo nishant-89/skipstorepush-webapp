@@ -1,11 +1,16 @@
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   Activity,
   CircleHelp,
+  LayoutDashboard,
   LayoutGrid,
+  Castle,
   Pin,
+  PinOff,
+  Settings,
+  User,
   type LucideIcon,
 } from "lucide-react";
 import ROUTES from "src/routes/routesPaths";
@@ -23,9 +28,14 @@ export interface NavItem {
   children?: NavItem[];
   icon?: string;
   isHidden?: boolean;
+  dockStart?: boolean;
 }
 
 export const sideNavItems: NavItem[] = [
+  {
+    name: "Dashboard",
+    path: ROUTES.DASHBOARD,
+  },
   {
     name: "All Apps",
     path: ROUTES.ALL_APPS,
@@ -51,6 +61,11 @@ export const sideNavItems: NavItem[] = [
   {
     name: "Help & FAQ",
     path: ROUTES.HELP,
+    dockStart: true,
+  },
+  {
+    name: "Settings",
+    path: ROUTES.SETTINGS,
   },
   {
     name: "My Account",
@@ -60,10 +75,14 @@ export const sideNavItems: NavItem[] = [
 ];
 
 const RAIL_ICONS: Record<string, LucideIcon> = {
-  [ROUTES.ALL_APPS]: LayoutGrid,
+  [ROUTES.DASHBOARD]: LayoutDashboard,
+  [ROUTES.ALL_APPS]: Castle,
   [ROUTES.MY_ACTIVITIES]: Activity,
   [ROUTES.HELP]: CircleHelp,
+  [ROUTES.SETTINGS]: Settings,
 };
+
+const ICON_SIZE = 20;
 
 export const checkChildActive = (path: string, childrens: NavItem[]) => {
   return childrens.some(
@@ -90,34 +109,16 @@ const SideNav = () => {
   const visibleItems = sideNavItems.filter((item) => !item.isHidden);
   const [hovered, setHovered] = useState(false);
   const [pinned, setPinned] = useState(readPinned);
-  const [pillY, setPillY] = useState(0);
-  const itemRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const listRef = useRef<HTMLDivElement>(null);
   const expanded = pinned || hovered;
-
-  const activeIndex = Math.max(
-    0,
-    visibleItems.findIndex((item) => isItemActive(pathname, item))
+  const isProfileActive = pathname === ROUTES.MY_ACCOUNT;
+  const activeIndex = visibleItems.findIndex((item) =>
+    isItemActive(pathname, item)
   );
-  const ActiveIcon = RAIL_ICONS[visibleItems[activeIndex]?.path] ?? LayoutGrid;
+  const ActiveIcon = isProfileActive
+    ? User
+    : (RAIL_ICONS[visibleItems[activeIndex]?.path] ?? LayoutDashboard);
 
-  useLayoutEffect(() => {
-    const el = itemRefs.current[activeIndex];
-    const list = listRef.current;
-    if (!el || !list) return;
-    const listRect = list.getBoundingClientRect();
-    const elRect = el.getBoundingClientRect();
-    setPillY(elRect.top - listRect.top);
-  }, [activeIndex, expanded, pathname]);
-
-  const handleSelect = (item: NavItem, idx: number) => {
-    const el = itemRefs.current[idx];
-    const list = listRef.current;
-    if (el && list) {
-      const listRect = list.getBoundingClientRect();
-      const elRect = el.getBoundingClientRect();
-      setPillY(elRect.top - listRect.top);
-    }
+  const handleSelect = (item: NavItem) => {
     navigate(item.path);
   };
 
@@ -139,7 +140,7 @@ const SideNav = () => {
     >
       <div className="sideNavRail">
         <div className="sideNavCollapsed" aria-hidden={expanded}>
-          <ActiveIcon size={16} strokeWidth={1.8} />
+          <ActiveIcon size={ICON_SIZE} strokeWidth={1.8} />
         </div>
 
         <div className="sideNavExpanded" aria-hidden={!expanded}>
@@ -150,34 +151,30 @@ const SideNav = () => {
             aria-pressed={pinned}
             aria-label={pinned ? "Unpin menu" : "Pin menu"}
           >
-            <Pin size={16} strokeWidth={pinned ? 2.2 : 1.7} />
+            {pinned ? (
+              <Pin size={ICON_SIZE} strokeWidth={2.2} />
+            ) : (
+              <PinOff size={ICON_SIZE} strokeWidth={1.7} />
+            )}
             <span className="sideNavTooltip">
               {pinned ? "Unpin menu" : "Pin menu"}
             </span>
           </button>
 
-          <div className="sideNavList" ref={listRef}>
-            <div
-              className="sideNavPill"
-              aria-hidden="true"
-              style={{ top: pillY }}
-            />
-            {visibleItems.map((item, idx) => {
-              const Icon = RAIL_ICONS[item.path] ?? LayoutGrid;
+          <div className="sideNavList">
+            {visibleItems.map((item) => {
+              const Icon = RAIL_ICONS[item.path] ?? LayoutDashboard;
               const isActive = isItemActive(pathname, item);
               return (
                 <button
                   key={item.path}
                   type="button"
-                  ref={(el) => {
-                    itemRefs.current[idx] = el;
-                  }}
-                  className={`sideNavItem${isActive ? " isActive" : ""}`}
-                  onClick={() => handleSelect(item, idx)}
+                  className={`sideNavItem${isActive ? " isActive" : ""}${item.dockStart ? " sideNavDock" : ""}`}
+                  onClick={() => handleSelect(item)}
                   aria-current={isActive ? "page" : undefined}
                   aria-label={item.name}
                 >
-                  <Icon size={16} strokeWidth={isActive ? 2.2 : 1.7} />
+                  <Icon size={ICON_SIZE} strokeWidth={isActive ? 2.2 : 1.7} />
                   {isActive ? (
                     <span className="sideNavActiveDot" aria-hidden="true" />
                   ) : null}
@@ -191,11 +188,14 @@ const SideNav = () => {
 
           <button
             type="button"
-            className={`sideNavProfile${pathname === ROUTES.MY_ACCOUNT ? " isActive" : ""}`}
+            className={`sideNavProfile${isProfileActive ? " isActive" : ""}`}
             aria-label="My Account"
             onClick={() => navigate(ROUTES.MY_ACCOUNT)}
           >
             <img className="sideNavAvatar" src={avatarSrc} alt="" />
+            {isProfileActive ? (
+              <span className="sideNavActiveDot" aria-hidden="true" />
+            ) : null}
             <span className="sideNavTooltip">Profile</span>
           </button>
         </div>

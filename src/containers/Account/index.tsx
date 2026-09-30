@@ -71,16 +71,8 @@ const Account = () => {
 
         <dl className="profileGrid">
           <div>
-            <dt>Username</dt>
-            <dd>{data?.fullName || "—"}</dd>
-          </div>
-          <div>
             <dt>Email</dt>
             <dd>{data?.email || "—"}</dd>
-          </div>
-          <div>
-            <dt>Full name</dt>
-            <dd>{data?.fullName || "—"}</dd>
           </div>
           <div>
             <dt>Auth type</dt>
@@ -120,7 +112,7 @@ const Account = () => {
           ) : null}
           {isGithubAuth && githubProfileUrl ? (
             <Button
-              label="View GitHub profile"
+              label="My GitHub"
               variant="contained"
               onClick={() => window.open(githubProfileUrl, "_blank")}
             />

@@ -4,8 +4,21 @@ const Icon = ({ ...props }: React.SVGProps<SVGSVGElement>) => (
   <svg data-testid="lucide-icon" {...props} />
 );
 
+export const LayoutDashboard = Icon;
 export const LayoutGrid = Icon;
 export const Activity = Icon;
 export const CircleHelp = Icon;
 export const Pin = Icon;
-export default { LayoutGrid, Activity, CircleHelp, Pin };
+export const PinOff = Icon;
+export const Settings = Icon;
+export const User = Icon;
+export default {
+  LayoutDashboard,
+  LayoutGrid,
+  Activity,
+  CircleHelp,
+  Pin,
+  PinOff,
+  Settings,
+  User,
+};

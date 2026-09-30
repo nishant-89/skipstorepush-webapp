@@ -15,12 +15,14 @@ jest.mock("react-router-dom", () => ({
 }));
 
 jest.mock("src/routes/routesPaths", () => ({
+  DASHBOARD: "/dashboard",
   ALL_APPS: "/all-apps",
   ALL_APPS_DETAILS: "/all-apps-details",
   RELEASE_DETAILS: "/release-details",
   MY_ACTIVITIES: "/my-activities",
   MY_ACCOUNT: "/my-account",
   HELP: "/help",
+  SETTINGS: "/settings",
 }));
 
 jest.mock("src/utils/common/constants", () => ({
@@ -89,6 +91,28 @@ describe("SideNav Component", () => {
     expect(mockNavigate).toHaveBeenCalledWith("/all-apps");
   });
 
+  it("places Dashboard above All Apps and Settings below Help", () => {
+    const visibleNames = sideNavItems
+      .filter((item) => !item.isHidden)
+      .map((item) => item.name);
+    expect(visibleNames.indexOf("Dashboard")).toBeLessThan(
+      visibleNames.indexOf("All Apps")
+    );
+    expect(visibleNames.indexOf("Help & FAQ")).toBeLessThan(
+      visibleNames.indexOf("Settings")
+    );
+    renderSideNav();
+    expect(screen.getByLabelText("Help & FAQ")).toHaveClass("sideNavDock");
+  });
+
+  it("navigates to Dashboard and Settings", () => {
+    renderSideNav();
+    fireEvent.click(screen.getByLabelText("Dashboard"));
+    expect(mockNavigate).toHaveBeenCalledWith("/dashboard");
+    fireEvent.click(screen.getByLabelText("Settings"));
+    expect(mockNavigate).toHaveBeenCalledWith("/settings");
+  });
+
   it("navigates to Help & FAQ", () => {
     renderSideNav();
     fireEvent.click(screen.getByLabelText("Help & FAQ"));
@@ -104,6 +128,12 @@ describe("SideNav Component", () => {
   it("marks All Apps active on a child route", () => {
     renderSideNav("/all-apps-details");
     expect(screen.getByLabelText("All Apps")).toHaveClass("isActive");
+  });
+
+  it("does not mark All Apps active on the profile route", () => {
+    renderSideNav("/my-account");
+    expect(screen.getByLabelText("All Apps")).not.toHaveClass("isActive");
+    expect(screen.getByLabelText("My Account")).toHaveClass("isActive");
   });
 });
 

@@ -1,15 +1,16 @@
 @use "../../../scss/variable.scss" as *;
 
 .sideNav {
-  --rail-size: 36px;
-  --rail-gap: 4px;
-  --rail-pad: 20px;
+  --rail-size: 46px;
+  --rail-gap: 8px;
+  --rail-pad: 22px;
   --rail-glass: rgba(12, 12, 16, 0.72);
   --rail-glass-idle: rgba(12, 12, 16, 0.64);
   --rail-icon: rgba(255, 255, 255, 0.9);
   --rail-icon-muted: rgba(255, 255, 255, 0.42);
   --rail-pill: rgba(255, 255, 255, 0.13);
   --rail-hover: rgba(255, 255, 255, 0.1);
+  --rail-hover-ring: rgba(255, 255, 255, 0.18);
   --rail-tooltip-bg: rgba(20, 20, 28, 0.92);
   --rail-tooltip-text: rgba(255, 255, 255, 0.9);
   --rail-line: rgba(255, 255, 255, 0.12);
@@ -22,10 +23,10 @@
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  width: 52px;
+  width: 58px;
   overflow: visible;
   height: calc(100vh - var(--shell-header-height) - 32px);
-  max-height: 90vh;
+  max-height: 86vh;
 
   .sideNavRail {
     position: relative;
@@ -35,7 +36,7 @@
     justify-content: space-between;
     width: var(--rail-size);
     height: var(--rail-size);
-    border-radius: 18px;
+    border-radius: 32px;
     background: var(--rail-glass-idle);
     backdrop-filter: blur(18px) saturate(180%);
     -webkit-backdrop-filter: blur(18px) saturate(180%);
@@ -57,9 +58,9 @@
     align-items: stretch;
 
     .sideNavRail {
-      width: 52px;
+      width: 58px;
       height: 100%;
-      border-radius: 26px;
+      border-radius: 38px;
       background: var(--rail-glass);
       box-shadow:
         0 8px 40px rgba(0, 0, 0, 0.28),
@@ -108,18 +109,10 @@
     flex: 1;
     width: 100%;
     gap: var(--rail-gap);
-  }
 
-  .sideNavPill {
-    position: absolute;
-    left: 50%;
-    width: var(--rail-size);
-    height: var(--rail-size);
-    margin-left: calc(var(--rail-size) / -2);
-    border-radius: 999px;
-    background: var(--rail-pill);
-    pointer-events: none;
-    transition: top 380ms cubic-bezier(0.34, 1.2, 0.64, 1);
+    > .sideNavItem.sideNavDock {
+      margin-top: auto;
+    }
   }
 
   .sideNavItem,
@@ -145,6 +138,7 @@
     &:focus-visible {
       background: var(--rail-hover);
       color: var(--rail-icon);
+      box-shadow: inset 0 0 0 1px var(--rail-hover-ring);
 
       .sideNavTooltip {
         opacity: 1;
@@ -152,13 +146,15 @@
       }
     }
 
-    &.isActive {
+    &.isActive:not(.sideNavPin) {
       color: var(--rail-icon);
+      background: var(--rail-pill);
     }
   }
 
   .sideNavPin {
-    margin-bottom: 8px;
+    margin-bottom: 22px;
+    margin-top: -12px;
   }
 
   .sideNavPin.isActive {
@@ -206,19 +202,24 @@
   }
 
   .sideNavProfile {
-    background: linear-gradient(135deg, #059669 0%, #0891b2 100%);
+    // background: linear-gradient(135deg, #059669 0%, #0891b2 100%);
     color: #f8fafc;
     overflow: hidden;
 
     &:hover,
     &:focus-visible {
       background: linear-gradient(135deg, #047857 0%, #0e7490 100%);
+      box-shadow: inset 0 0 0 1px var(--rail-hover-ring);
     }
+
+    // &.isActive {
+    //   box-shadow: inset 0 0 0 2px var(--rail-dot);
+    // }
   }
 
   .sideNavAvatar {
-    width: 100%;
-    height: 100%;
+    width: 80%;
+    height: 80%;
     object-fit: cover;
     border-radius: 50%;
   }
@@ -229,8 +230,9 @@ html[data-theme="light"] .sideNav {
   --rail-glass-idle: rgba(255, 255, 255, 0.92);
   --rail-icon: #{$light-text-primary};
   --rail-icon-muted: #{$light-text-secondary};
-  --rail-pill: rgba($light-accent, 0.16);
-  --rail-hover: rgba($light-accent, 0.12);
+  --rail-pill: rgba($light-accent, 0.28);
+  --rail-hover: rgba($light-accent, 0.22);
+  --rail-hover-ring: #{$light-accent};
   --rail-tooltip-bg: #{$light-text-primary};
   --rail-tooltip-text: #{$light-bg-surface};
   --rail-line: #{$light-border};

@@ -37,14 +37,18 @@ const ReleaseDetails = LazyLoader(
 const Activities = LazyLoader(lazy(() => import("src/containers/Activities")));
 const Account = LazyLoader(lazy(() => import("src/containers/Account")));
 const Help = LazyLoader(lazy(() => import("src/containers/Help")));
+const Dashboard = LazyLoader(lazy(() => import("src/containers/Dashboard")));
+const Settings = LazyLoader(lazy(() => import("src/containers/Settings")));
 
 const routesConfig = [
+  { path: ROUTES.DASHBOARD, isPrivate: true, component: Dashboard },
   { path: ROUTES.ALL_APPS, isPrivate: true, component: AllApps },
   { path: ROUTES.MY_ACTIVITIES, isPrivate: true, component: Activities },
   { path: ROUTES.ALL_APPS_DETAILS, isPrivate: true, component: AllAppsDetails },
   { path: ROUTES.RELEASE_DETAILS, isPrivate: true, component: ReleaseDetails },
   { path: ROUTES.MY_ACCOUNT, isPrivate: true, component: Account },
   { path: ROUTES.HELP, isPrivate: true, component: Help },
+  { path: ROUTES.SETTINGS, isPrivate: true, component: Settings },
   { path: ROUTES.INVITATION, isPrivate: true, component: Invite },
   {
     path: ROUTES.LOGIN,

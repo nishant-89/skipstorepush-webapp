@@ -12,7 +12,7 @@ const Header = () => {
     <header className="header">
       <div className="leftWrapper">
         <figure className="logo">
-          <Link to={ROUTES.ALL_APPS}>
+          <Link to={ROUTES.DASHBOARD}>
             <img src={skipstore} alt="Logo" />
           </Link>
         </figure>
