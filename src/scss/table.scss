@@ -76,12 +76,12 @@
     padding: 10px 16px;
     background-color: transparent;
     font-weight: 600;
-    font-family: "Inter", sans-serif !important;
+    font-family: var(--font-ui) !important;
     border-bottom: 1px solid var(--tableBorder) !important;
     font-size: 14px;
 
     .MuiTableSortLabel-root {
-      font-family: "Inter", sans-serif !important;
+      font-family: var(--font-ui) !important;
       &:hover,&.Mui-active {
         color: var(--breadcrumbActiveText)!important;
       }
@@ -154,7 +154,7 @@
     font-size: size(14);
     font-weight: 500;
     color: var(--color-text-primary);
-    font-family: "Inter", sans-serif !important;
+    font-family: var(--font-ui) !important;
   }
 
   .MuiToolbar-root {

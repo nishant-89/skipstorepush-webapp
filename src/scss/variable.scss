@@ -24,6 +24,12 @@ $light-border: #94a3b8;
 $light-error: #e11d48;
 $light-warn: #d97706;
 
+// Font stacks — change families here only (must match faces loaded in index.html).
+$font-sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+$font-ui: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+$font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+  "Liberation Mono", "Courier New", monospace;
+
 :root {
   --color-bg-primary: #{$color-bg-primary};
   --color-bg-surface: #{$color-bg-surface};
@@ -96,8 +102,10 @@ $light-warn: #d97706;
   --mainBg: var(--color-bg-primary);
   --layoutBg: var(--color-bg-primary);
   --titleDarkColor: var(--color-text-primary);
-  --font: "Montserrat", sans-serif;
-  --font-mono: "IBM Plex Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-sans: #{$font-sans};
+  --font-ui: #{$font-ui};
+  --font-mono: #{$font-mono};
+  --font: var(--font-sans);
   --headerBg: var(--color-bg-surface);
   --headerBorder: var(--color-border);
   --menuText: var(--color-text-secondary);

@@ -210,7 +210,7 @@
         .switchTxt {
           padding-left: 8px;
           margin: 0;
-          font-family: "Inter", sans-serif;
+          font-family: var(--font-ui);
           font-weight: 500;
           font-size: 11px;
           line-height: normal;
@@ -511,7 +511,7 @@
     border-radius: 8px !important;
     color: var(--color-text-primary) !important;
     padding: 8px 11px !important;
-    font-family: "Inter", sans-serif !important;
+    font-family: var(--font-ui) !important;
     font-weight: 600 !important;
     font-size: 12px !important;
     line-height: 18px !important;
