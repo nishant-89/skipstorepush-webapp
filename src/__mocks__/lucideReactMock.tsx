@@ -6,6 +6,7 @@ const Icon = ({ ...props }: React.SVGProps<SVGSVGElement>) => (
 
 export const LayoutDashboard = Icon;
 export const LayoutGrid = Icon;
+export const Castle = Icon;
 export const Activity = Icon;
 export const CircleHelp = Icon;
 export const Pin = Icon;
@@ -15,6 +16,7 @@ export const User = Icon;
 export default {
   LayoutDashboard,
   LayoutGrid,
+  Castle,
   Activity,
   CircleHelp,
   Pin,

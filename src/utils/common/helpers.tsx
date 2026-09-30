@@ -1,5 +1,6 @@
 // Moment import
 import moment from "moment";
+import { getStoredTimeZone } from "src/utils/userSettings";
 
 export const getFirstCharOrDefault = (value?: string | undefined): string => {
   return value ? value?.charAt(0)?.toUpperCase() : "";
@@ -76,21 +77,24 @@ export const getOrdinalDay = (day: number): string => {
   }
 };
 
-export const formatTimeZoneName = (date: Date): string => {
-  if (-date.getTimezoneOffset() === 330) {
+export const formatTimeZoneName = (date: Date, timeZone?: string): string => {
+  if (!timeZone && -date.getTimezoneOffset() === 330) {
     return "IST";
   }
 
-  const timeZone =
-    new Intl.DateTimeFormat("en-US", { timeZoneName: "short" })
+  const timeZoneName =
+    new Intl.DateTimeFormat("en-US", {
+      timeZoneName: "short",
+      ...(timeZone ? { timeZone } : {}),
+    })
       .formatToParts(date)
       .find((part) => part.type === "timeZoneName")?.value || "";
 
-  if (/^(GMT|UTC)\+0?5:30$/.test(timeZone)) {
+  if (/^(GMT|UTC)\+0?5:30$/.test(timeZoneName)) {
     return "IST";
   }
 
-  return timeZone;
+  return timeZoneName;
 };
 
 export const formatDateTime = (dateStr: string): string => {
@@ -104,6 +108,7 @@ export const formatDateTime = (dateStr: string): string => {
       return "";
     }
 
+    const storedTimeZone = getStoredTimeZone() || undefined;
     const month = MONTHS_SHORT[date.getMonth()];
     const day = getOrdinalDay(date.getDate());
     const year = date.getFullYear();
@@ -111,8 +116,9 @@ export const formatDateTime = (dateStr: string): string => {
       hour: "numeric",
       minute: "2-digit",
       hour12: true,
+      ...(storedTimeZone ? { timeZone: storedTimeZone } : {}),
     }).format(date);
-    const timeZone = formatTimeZoneName(date);
+    const timeZone = formatTimeZoneName(date, storedTimeZone);
 
     return `${month} ${day} ${year} ${time}${timeZone ? ` ${timeZone}` : ""}`;
   } catch (error) {

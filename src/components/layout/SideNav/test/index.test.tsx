@@ -4,9 +4,10 @@ import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 import SideNav, {
   checkChildActive,
-  NAV_PIN_STORAGE_KEY,
   sideNavItems,
 } from "../index";
+import { persistUserSettings } from "src/utils/persistUserSettings";
+import { NAV_PIN_STORAGE_KEY } from "src/utils/userSettings";
 
 const mockNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
@@ -29,11 +30,28 @@ jest.mock("src/utils/common/constants", () => ({
   UserPlaceholderIcon: "mocked-user-placeholder.svg",
 }));
 
+jest.mock("src/utils/persistUserSettings", () => ({
+  persistUserSettings: jest.fn().mockResolvedValue({
+    menuPinned: true,
+    preservePinnedState: false,
+    notificationEnabled: true,
+    defaultTheme: "DARK",
+    emailNotificationEnabled: true,
+    releaseAlertEnabled: true,
+    compactMode: false,
+    language: "en",
+    timezone: null,
+  }),
+}));
+
 const mockStore = configureStore([]);
 
-const renderSideNav = (path = "/all-apps") => {
+const renderSideNav = (
+  path = "/all-apps",
+  settings?: { menuPinned?: boolean; preservePinnedState?: boolean }
+) => {
   const store = mockStore({
-    profile: { data: { profileImage: "" } },
+    profile: { data: { profileImage: "", settings } },
   });
   return render(
     <Provider store={store}>
@@ -48,6 +66,7 @@ describe("SideNav Component", () => {
   beforeEach(() => {
     mockNavigate.mockClear();
     localStorage.clear();
+    (persistUserSettings as jest.Mock).mockClear();
   });
 
   it("renders the overlay rail", () => {
@@ -83,6 +102,20 @@ describe("SideNav Component", () => {
     fireEvent.mouseLeave(nav);
     expect(nav).toHaveClass("isExpanded");
     expect(localStorage.getItem(NAV_PIN_STORAGE_KEY)).toBe("true");
+  });
+
+  it("does not pin or unpin when pinned state is preserved", () => {
+    renderSideNav("/all-apps", {
+      menuPinned: false,
+      preservePinnedState: true,
+    });
+    const nav = screen.getByLabelText("Main");
+    fireEvent.mouseEnter(nav);
+    const pin = screen.getByLabelText("Pinned state is preserved");
+    expect(pin).toBeDisabled();
+    fireEvent.click(pin);
+    expect(nav).not.toHaveClass("isPinned");
+    expect(persistUserSettings).not.toHaveBeenCalled();
   });
 
   it("navigates when a rail item is clicked", () => {

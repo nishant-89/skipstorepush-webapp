@@ -162,6 +162,11 @@
     background: var(--rail-hover);
   }
 
+  .sideNavPin.isLocked {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
   .sideNavActiveDot {
     position: absolute;
     right: 0;

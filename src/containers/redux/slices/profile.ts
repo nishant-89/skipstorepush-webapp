@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Profile, ProfileDataState } from "../types";
+import { Profile, ProfileDataState, UserSettings } from "../types";
 
 const initialState: ProfileDataState = {
   loading: false,
@@ -28,6 +28,14 @@ const profileDataSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    mergeProfileSettings(
+      state: ProfileDataState,
+      action: PayloadAction<UserSettings>
+    ) {
+      if (state.data) {
+        state.data.settings = action.payload;
+      }
+    },
   },
 });
 
@@ -35,6 +43,7 @@ export const {
   fetchProfileDataRequest,
   fetchProfileDataFailure,
   fetchProfileDataSuccess,
+  mergeProfileSettings,
 } = profileDataSlice.actions;
 
 // This is your custom logout action to reset the whole state

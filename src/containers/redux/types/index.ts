@@ -31,6 +31,40 @@ export interface ProfileSession {
   createdDate: string;
 }
 
+export type UserTheme = "LIGHT" | "DARK";
+
+export interface UserSettings {
+  id?: number;
+  userId?: number;
+  menuPinned: boolean;
+  preservePinnedState: boolean;
+  notificationEnabled: boolean;
+  defaultTheme: UserTheme;
+  emailNotificationEnabled: boolean;
+  releaseAlertEnabled: boolean;
+  compactMode: boolean;
+  language: string;
+  timezone: string | null;
+  extras?: Record<string, unknown> | null;
+  createdDate?: string;
+  updatedDate?: string;
+}
+
+export type UserSettingsUpdate = Partial<
+  Pick<
+    UserSettings,
+    | "menuPinned"
+    | "preservePinnedState"
+    | "notificationEnabled"
+    | "defaultTheme"
+    | "emailNotificationEnabled"
+    | "releaseAlertEnabled"
+    | "compactMode"
+    | "language"
+    | "timezone"
+  >
+>;
+
 export interface Profile {
   id: number;
   azureUserId?: string;
@@ -42,6 +76,7 @@ export interface Profile {
   createdDate: string;
   lastLogin?: string;
   session?: ProfileSession | null;
+  settings?: UserSettings;
 }
 
 export interface ProfileDataState {

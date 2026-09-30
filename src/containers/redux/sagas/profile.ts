@@ -10,12 +10,16 @@ import {
 import { getDataApi } from "src/apis/api";
 import { ProfileResponse } from "../types";
 import { apiRoutes } from "src/utils/common/constants";
+import { applyUserSettings } from "src/utils/userSettings";
 
 function* fetchProfileDataSaga(_action: PayloadAction) {
   try {
     const response: ProfileResponse = yield call(getDataApi, {
       path: apiRoutes.Profile,
     });
+    if (response.data?.settings) {
+      applyUserSettings(response.data.settings);
+    }
     yield put(fetchProfileDataSuccess(response.data));
   } catch (error) {
     yield put(fetchProfileDataFailure((error as Error).message));

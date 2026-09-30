@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   Activity,
   CircleHelp,
   LayoutDashboard,
-  LayoutGrid,
   Castle,
   Pin,
   PinOff,
@@ -17,9 +16,11 @@ import ROUTES from "src/routes/routesPaths";
 import { UserPlaceholderIcon } from "src/utils/common/constants";
 import { RootState } from "src/redux/rootReducers";
 
-import "./index.scss";
+import { NAV_PIN_STORAGE_KEY } from "src/utils/userSettings";
+import { persistUserSettings } from "src/utils/persistUserSettings";
+import { mergeProfileSettings } from "src/containers/redux/slices/profile";
 
-export const NAV_PIN_STORAGE_KEY = "skipstore_nav_pinned";
+import "./index.scss";
 
 export interface NavItem {
   name: string;
@@ -103,6 +104,7 @@ const readPinned = () => {
 const SideNav = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const dispatch = useDispatch();
   const profile = useSelector((state: RootState) => state.profile.data);
   const avatarSrc = profile?.profileImage || UserPlaceholderIcon;
 
@@ -110,6 +112,12 @@ const SideNav = () => {
   const [hovered, setHovered] = useState(false);
   const [pinned, setPinned] = useState(readPinned);
   const expanded = pinned || hovered;
+
+  useEffect(() => {
+    if (typeof profile?.settings?.menuPinned === "boolean") {
+      setPinned(profile.settings.menuPinned);
+    }
+  }, [profile?.settings?.menuPinned]);
   const isProfileActive = pathname === ROUTES.MY_ACCOUNT;
   const activeIndex = visibleItems.findIndex((item) =>
     isItemActive(pathname, item)
@@ -122,12 +130,25 @@ const SideNav = () => {
     navigate(item.path);
   };
 
+  const preservePinnedState = Boolean(
+    profile?.settings?.preservePinnedState
+  );
+
   const handleTogglePin = () => {
-    setPinned((current) => {
-      const next = !current;
-      window.localStorage.setItem(NAV_PIN_STORAGE_KEY, String(next));
-      return next;
-    });
+    if (preservePinnedState) {
+      return;
+    }
+    const next = !pinned;
+    setPinned(next);
+    window.localStorage.setItem(NAV_PIN_STORAGE_KEY, String(next));
+    void persistUserSettings({ menuPinned: next })
+      .then((saved) => {
+        dispatch(mergeProfileSettings(saved));
+      })
+      .catch(() => {
+        setPinned(!next);
+        window.localStorage.setItem(NAV_PIN_STORAGE_KEY, String(!next));
+      });
   };
 
   return (
@@ -146,10 +167,17 @@ const SideNav = () => {
         <div className="sideNavExpanded" aria-hidden={!expanded}>
           <button
             type="button"
-            className={`sideNavItem sideNavPin${pinned ? " isActive" : ""}`}
+            className={`sideNavItem sideNavPin${pinned ? " isActive" : ""}${preservePinnedState ? " isLocked" : ""}`}
             onClick={handleTogglePin}
+            disabled={preservePinnedState}
             aria-pressed={pinned}
-            aria-label={pinned ? "Unpin menu" : "Pin menu"}
+            aria-label={
+              preservePinnedState
+                ? "Pinned state is preserved"
+                : pinned
+                  ? "Unpin menu"
+                  : "Pin menu"
+            }
           >
             {pinned ? (
               <Pin size={ICON_SIZE} strokeWidth={2.2} />
@@ -157,7 +185,11 @@ const SideNav = () => {
               <PinOff size={ICON_SIZE} strokeWidth={1.7} />
             )}
             <span className="sideNavTooltip">
-              {pinned ? "Unpin menu" : "Pin menu"}
+              {preservePinnedState
+                ? "Pinned state is preserved"
+                : pinned
+                  ? "Unpin menu"
+                  : "Pin menu"}
             </span>
           </button>
 

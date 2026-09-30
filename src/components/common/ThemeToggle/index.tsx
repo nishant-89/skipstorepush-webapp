@@ -1,9 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { mergeProfileSettings } from "src/containers/redux/slices/profile";
+import { persistUserSettings } from "src/utils/persistUserSettings";
+import { RootState } from "src/redux/rootReducers";
 import { getPreferredTheme, toggleTheme } from "src/utils/theme";
+import { themeToApi } from "src/utils/userSettings";
 
 const ThemeToggle = () => {
+  const dispatch = useDispatch();
+  const savedTheme = useSelector(
+    (state: RootState) => state.profile.data?.settings?.defaultTheme
+  );
   const [theme, setTheme] = useState(getPreferredTheme);
   const isLight = theme === "light";
+
+  useEffect(() => {
+    setTheme(getPreferredTheme());
+  }, [savedTheme]);
+
+  const handleToggle = async () => {
+    const next = toggleTheme(theme);
+    setTheme(next);
+    try {
+      const saved = await persistUserSettings({
+        defaultTheme: themeToApi(next),
+      });
+      dispatch(mergeProfileSettings(saved));
+    } catch {
+      // Local theme still applies if the account save fails.
+    }
+  };
 
   return (
     <button
@@ -11,7 +37,9 @@ const ThemeToggle = () => {
       role="switch"
       className={`themeSwitch${isLight ? " isLight" : ""}`}
       aria-checked={isLight}
-      onClick={() => setTheme((current) => toggleTheme(current))}
+      onClick={() => {
+        void handleToggle();
+      }}
       aria-label={
         isLight ? "Switch to dark theme" : "Switch to light theme"
       }

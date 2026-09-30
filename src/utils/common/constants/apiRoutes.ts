@@ -23,6 +23,7 @@ export const apiRoutes = {
   ChangePassword: "api/user/change-password",
   UpdateProfileImage: "api/user/profile-image",
   Faqs: "api/user/faq",
+  UserSettings: "api/user/settings",
   Activities: "api/activities",
   Register: "api/user/register",
   SendOtp: "api/user/send-otp",

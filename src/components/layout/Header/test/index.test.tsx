@@ -1,5 +1,7 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import configureStore from "redux-mock-store";
 import Header from "../index";
 
 jest.mock("src/utils/common/constants", () => ({
@@ -11,12 +13,24 @@ jest.mock("src/routes/routesPaths", () => ({
   DASHBOARD: "/dashboard",
 }));
 
+jest.mock("src/utils/persistUserSettings", () => ({
+  persistUserSettings: jest.fn().mockResolvedValue({}),
+}));
+
+const mockStore = configureStore([]);
+
 describe("Header Component", () => {
   const renderHeader = () =>
     render(
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>
+      <Provider
+        store={mockStore({
+          profile: { data: null, loading: false, error: "" },
+        })}
+      >
+        <BrowserRouter>
+          <Header />
+        </BrowserRouter>
+      </Provider>
     );
 
   it("renders logos and theme toggle without an account menu", () => {
