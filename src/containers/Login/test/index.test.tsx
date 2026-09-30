@@ -8,6 +8,11 @@ jest.mock("src/utils/common/constants", () => ({
   GithubIcon: () => <svg data-testid="github-icon" />,
 }));
 
+jest.mock("src/components/common/ThemeToggle", () => ({
+  __esModule: true,
+  default: () => <button type="button" aria-label="Switch to light theme" />,
+}));
+
 interface MockButtonProps {
   label: string;
   onClick?: () => void;

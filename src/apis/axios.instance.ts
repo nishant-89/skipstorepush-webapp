@@ -100,7 +100,11 @@ $axios.interceptors.response.use(
     console.log("error", response);
     if (response?.status === 401) {
       localStorage.removeItem("persist:root");
-      if (window.location.pathname !== ROUTES.LOGIN) {
+      const onPublicAuthPage =
+        window.location.pathname === ROUTES.LOGIN ||
+        window.location.pathname === ROUTES.REGISTER ||
+        window.location.pathname === ROUTES.FORGOT_PASSWORD;
+      if (!onPublicAuthPage) {
         window.location.href = ROUTES.LOGIN;
       }
     }

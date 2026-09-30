@@ -7,6 +7,11 @@ jest.mock("src/utils/common/constants", () => ({
   skipstore: "logo.png",
 }));
 
+jest.mock("src/components/common/ThemeToggle", () => ({
+  __esModule: true,
+  default: () => <button type="button" aria-label="Switch to light theme" />,
+}));
+
 jest.mock("src/components/common/Button", () => ({
   __esModule: true,
   default: ({

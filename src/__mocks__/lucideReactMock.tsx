@@ -20,6 +20,9 @@ export const User = Icon;
 export const Apple = Icon;
 export const Bell = Icon;
 export const ListClock = Icon;
+export const KeyRound = Icon;
+export const Lock = Icon;
+export const LogOut = Icon;
 export default {
   LayoutDashboard,
   LayoutGrid,
@@ -37,4 +40,7 @@ export default {
   Apple,
   Bell,
   ListClock,
+  KeyRound,
+  Lock,
+  LogOut,
 };

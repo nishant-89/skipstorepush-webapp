@@ -8,6 +8,9 @@ import { themeToApi } from "src/utils/userSettings";
 
 const ThemeToggle = () => {
   const dispatch = useDispatch();
+  const accessToken = useSelector(
+    (state: RootState) => state.auth.accessToken
+  );
   const savedTheme = useSelector(
     (state: RootState) => state.profile.data?.settings?.defaultTheme
   );
@@ -21,6 +24,9 @@ const ThemeToggle = () => {
   const handleToggle = async () => {
     const next = toggleTheme(theme);
     setTheme(next);
+    if (!accessToken) {
+      return;
+    }
     try {
       const saved = await persistUserSettings({
         defaultTheme: themeToApi(next),

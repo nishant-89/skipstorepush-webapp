@@ -4,25 +4,25 @@
 .loginWrap {
   min-height: 100vh;
   width: 100%;
-  padding: 48px 32px 32px;
+  padding: 20px 24px 16px;
   background: linear-gradient(45deg, var(--color-bg-primary) 0%, var(--color-bg-surface) 100%);
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  overflow: visible;
+  align-items: center;
+  overflow: hidden;
   position: relative;
 
   .authThemeSlot {
     position: absolute;
-    top: 24px;
-    right: 24px;
+    top: 16px;
+    right: 16px;
   }
 
   .loginWrapInner {
     width: 720px;
     max-width: 100%;
-    margin: auto 0;
-    padding: 48px 56px 40px;
+    margin: 0;
+    padding: 28px 40px 20px;
     background-color: var(--color-bg-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
@@ -30,32 +30,30 @@
   }
 
   .textWrap {
-    min-height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: flex-start;
 
     .topSection {
       width: 100%;
 
       .loginLogoSec {
-        width: 121px;
-        margin-bottom: 32px;
+        width: 96px;
+        margin-bottom: 16px;
         img {
           width: 100%;
         }
       }
       .mainHeading {
-        margin-bottom: 8px;
+        margin-bottom: 6px;
         font-weight: 700;
-        font-size: 30px;
+        font-size: 26px;
         line-height: 130%;
         color: var(--color-text-primary);
       }
       .headingInfo {
         font-weight: 400;
-        font-size: 16px;
+        font-size: 15px;
         line-height: 150%;
         color: var(--color-text-secondary);
 
@@ -74,10 +72,10 @@
       }
     }
     .bottomSection {
-      margin-top: 32px;
+      margin-top: 16px;
       .copyRightText {
         font-weight: 400;
-        font-size: 16px;
+        font-size: 14px;
         line-height: 130%;
         color: var(--color-text-secondary);
       }
@@ -86,7 +84,7 @@
 
   .authForm {
     width: 100%;
-    margin-top: 24px;
+    margin-top: 16px;
     display: flex;
     flex-direction: column;
 
@@ -95,10 +93,11 @@
 
       label {
         display: block;
-        margin-bottom: 4px;
+        margin-bottom: 6px;
         color: var(--color-text-primary);
         font-size: 13px;
         font-weight: 600;
+        line-height: 18px;
       }
 
       .MuiTextField-root {
@@ -111,6 +110,11 @@
       }
     }
 
+    .input-field + .input-field,
+    .fieldError + .input-field {
+      margin-top: 12px;
+    }
+
     .otpLabel {
       display: block;
       margin-bottom: 8px;
@@ -120,15 +124,20 @@
     }
 
     .fieldError {
-      margin: 0;
+      margin: 6px 0 0;
       color: var(--color-error);
       font-size: 12px;
-      line-height: 20px;
+      line-height: 18px;
     }
 
     .fieldErrorSlot {
-      min-height: 20px;
-      margin: 8px 0 12px;
+      min-height: 18px;
+      margin: 6px 0 12px;
+    }
+
+    .input-field + .primaryAuthButton,
+    .fieldError + .primaryAuthButton {
+      margin-top: 14px !important;
     }
   }
 
@@ -162,11 +171,15 @@
   .authInlineActions {
     display: flex;
     justify-content: flex-end;
-    margin: 4px 0 16px;
+    margin: 6px 0 2px;
+  }
+
+  .authInlineActions + .primaryAuthButton {
+    margin-top: 12px !important;
   }
 
   .primaryAuthButton {
-    margin-bottom: 8px !important;
+    margin-bottom: 4px !important;
   }
 
   .authDivider {
@@ -174,7 +187,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    margin: 16px 0;
+    margin: 12px 0;
 
     &::before,
     &::after {
@@ -194,7 +207,7 @@
 
   .authSwitch {
     width: 100%;
-    margin: 16px 0 0;
+    margin: 12px 0 0;
     color: var(--color-text-secondary);
     font-size: 14px;
 
@@ -216,7 +229,7 @@
     padding: 24px 16px;
 
     .loginWrapInner {
-      padding: 32px 20px 24px;
+      padding: 24px 20px 16px;
     }
 
     .otpBoxes {

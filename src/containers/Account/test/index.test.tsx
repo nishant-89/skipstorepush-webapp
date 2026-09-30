@@ -42,6 +42,7 @@ jest.mock("src/components/common/Modal/accessKeyModal", () => ({
 
 jest.mock("src/utils/common/constants", () => ({
   UserPlaceholderIcon: "placeholder.png",
+  GithubIcon: "github.png",
 }));
 
 describe("Account", () => {
@@ -64,13 +65,32 @@ describe("Account", () => {
     });
   });
 
+  it("renders the two-column profile layout", () => {
+    render(
+      <MemoryRouter>
+        <Account />
+      </MemoryRouter>
+    );
+    expect(
+      screen.getByRole("heading", { name: "User profile" })
+    ).toBeInTheDocument();
+    expect(screen.getByText("ada@example.com")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Profile" })).toHaveAttribute(
+      "aria-current",
+      "page"
+    );
+    expect(
+      screen.getAllByRole("button", { name: "Change password" }).length
+    ).toBeGreaterThan(0);
+  });
+
   it("opens the logout modal from the profile page", () => {
     render(
       <MemoryRouter>
         <Account />
       </MemoryRouter>
     );
-    fireEvent.click(screen.getByRole("button", { name: "Logout" }));
+    fireEvent.click(screen.getByRole("button", { name: "Sign out" }));
     expect(screen.getByText("Done for today?")).toBeInTheDocument();
   });
 });

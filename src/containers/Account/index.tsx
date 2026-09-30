@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { KeyRound, Lock, LogOut, User } from "lucide-react";
 import Breadcrumbs from "src/components/common/BreadCrumbs";
 import Button from "src/components/common/Button";
-import { UserPlaceholderIcon } from "src/utils/common/constants";
+import { GithubIcon, UserPlaceholderIcon } from "src/utils/common/constants";
 import { formatDateTime } from "src/utils/common/helpers";
 import { useAccountHelper, PROFILE_IMAGE_ACCEPT } from "./helper";
 import ChangePasswordModal from "./changePasswordModal";
@@ -11,6 +12,21 @@ import "./account.scss";
 
 const authLabel = (authType?: string) =>
   authType === "BASIC" ? "Email / password" : "GitHub";
+
+const AccountField = ({
+  label,
+  value,
+  mono = false,
+}: {
+  label: string;
+  value: string;
+  mono?: boolean;
+}) => (
+  <div className="accountField">
+    <span className="accountFieldLabel">{label}</span>
+    <span className={`accountFieldValue${mono ? " isMono" : ""}`}>{value}</span>
+  </div>
+);
 
 const Account = () => {
   const {
@@ -29,105 +45,157 @@ const Account = () => {
     handleProfileImageChange,
   } = useAccountHelper();
   const [isLogoutOpen, setIsLogoutOpen] = useState(false);
+  const isBasicAuth = data?.authType === "BASIC";
 
   return (
     <div className="accountPage">
-      <Breadcrumbs />
-      <div className="cardBgWrapper accountCard">
-        <div className="profileHeader">
-          <input
-            ref={fileInputRef}
-            className="profileImageInput"
-            type="file"
-            accept={PROFILE_IMAGE_ACCEPT}
-            onChange={handleProfileImageChange}
-          />
-          <button
-            type="button"
-            className="profileImageButton"
-            onClick={openProfileImagePicker}
-            aria-label="Change profile photo"
-          >
-            <img
-              className="profileImage"
-              src={data?.profileImage || UserPlaceholderIcon}
-              alt=""
-            />
-            <span className="profileImageOverlay">Change</span>
-          </button>
-          <div>
-            <h2>{data?.fullName || "—"}</h2>
-            <p className="authBadge">{authLabel(data?.authType)}</p>
+      <Breadcrumbs currentLabel="User profile" />
+      <div className="accountLayout">
+        <aside className="cardBgWrapper accountNav">
+          <nav className="accountNavList" aria-label="Profile actions">
             <button
               type="button"
-              className="textLinkBtn"
-              onClick={openProfileImagePicker}
+              className="accountNavItem isActive"
+              aria-current="page"
             >
-              Change photo
+              <User size={16} aria-hidden />
+              Profile
             </button>
-          </div>
-        </div>
-
-        <dl className="profileGrid">
-          <div>
-            <dt>Email</dt>
-            <dd>{data?.email || "—"}</dd>
-          </div>
-          <div>
-            <dt>Auth type</dt>
-            <dd>{authLabel(data?.authType)}</dd>
-          </div>
-          <div>
-            <dt>Last login</dt>
-            <dd>{data?.lastLogin ? formatDateTime(data.lastLogin) : "—"}</dd>
-          </div>
-          {/* <div>
-            <dt>Current session started</dt>
-            <dd>
-              {data?.session?.createdDate
-                ? formatDateTime(data.session.createdDate)
-                : "—"}
-            </dd>
-          </div>
-          <div>
-            <dt>Session ID</dt>
-            <dd className="sessionId">{data?.session?.sessionId || "—"}</dd>
-          </div> */}
-          <div>
-            <dt>Account active since</dt>
-            <dd>
-              {data?.createdDate ? formatDateTime(data.createdDate) : "—"}
-            </dd>
-          </div>
-        </dl>
-
-        <div className="profileActions">
-          {accessKey ? (
-            <Button
-              label="Access Key"
-              variant="outlined"
-              onClick={openAccessKeyModal}
-            />
-          ) : null}
-          {isGithubAuth && githubProfileUrl ? (
-            <Button
-              label="My GitHub"
-              variant="contained"
-              onClick={() => window.open(githubProfileUrl, "_blank")}
-            />
-          ) : null}
-          {data?.authType === "BASIC" ? (
-            <Button
-              label="Change password"
-              variant="contained"
-              onClick={openPasswordModal}
-            />
-          ) : null}
-          <Button
-            label="Logout"
-            variant="outlined"
+            {isBasicAuth ? (
+              <button
+                type="button"
+                className="accountNavItem"
+                onClick={openPasswordModal}
+              >
+                <Lock size={16} aria-hidden />
+                Change password
+              </button>
+            ) : null}
+            {accessKey ? (
+              <button
+                type="button"
+                className="accountNavItem"
+                onClick={openAccessKeyModal}
+              >
+                <KeyRound size={16} aria-hidden />
+                Access key
+              </button>
+            ) : null}
+            {isGithubAuth && githubProfileUrl ? (
+              <button
+                type="button"
+                className="accountNavItem"
+                onClick={() => window.open(githubProfileUrl, "_blank")}
+              >
+                <img src={GithubIcon} alt="" width={16} height={16} />
+                GitHub
+              </button>
+            ) : null}
+          </nav>
+          <button
+            type="button"
+            className="accountNavSignOut"
             onClick={() => setIsLogoutOpen(true)}
-          />
+          >
+            <LogOut size={16} aria-hidden />
+            Sign out
+          </button>
+        </aside>
+
+        <div className="cardBgWrapper accountMain">
+          <header className="accountMainHead">
+            <h1>User profile</h1>
+            <p>Manage your details and account security.</p>
+          </header>
+
+          <div className="accountHero">
+            <section className="accountPanel accountIdentity">
+              <input
+                ref={fileInputRef}
+                className="profileImageInput"
+                type="file"
+                accept={PROFILE_IMAGE_ACCEPT}
+                onChange={handleProfileImageChange}
+              />
+              <button
+                type="button"
+                className="profileImageButton"
+                onClick={openProfileImagePicker}
+                aria-label="Change profile photo"
+              >
+                <img
+                  className="profileImage"
+                  src={data?.profileImage || UserPlaceholderIcon}
+                  alt=""
+                />
+                <span className="profileImageOverlay">Change</span>
+              </button>
+              <h2>{data?.fullName || "—"}</h2>
+              <p className="authBadge">{authLabel(data?.authType)}</p>
+              <button
+                type="button"
+                className="textLinkBtn"
+                onClick={openProfileImagePicker}
+              >
+                Change photo
+              </button>
+            </section>
+
+            <section className="accountPanel">
+              <h3>General information</h3>
+              <div className="accountFieldGrid">
+                <AccountField label="Email" value={data?.email || "—"} />
+                <AccountField
+                  label="Last login"
+                  value={
+                    data?.lastLogin ? formatDateTime(data.lastLogin) : "—"
+                  }
+                />
+              </div>
+            </section>
+          </div>
+
+          <section className="accountPanel">
+            <h3>Security</h3>
+            <div className="accountFieldGrid">
+              <AccountField
+                label="Sign-in method"
+                value={authLabel(data?.authType)}
+              />
+              {isBasicAuth ? (
+                <AccountField label="Password" value="••••••" mono />
+              ) : null}
+              <AccountField
+                label="Account active since"
+                value={
+                  data?.createdDate ? formatDateTime(data.createdDate) : "—"
+                }
+              />
+            </div>
+            <div className="accountPanelActions">
+              {isBasicAuth ? (
+                <Button
+                  label="Change password"
+                  variant="outlined"
+                  onClick={openPasswordModal}
+                />
+              ) : null}
+              {accessKey ? (
+                <Button
+                  label="Access key"
+                  variant="outlined"
+                  onClick={openAccessKeyModal}
+                />
+              ) : null}
+              {isGithubAuth && githubProfileUrl ? (
+                <Button
+                  label="My GitHub"
+                  variant="outlined"
+                  onClick={() => window.open(githubProfileUrl, "_blank")}
+                />
+              ) : null}
+            </div>
+          </section>
         </div>
       </div>
       <AccessKeyModal
