@@ -67,33 +67,8 @@
       .buttonSection {
         margin-top: 8px;
         .githubButton {
-          width: 100% !important;
-          min-height: 50px !important;
-          gap: 12px !important;
-          padding: 12px 20px !important;
-          background-color: var(--color-bg-primary) !important;
-          border: 1px solid var(--color-border) !important;
-          box-shadow: none !important;
-          border-radius: var(--radius-btn) !important;
-          font-weight: 600 !important;
-          font-size: 14px !important;
-          line-height: 20px !important;
-          color: var(--color-text-primary) !important;
-          justify-content: center !important;
-          text-transform: none !important;
-
           img {
-            width: 24px;
-            height: 24px;
-            display: block;
-            flex-shrink: 0;
-            object-fit: contain;
             filter: brightness(0) invert(1);
-          }
-
-          &.Mui-disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
           }
         }
       }
@@ -190,38 +165,8 @@
     margin: 4px 0 16px;
   }
 
-  .textLinkBtn {
-    background: none;
-    border: 0;
-    padding: 0;
-    color: var(--color-accent);
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-
   .primaryAuthButton {
-    width: 100% !important;
-    height: 50px !important;
     margin-bottom: 8px !important;
-    background-color: var(--color-accent) !important;
-    color: var(--color-bg-primary) !important;
-    border: 1px solid var(--color-accent) !important;
-    border-radius: var(--radius-btn) !important;
-    font-weight: 600 !important;
-    text-transform: none !important;
-
-    &.Mui-disabled {
-      opacity: 0.45 !important;
-      background-color: var(--color-text-secondary) !important;
-      color: var(--color-bg-primary) !important;
-      border: 1px solid var(--color-border) !important;
-      cursor: not-allowed !important;
-    }
   }
 
   .authDivider {
@@ -292,18 +237,4 @@ html[data-theme="light"] {
       filter: brightness(0) !important;
     }
   }
-
-  .primaryAuthButton {
-    color: var(--on-accent) !important;
-
-    &.Mui-disabled {
-      color: var(--on-accent) !important;
-    }
-  }
-}
-
-.loginWrap .githubButton.MuiButton-root {
-  background-color: var(--color-bg-primary) !important;
-  color: var(--color-text-primary) !important;
-  border: 1px solid var(--color-border) !important;
 }

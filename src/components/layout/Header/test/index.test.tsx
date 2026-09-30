@@ -9,6 +9,11 @@ jest.mock("src/utils/common/constants", () => ({
   CodePushLogoImage: "mocked-code-push-logo.svg",
 }));
 
+jest.mock("../Notifications", () => ({
+  __esModule: true,
+  default: () => <button type="button" aria-label="Notifications" />,
+}));
+
 jest.mock("src/routes/routesPaths", () => ({
   DASHBOARD: "/dashboard",
 }));
@@ -33,10 +38,11 @@ describe("Header Component", () => {
       </Provider>
     );
 
-  it("renders logos and theme toggle without an account menu", () => {
+  it("renders logos, notifications, and theme toggle without an account menu", () => {
     renderHeader();
     expect(screen.getByAltText("Logo")).toBeInTheDocument();
     expect(screen.getByAltText("Icon")).toBeInTheDocument();
+    expect(screen.getByLabelText("Notifications")).toBeInTheDocument();
     expect(screen.getByLabelText("Switch to light theme")).toBeInTheDocument();
     expect(screen.queryByLabelText("Open account menu")).not.toBeInTheDocument();
   });

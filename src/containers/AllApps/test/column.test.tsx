@@ -51,14 +51,23 @@ describe("allAppsColumns config", () => {
   it("should display iOS if osType is 'IOS'", () => {
     renderColumnCell(1);
 
-    expect(screen.getByText("iOS")).toBeInTheDocument();
+    expect(screen.getByLabelText("iOS")).toBeInTheDocument();
   });
 
   it("should display Android if osType is not 'IOS'", () => {
     const androidRow = { ...mockRow, osType: "android" };
     renderColumnCell(1, androidRow);
 
-    expect(screen.getByText("Android")).toBeInTheDocument();
+    expect(screen.getByLabelText("Android")).toBeInTheDocument();
+  });
+
+  it("should render created date as Dth Mon YYYY", () => {
+    renderColumnCell(3, {
+      ...mockRow,
+      createdDate: new Date(2026, 8, 30).toISOString(),
+    });
+
+    expect(screen.getByText("30th Sept 2026")).toBeInTheDocument();
   });
 
   it("should have correct column metadata", () => {
@@ -73,5 +82,9 @@ describe("allAppsColumns config", () => {
     expect(allAppsColumns[2].field).toBe("ownerName");
     expect(allAppsColumns[2].sorting).toBe(false);
     expect(allAppsColumns[2].headerName).toBe("Owner");
+
+    expect(allAppsColumns[3].field).toBe("createdDate");
+    expect(allAppsColumns[3].sorting).toBe(false);
+    expect(allAppsColumns[3].headerName).toBe("Created");
   });
 });

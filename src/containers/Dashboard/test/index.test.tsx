@@ -1,14 +1,25 @@
 import { render, screen } from "@testing-library/react";
 import Dashboard from "../index";
 
+jest.mock("react-redux", () => ({
+  useSelector: (selector: (state: unknown) => unknown) =>
+    selector({
+      profile: { data: { fullName: "Ada Lovelace" } },
+    }),
+}));
+
 jest.mock("src/components/common/BreadCrumbs", () => ({
   __esModule: true,
-  default: ({ title }: { title: string }) => <h1>{title}</h1>,
+  default: ({ currentLabel }: { currentLabel?: string }) => (
+    <nav aria-label="breadcrumb">{currentLabel}</nav>
+  ),
 }));
 
 describe("Dashboard", () => {
-  it("renders a blank dashboard shell", () => {
+  it("greets the signed-in user instead of Dashboard", () => {
     render(<Dashboard />);
-    expect(screen.getByRole("heading", { name: "Dashboard" })).toBeInTheDocument();
+    expect(screen.getByLabelText("breadcrumb")).toHaveTextContent(
+      "Hello, Ada Lovelace"
+    );
   });
 });

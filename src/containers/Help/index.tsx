@@ -17,7 +17,7 @@ const Help = () => {
 
   return (
     <div className="helpPage">
-      <Breadcrumbs title="Help" />
+      <Breadcrumbs />
       <div className="cardBgWrapper helpCard">
         <DebounceSearch
           searchTerm={searchTerm}

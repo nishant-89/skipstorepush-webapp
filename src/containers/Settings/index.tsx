@@ -37,7 +37,6 @@ const SettingsToggle = ({
 const Settings = () => {
   const {
     settings,
-    loading,
     savingKey,
     languageOptions,
     timeZones,
@@ -50,7 +49,7 @@ const Settings = () => {
 
   return (
     <div className="settingsPage">
-      <Breadcrumbs title="Settings" loading={loading} />
+      <Breadcrumbs />
       <div className="cardBgWrapper settingsCard">
         <section>
           <h2>Appearance</h2>
@@ -85,7 +84,7 @@ const Settings = () => {
             <div className="settingsTheme">
               <button
                 type="button"
-                className={settings.defaultTheme === "DARK" ? "isActive" : ""}
+                className={`appBtn appBtn--secondary appBtn--sm${settings.defaultTheme === "DARK" ? " isActive" : ""}`}
                 disabled={busy}
                 onClick={() => setTheme("DARK")}
               >
@@ -93,7 +92,7 @@ const Settings = () => {
               </button>
               <button
                 type="button"
-                className={settings.defaultTheme === "LIGHT" ? "isActive" : ""}
+                className={`appBtn appBtn--secondary appBtn--sm${settings.defaultTheme === "LIGHT" ? " isActive" : ""}`}
                 disabled={busy}
                 onClick={() => setTheme("LIGHT")}
               >

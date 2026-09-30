@@ -34,7 +34,6 @@ const AllApps = () => {
     setIsRedIndicator,
     isRedIndicator,
     searchTerm,
-    user,
     clearOsFilter,
     clearAllSavedFilters,
   } = useAllAppsHelper();
@@ -83,7 +82,7 @@ const AllApps = () => {
 
   return (
     <div className="AllAppsWrapper">
-      <Breadcrumbs title={`Hello, ${user.userName}`} />
+      <Breadcrumbs />
 
       <div className="cardBgWrapper AllAppsMainWrapper">
         <div className="AllAppsInnerWrapper">
@@ -134,7 +133,7 @@ const AllApps = () => {
               ) : null}
               <button
                 type="button"
-                className="clearSavedFilters"
+                className="clearSavedFilters textLinkBtn"
                 onClick={clearAllSavedFilters}
               >
                 Clear saved

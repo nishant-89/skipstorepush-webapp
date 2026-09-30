@@ -1,7 +1,8 @@
 import { Provider } from "react-redux";
 import store from "src/redux/store";
 import RoutesManager from "./routes";
-import { Slide, ToastContainer } from "react-toastify";
+import { Bounce, ToastContainer } from "react-toastify";
+import "src/components/common/ToastAlert/toast.scss";
 
 function App() {
   return (
@@ -9,11 +10,15 @@ function App() {
       <RoutesManager />
       <ToastContainer
         closeButton={false}
-        autoClose={3000}
+        closeOnClick={false}
+        draggable={false}
+        autoClose={4000}
         newestOnTop
         pauseOnHover
-        position="top-center"
-        transition={Slide}
+        hideProgressBar={false}
+        position="bottom-right"
+        transition={Bounce}
+        className="skipToastContainer"
       />
     </Provider>
   );

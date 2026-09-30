@@ -12,7 +12,14 @@ export const CircleHelp = Icon;
 export const Pin = Icon;
 export const PinOff = Icon;
 export const Settings = Icon;
+export const CheckCircle2 = Icon;
+export const CircleAlert = Icon;
+export const Info = Icon;
+export const X = Icon;
 export const User = Icon;
+export const Apple = Icon;
+export const Bell = Icon;
+export const ListClock = Icon;
 export default {
   LayoutDashboard,
   LayoutGrid,
@@ -22,5 +29,12 @@ export default {
   Pin,
   PinOff,
   Settings,
+  CheckCircle2,
+  CircleAlert,
+  Info,
+  X,
   User,
+  Apple,
+  Bell,
+  ListClock,
 };

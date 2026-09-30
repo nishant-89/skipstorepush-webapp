@@ -11,6 +11,7 @@ import { Column } from "src/utils/types";
 import { v4 as uuid } from "uuid";
 
 import "./tableDataLoader.scss";
+import "src/scss/table.scss";
 interface TableDataLoaderProps<T> {
   columns: Column<T>[];
   rowCount?: number;
@@ -21,7 +22,7 @@ const TableDataLoader = <T,>({
   rowCount = 5,
 }: TableDataLoaderProps<T>) => {
   return (
-    <Paper style={{ width: "100%" }}>
+    <Paper style={{ width: "100%" }} className="devConsoleTable">
       <TableContainer data-testid="table-data-loader">
         <Table stickyHeader aria-label="loading table">
           <TableHead>

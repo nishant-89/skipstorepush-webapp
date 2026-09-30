@@ -54,7 +54,7 @@ const Activities = () => {
 
   return (
     <div className="AllAppsWrapper activitiesPage">
-      <Breadcrumbs title="My Activities" />
+      <Breadcrumbs />
       <div className="cardBgWrapper AllAppsMainWrapper">
         <div className="AllAppsInnerWrapper">
           <div className="TopSection">

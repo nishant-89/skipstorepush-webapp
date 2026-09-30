@@ -29,8 +29,10 @@ describe("ButtonComp", () => {
   });
 
   it("renders with icon when isIcon is true", () => {
-    render(<ButtonComp label="Icon Button" isIcon icon="/test-icon.png" />);
-    const img = screen.getByRole("img", { name: "rear-icon" });
+    const { container } = render(
+      <ButtonComp label="Icon Button" isIcon icon="/test-icon.png" />
+    );
+    const img = container.querySelector("img");
     expect(img).toHaveAttribute("src", "/test-icon.png");
     expect(screen.getByText("Icon Button")).toBeInTheDocument();
   });
@@ -48,6 +50,14 @@ describe("ButtonComp", () => {
     render(<ButtonComp label="Active" isActive />);
     const button = screen.getByRole("button", { name: "Active" });
     expect(button).toHaveClass("active");
+    expect(button).toHaveClass("isActive");
+  });
+
+  it("hides the button when hidden is true", () => {
+    render(<ButtonComp label="Hidden" hidden />);
+    expect(screen.getByRole("button", { name: "Hidden" })).toHaveClass(
+      "isHidden"
+    );
   });
 
   it("defaults to type='button'", () => {

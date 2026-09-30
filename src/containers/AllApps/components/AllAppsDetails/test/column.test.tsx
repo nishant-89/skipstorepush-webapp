@@ -61,11 +61,10 @@ describe("getReleaseColumns", () => {
   it("should render status with correct label and color", () => {
     const columns = getReleaseColumns(appId);
     const StatusCell = columns[2].renderCell!;
-    const { getByText, container } = render(StatusCell(mockReleaseData));
+    const { getByText } = render(StatusCell(mockReleaseData));
 
     expect(getByText("LIVE")).toBeInTheDocument();
-    const dot = container.querySelector("span");
-    expect(dot).toHaveStyle("background-color: var(--color-accent-success)");
+    expect(getByText("LIVE")).toHaveClass("success");
   });
 
   it("should render status as 'Rollback' if status is ROLLED_BACK", () => {
@@ -220,11 +219,10 @@ describe("getReleaseColumns", () => {
     const columns = getReleaseColumns("testApp");
     const StatusCell = columns[2].renderCell!;
     const data = { status: "PAUSED" } as any;
-    const { getByText, container } = render(StatusCell(data));
+    const { getByText } = render(StatusCell(data));
     // The code will render PAUSED (uppercase)
     expect(getByText("PAUSED")).toBeInTheDocument();
-    const dot = container.querySelector("span");
-    expect(dot).toHaveStyle("background-color: var(--color-warn)");
+    expect(getByText("PAUSED")).toHaveClass("pending");
   });
 
   it("should throw if status is undefined (capitalizeFirstLetter called with undefined)", () => {

@@ -79,9 +79,8 @@ const ReleaseDetails = () => {
   return (
     <div className="ReleaseDetailWrapper">
       <Breadcrumbs
-        loading={release?.releaseVersion ? false : true}
-        title={`${release?.releaseVersion} Details`}
-        toolTipTitle="Releases Detail Tooltip Content"
+        loading={!release?.appName}
+        contextName={release?.appName}
       />
       <div className="cardBgWrapper ReleasesDetailMainWrapper">
         {/* detail section */}

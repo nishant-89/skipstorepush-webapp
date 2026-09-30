@@ -3,32 +3,18 @@
 .breadcrumbsWrap {
     padding: 0;
     margin-bottom: size(20);
-    
-    .mainTitle {
-        margin: 0;
-        font-size: size(26);
-        font-weight: 700;
-        line-height: 140%;
-        color: var(--color-text-primary);
-        // text-transform: capitalize;
-        .infoIcon {
-            margin-left: size(12);
-            margin-bottom: size(5);
-            display: inline-block;
-            vertical-align: middle;
-            cursor: pointer;
-        }
-    }
 
     .breadcrumbList {
-        margin-bottom: size(20);
+        margin-bottom: 0;
         display: flex;
+        flex-wrap: wrap;
+        align-items: center;
         gap: size(10);
 
         .bredcrumbContent {
             .breadcrumbLink {
                 font-family: var(--font);
-                font-size: size(14);
+                font-size: size(18);
                 font-weight: 600;
                 line-height: size(20);
                 text-decoration: none;
@@ -38,7 +24,7 @@
                     font-weight: 500;
                 }
             }
-            &:last-child {
+            &:last-child:not(.contextName) {
                
                 .breadcrumbLink {
                     color: var(--tabActiveColor);
@@ -51,23 +37,18 @@
                 display: inline-block;
                 vertical-align: middle;
             }
+            .breadcrumbContext {
+                color: var(--color-text-primary);
+                font-size: size(18);
+                font-weight: 700;
+            }
         }
     }
 }
 
 @media screen and (max-width: 1500px) {
     .breadcrumbsWrap {
-        .mainTitle {
-            font-size: size(30);
-            line-height: size(30);
-            font-weight: 700;
-            .infoIcon {
-                margin-left: size(8);
-                margin-bottom: size(4);
-            }
-        }
         .breadcrumbList {
-            margin-bottom: size(20);
             gap: size(10);
             .bredcrumbContent {
                 
@@ -80,15 +61,11 @@
 }
 @media screen and (max-width: 1024px) {
     .breadcrumbsWrap {
-        .mainTitle {
-            font-size: size(24);
-            line-height: 25px;
-        }
         .breadcrumbList {
             gap: size(4);
             .bredcrumbContent {
                 .breadcrumbLink {
-                    font-size: size(13);
+                    font-size: size(18);
                 }
                 .separator {
                     margin-left: size(4);

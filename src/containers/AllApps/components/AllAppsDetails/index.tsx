@@ -151,8 +151,8 @@ const AllAppsDetails = () => {
   return (
     <div className="AllAppsDetailWrapper">
       <Breadcrumbs
-        title={appDetail?.name}
-        toolTipTitle="App Details Tooltip Content "
+        contextName={appDetail?.name}
+        loading={!appDetail?.name}
       />
 
       <div className="cardBgWrapper AllAppsDetailMainWrapper">

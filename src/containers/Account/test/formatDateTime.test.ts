@@ -1,4 +1,9 @@
-import { formatDateTime, formatTimeZoneName, getOrdinalDay } from "src/utils/common/helpers";
+import {
+  formatDateTime,
+  formatOrdinalDate,
+  formatTimeZoneName,
+  getOrdinalDay,
+} from "src/utils/common/helpers";
 
 describe("getOrdinalDay", () => {
   it("returns the expected English ordinals", () => {
@@ -44,5 +49,17 @@ describe("formatDateTime", () => {
   it("returns an empty string for missing or invalid values", () => {
     expect(formatDateTime("")).toBe("");
     expect(formatDateTime("not-a-date")).toBe("");
+  });
+});
+
+describe("formatOrdinalDate", () => {
+  it("formats local dates as Dth Mon YYYY", () => {
+    const localDate = new Date(2026, 8, 30);
+    expect(formatOrdinalDate(localDate.toISOString())).toBe("30th Sept 2026");
+  });
+
+  it("returns an empty string for missing or invalid values", () => {
+    expect(formatOrdinalDate("")).toBe("");
+    expect(formatOrdinalDate("not-a-date")).toBe("");
   });
 });

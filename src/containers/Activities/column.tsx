@@ -20,10 +20,10 @@ export const activityColumns: Column<ActivityItem>[] = [
         return <span>—</span>;
       }
       if (!canOpenActivityApp(row)) {
-        return <span>{appName}</span>;
+        return <span className="tableTitle">{appName}</span>;
       }
       return (
-        <Link to={`/all-apps/details/${row.appId}`} className="tableTitle">
+        <Link to={`/all-apps/details/${row.appId}`} className="tableTitle codeLink">
           {appName}
         </Link>
       );
@@ -45,7 +45,7 @@ export const activityColumns: Column<ActivityItem>[] = [
     sorting: false,
     headerName: "Time",
     renderCell: (row: ActivityItem) => (
-      <span>{formatDateTime(row.createdDate) || "—"}</span>
+      <span className="devTime">{formatDateTime(row.createdDate) || "—"}</span>
     ),
   },
   {
@@ -53,7 +53,7 @@ export const activityColumns: Column<ActivityItem>[] = [
     sorting: false,
     headerName: "Details",
     renderCell: (row: ActivityItem) => (
-      <span>{formatActivityDetails(row.metadata)}</span>
+      <span className="devMeta">{formatActivityDetails(row.metadata)}</span>
     ),
   },
   {
@@ -64,10 +64,12 @@ export const activityColumns: Column<ActivityItem>[] = [
       const isSuccess = row.status === "SUCCESS";
       return (
         <span
-          className={`activityStatus ${isSuccess ? "success" : "failed"}`}
+          className={`ciStatus ${isSuccess ? "success" : "failed"}`}
           title={formatActivityLabel(row.status)}
           aria-label={formatActivityLabel(row.status)}
-        />
+        >
+          {isSuccess ? "ok" : "fail"}
+        </span>
       );
     },
   },

@@ -159,80 +159,6 @@ input:-webkit-autofill:active {
   }
 }
 
-.MuiButton-root {
-  border-radius: var(--radius-btn) !important;
-  transition:
-    font-size 0.2s ease,
-    border-color 0.2s ease,
-    background-color 0.2s ease,
-    color 0.2s ease !important;
-
-  &:hover:not(:disabled):not(.Mui-disabled) {
-    font-size: calc(1em + 0.5px) !important;
-  }
-}
-
-.MuiButton-text {
-  text-transform: capitalize !important;
-  font-family: var(--font) !important;
-  font-weight: 600 !important;
-  font-size: size(12) !important;
-  color: var(--btnColor) !important;
-  border: 1px solid var(--color-border) !important;
-  &:disabled {
-    color: var(--borderGray) !important;
-    opacity: 0.8;
-  }
-}
-
-.MuiButton-outlined {
-  height: size(40) !important;
-  min-width: size(120) !important;
-  border-radius: var(--radius-btn) !important;
-  border: 1px solid var(--color-border) !important;
-  gap: size(10);
-  font-size: size(14) !important;
-  font-family: var(--font) !important;
-  font-weight: 600 !important;
-  color: var(--colorSecondary) !important;
-  text-transform: capitalize !important;
-  box-shadow: 0px 1px 2px 0px var(--color-overlay) !important;
-  &:disabled {
-    color: var(--color-border) !important;
-    border: 1px solid var(--color-border) !important;
-  }
-}
-
-.MuiButton-contained {
-  height: size(40) !important;
-  min-width: size(120) !important;
-  border-radius: var(--radius-btn) !important;
-  border: 1px solid var(--color-accent) !important;
-  background-color: var(--btnColor) !important;
-  gap: size(10);
-  color: var(--on-accent) !important;
-  font-family: var(--font) !important;
-  font-size: size(14) !important;
-  font-weight: 600 !important;
-  text-transform: capitalize !important;
-  box-shadow: -1px 0px 0px 0px var(--color-accent-muted) inset !important;
-  white-space: nowrap;
-  &.addNewBtn {
-    min-width: 85px !important;
-  }
-  &:disabled {
-    background-color: var(--borderGray) !important;
-    border: 1px solid var(--color-border) !important;
-  }
-}
-
-.MuiButton-root:hover:not(:disabled):not(.Mui-disabled),
-.MuiButton-text:hover:not(:disabled):not(.Mui-disabled),
-.MuiButton-outlined:hover:not(:disabled):not(.Mui-disabled),
-.MuiButton-contained:hover:not(:disabled):not(.Mui-disabled) {
-  font-size: calc(1em + 0.5px) !important;
-}
-
 .bbtn {
   width: 100%;
   height: size(40);
@@ -778,42 +704,6 @@ select[value=""] {
       font-size: size(16) !important;
       &::placeholder {
         font-size: size(16) !important;
-      }
-    }
-  }
-}
-
-.Toastify__toast-container {
-  max-width: fit-content !important;
-  min-width: fit-content !important;
-  width: fit-content !important;
-  .Toastify__toast-theme--light {
-    margin: -4px !important;
-    min-height: auto !important;
-    padding: 0;
-    border: 1px solid var(--color-border);
-    box-shadow: none;
-    border-radius: 12px;
-    background-color: var(--color-bg-surface);
-    height: auto !important;
- 
-    .alert-message,
-    .alert-sub-message {
-      margin: 0;
-      font-family: var(--font) !important;
-      font-size: 14px;
-      font-weight: 600;
-      line-height: 20px;
-      color: var(--color-text-primary);  
-    }
-    .Toastify__toast-body {
-      padding: 8px 8px 12px;
-      .Toastify__toast-icon {
-        width: 38px;
-        margin-right: 9px;
-        img {
-          width: 38px;
-        }
       }
     }
   }

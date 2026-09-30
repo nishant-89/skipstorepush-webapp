@@ -1,9 +1,16 @@
+import { useSelector } from "react-redux";
 import Breadcrumbs from "src/components/common/BreadCrumbs";
+import { RootState } from "src/redux/rootReducers";
 
 const Dashboard = () => {
+  const fullName = useSelector(
+    (state: RootState) => state.profile.data?.fullName
+  )?.trim();
+  const greeting = fullName ? `Hello, ${fullName}` : "Hello";
+
   return (
     <div className="dashboardPage">
-      <Breadcrumbs title="Dashboard" />
+      <Breadcrumbs currentLabel={greeting} />
     </div>
   );
 };

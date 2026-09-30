@@ -17,7 +17,7 @@ export const getReleaseColumns = (
         <div>
           <Link
             to={`/all-apps/details/${appId}/release/${param?.id}`}
-            className="tableTitle"
+            className="tableTitle codeLink"
           >
             {param?.releaseVersion ?? ""}
           </Link>
@@ -37,32 +37,15 @@ export const getReleaseColumns = (
     renderCell: (param: RELEASE_RESPONSE_TYPE) => {
       const statusColor =
         param.status === "LIVE"
-          ? "var(--color-accent-success)"
-          : "var(--color-warn)";
-      return (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
-            fontFamily: "inter",
-          }}
-        >
-          <span
-            style={{
-              display: "inline-block",
-              width: 8,
-              height: 8,
-              borderRadius: "50%",
-              backgroundColor: statusColor,
-              marginRight: 8,
-            }}
-          ></span>
-          {param?.status === "ROLLED_BACK"
-            ? capitalizeFirstLetter("Rollback")
-            : capitalizeFirstLetter(param?.status)}
-        </div>
-      );
+          ? "success"
+          : param.status === "ROLLED_BACK"
+            ? "failed"
+            : "pending";
+      const label =
+        param?.status === "ROLLED_BACK"
+          ? capitalizeFirstLetter("Rollback")
+          : capitalizeFirstLetter(param?.status);
+      return <span className={`ciStatus ${statusColor}`}>{label}</span>;
     },
   },
   {
@@ -110,7 +93,7 @@ export const getCollabratorColumns = (
       sorting: false,
       headerName: "Name",
       renderCell: (param: COLLABRATOR_RESPONSE_TYPE) => (
-        <span className={param.role === "Owner" ? "owner-role" : ""}>
+        <span className={param.role === "Owner" ? "owner-role tableTitle" : "tableTitle"}>
           {param.status === "pending"
             ? "Invited Collaborator"
             : (param.fullName ?? "N/A")}
@@ -122,7 +105,7 @@ export const getCollabratorColumns = (
       sorting: true,
       headerName: "Email",
       renderCell: (param: COLLABRATOR_RESPONSE_TYPE) => (
-        <span className={param.role === "Owner" ? "owner-role" : ""}>
+        <span className={param.role === "Owner" ? "owner-role devMeta" : "devMeta"}>
           {param.email ?? "N/A"}
         </span>
       ),

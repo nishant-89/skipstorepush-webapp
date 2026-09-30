@@ -8,7 +8,7 @@ jest.mock("../helper", () => ({
 
 jest.mock("src/components/common/BreadCrumbs", () => ({
   __esModule: true,
-  default: ({ title }: { title: string }) => <h1>{title}</h1>,
+  default: () => <nav aria-label="breadcrumb">Breadcrumbs</nav>,
 }));
 
 describe("Settings", () => {
@@ -36,7 +36,7 @@ describe("Settings", () => {
     });
 
     render(<Settings />);
-    expect(screen.getByRole("heading", { name: "Settings" })).toBeInTheDocument();
+    expect(screen.getByLabelText("breadcrumb")).toBeInTheDocument();
     expect(screen.getByLabelText("Pin navigation")).toBeInTheDocument();
     expect(screen.getByLabelText("Preserve pinned state")).toBeInTheDocument();
     expect(screen.getByLabelText("Compact mode")).toBeInTheDocument();

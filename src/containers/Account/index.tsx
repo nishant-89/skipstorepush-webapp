@@ -15,7 +15,6 @@ const authLabel = (authType?: string) =>
 const Account = () => {
   const {
     data,
-    loading,
     accessKey,
     isGithubAuth,
     githubProfileUrl,
@@ -33,7 +32,7 @@ const Account = () => {
 
   return (
     <div className="accountPage">
-      <Breadcrumbs title="My Account" loading={loading} />
+      <Breadcrumbs />
       <div className="cardBgWrapper accountCard">
         <div className="profileHeader">
           <input

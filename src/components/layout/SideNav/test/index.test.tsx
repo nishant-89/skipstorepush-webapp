@@ -146,6 +146,16 @@ describe("SideNav Component", () => {
     expect(mockNavigate).toHaveBeenCalledWith("/settings");
   });
 
+  it("asks the header to refresh unread notifications when Dashboard is clicked", () => {
+    const dispatchSpy = jest.spyOn(window, "dispatchEvent");
+    renderSideNav();
+    fireEvent.click(screen.getByLabelText("Dashboard"));
+    expect(dispatchSpy).toHaveBeenCalledWith(
+      expect.objectContaining({ type: "skipstore-notifications-unread-refresh" })
+    );
+    dispatchSpy.mockRestore();
+  });
+
   it("navigates to Help & FAQ", () => {
     renderSideNav();
     fireEvent.click(screen.getByLabelText("Help & FAQ"));

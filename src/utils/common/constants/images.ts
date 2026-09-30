@@ -56,6 +56,7 @@ import InviteShareIcon from "src/assets/images/share-icon.svg";
 import PromoteModalIcon from "src/assets/images/promote-modal-icon.svg";
 import RooloutUpdateIcon from "src/assets/images/roolout-update-modal-icon.svg";
 import TableDeleteIcon from "src/assets/images/table-delete-icon.svg";
+import AndroidIcon from "src/assets/images/androidIcon.svg";
 
 export {
   skipstore,
@@ -116,4 +117,5 @@ export {
   PromoteModalIcon,
   RooloutUpdateIcon,
   TableDeleteIcon,
+  AndroidIcon,
 };

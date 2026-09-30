@@ -4,6 +4,7 @@ import {
   CodePushLogoImage,
 } from "src/utils/common/constants";
 import ThemeToggle from "src/components/common/ThemeToggle";
+import Notifications from "./Notifications";
 import "../Header/header.scss";
 import ROUTES from "src/routes/routesPaths";
 
@@ -28,6 +29,7 @@ const Header = () => {
       </div>
       <div className="rightWrap">
         <div className="actionBtnWrap">
+          <Notifications />
           <ThemeToggle />
         </div>
       </div>

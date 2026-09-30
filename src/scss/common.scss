@@ -84,3 +84,10 @@ p {
 .border-bottom {
     border-bottom: 1px solid var(--borderGray);
 }
+
+.cardBgWrapper {
+    padding: 24px;
+    background-color: var(--color-bg-surface);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+}

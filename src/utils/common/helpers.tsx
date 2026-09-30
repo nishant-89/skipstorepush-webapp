@@ -126,3 +126,36 @@ export const formatDateTime = (dateStr: string): string => {
     return "";
   }
 };
+
+export const formatOrdinalDate = (dateStr: string): string => {
+  try {
+    if (!dateStr) {
+      return "";
+    }
+
+    const date = new Date(dateStr);
+    if (Number.isNaN(date.getTime())) {
+      return "";
+    }
+
+    const storedTimeZone = getStoredTimeZone() || undefined;
+    const parts = new Intl.DateTimeFormat("en-US", {
+      day: "numeric",
+      month: "numeric",
+      year: "numeric",
+      ...(storedTimeZone ? { timeZone: storedTimeZone } : {}),
+    }).formatToParts(date);
+    const day = Number(parts.find((part) => part.type === "day")?.value);
+    const month = Number(parts.find((part) => part.type === "month")?.value);
+    const year = parts.find((part) => part.type === "year")?.value;
+
+    if (!day || !month || !year) {
+      return "";
+    }
+
+    return `${getOrdinalDay(day)} ${MONTHS_SHORT[month - 1]} ${year}`;
+  } catch (error) {
+    console.log(error);
+    return "";
+  }
+};

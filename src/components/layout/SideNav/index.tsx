@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   Activity,
+  ListClock,
   CircleHelp,
   LayoutDashboard,
   Castle,
@@ -19,6 +20,7 @@ import { RootState } from "src/redux/rootReducers";
 import { NAV_PIN_STORAGE_KEY } from "src/utils/userSettings";
 import { persistUserSettings } from "src/utils/persistUserSettings";
 import { mergeProfileSettings } from "src/containers/redux/slices/profile";
+import { requestUnreadRefresh } from "src/utils/notifications";
 
 import "./index.scss";
 
@@ -78,7 +80,7 @@ export const sideNavItems: NavItem[] = [
 const RAIL_ICONS: Record<string, LucideIcon> = {
   [ROUTES.DASHBOARD]: LayoutDashboard,
   [ROUTES.ALL_APPS]: Castle,
-  [ROUTES.MY_ACTIVITIES]: Activity,
+  [ROUTES.MY_ACTIVITIES]: ListClock,
   [ROUTES.HELP]: CircleHelp,
   [ROUTES.SETTINGS]: Settings,
 };
@@ -127,6 +129,9 @@ const SideNav = () => {
     : (RAIL_ICONS[visibleItems[activeIndex]?.path] ?? LayoutDashboard);
 
   const handleSelect = (item: NavItem) => {
+    if (item.path === ROUTES.DASHBOARD) {
+      requestUnreadRefresh();
+    }
     navigate(item.path);
   };
 

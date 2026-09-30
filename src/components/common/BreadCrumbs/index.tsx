@@ -5,38 +5,50 @@ import { Skeleton } from "@mui/material";
 import "./breadcrumb.scss";
 
 const Breadcrumbs = ({
-  title = "",
+  contextName = "",
   loading = false,
-  //toolTipTitle=""
+  currentLabel,
 }: {
-  title: string;
+  title?: string;
+  contextName?: string;
   loading?: boolean;
   toolTipTitle?: string;
+  currentLabel?: string;
 }) => {
   const { breadcrumbTrail } = UseBreadCrumbHelper();
 
   return (
     <div className="breadcrumbsWrap">
       <ul className="breadcrumbList">
-        {breadcrumbTrail.map((item, index) => (
+        {breadcrumbTrail.map((item, index) => {
+          const isLast = index === breadcrumbTrail.length - 1;
+          const label = isLast && currentLabel ? currentLabel : item.name;
+
+          return (
           <li className="bredcrumbContent" key={item.path}>
-            {index !== breadcrumbTrail.length - 1 ? (
+            {!isLast ? (
               <Link className="breadcrumbLink active" to={item.path}>
-                {item.name}
+                {label}
               </Link>
             ) : (
-              <span className="breadcrumbLink">{item.name}</span>
+              <span className="breadcrumbLink">{label}</span>
             )}
-            {index < breadcrumbTrail.length - 1 && (
+            {!isLast && (
               <span className="separator"> / </span>
             )}
           </li>
-        ))}
+          );
+        })}
+        {loading ? (
+          <li className="bredcrumbContent contextName">
+            <Skeleton variant="text" width={120} height={24} />
+          </li>
+        ) : contextName ? (
+          <li className="bredcrumbContent contextName">
+            <span className="breadcrumbContext">{`{ ${contextName} }`}</span>
+          </li>
+        ) : null}
       </ul>
-
-      <h1 className="mainTitle">
-        {loading ? <Skeleton variant="text" width={250} height={42} /> : title}
-      </h1>
     </div>
   );
 };

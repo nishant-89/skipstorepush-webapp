@@ -10,7 +10,7 @@ interface MockProps {
 // Mocks for children components
 jest.mock("src/components/common/BreadCrumbs", () => ({
   __esModule: true,
-  default: ({ title }: MockProps) => <div>{title}</div>,
+  default: () => <div data-testid="breadcrumbs" />,
 }));
 
 jest.mock("src/components/common/Search", () => ({
@@ -111,7 +111,7 @@ describe("AllApps Component", () => {
 
   it("renders breadcrumbs and UI controls", () => {
     render(<AllApps />);
-    expect(screen.getByText("Hello, Test User")).toBeInTheDocument();
+    expect(screen.getByTestId("breadcrumbs")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Search")).toBeInTheDocument();
     expect(screen.getByTestId("filter-popup")).toBeInTheDocument();
   });

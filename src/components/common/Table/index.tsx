@@ -17,6 +17,7 @@ import { v4 as uuid } from "uuid";
 import PaginationComponent from "./pagination";
 import SortIcon from "./SortIcon";
 import { Column } from "src/utils/types";
+import "src/scss/table.scss";
 
 interface TableComponentProps<T> {
   tableData: T[];
@@ -122,7 +123,7 @@ const TableComponent = <
   const isPaginationHide = sortedData.length < 6 && page === 0 && count < 6;
 
   return (
-    <Paper style={{ width: "100%" }} className={className}>
+    <Paper style={{ width: "100%" }} className={["devConsoleTable", className].filter(Boolean).join(" ")}>
       <TableContainer
         data-testid="table-component"
         className="campaignListingTable"
