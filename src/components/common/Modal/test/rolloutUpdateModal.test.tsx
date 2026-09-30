@@ -15,7 +15,7 @@ jest.mock("@mui/material", () => {
 });
 
 // Mock RooloutUpdateIcon import
-jest.mock("src/utils/common/constants", () => ({
+jest.mock("src/utils/common/constants/constants", () => ({
   RooloutUpdateIcon: "rollout-update-icon.svg",
 }));
 

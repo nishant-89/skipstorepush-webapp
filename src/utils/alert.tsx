@@ -1,7 +1,7 @@
 import React from "react";
 import { toast, Id } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ToastAlert, { ToastKind } from "src/components/common/ToastAlert";
+import ToastAlert, { ToastKind } from "src/components/common/ToastAlert/ToastAlert";
 import { eventListenerManager } from "./eventListenerFlag";
 
 const commonErr = "OOPS! something went wrong!";

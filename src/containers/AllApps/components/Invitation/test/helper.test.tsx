@@ -6,7 +6,7 @@ import * as api from "src/apis/api";
 import * as alertUtils from "src/utils/alert";
 import * as globalSlice from "src/redux/slices/globalSlice";
 import ROUTES from "src/routes/routesPaths";
-import { getErrorMessage } from "src/utils/common/constants";
+import { getErrorMessage } from "src/utils/common/constants/constants";
 
 jest.mock("react-redux", () => ({
   useDispatch: jest.fn(),
@@ -24,8 +24,8 @@ jest.mock("src/utils/alert", () => ({
   showAlert: jest.fn(),
 }));
 
-jest.mock("src/utils/common/constants", () => ({
-  ...jest.requireActual("src/utils/common/constants"),
+jest.mock("src/utils/common/constants/constants", () => ({
+  ...jest.requireActual("src/utils/common/constants/constants"),
   getErrorMessage: jest.fn(() => "Error"),
 }));
 
@@ -53,13 +53,13 @@ describe("useInviteHelper", () => {
 
     expect(api.getDataApi).toHaveBeenCalledWith({
       path: expect.stringContaining(
-        "app-center/v1/users/check-invitation?invitationId=invite-id"
+        "api/collaborators/check-invitation?invitationId=invite-id"
       ),
     });
 
     expect(api.getDataApi).toHaveBeenCalledWith({
       path: expect.stringContaining(
-        "app-center/v1/users/accept-invitation?invitationId=invite-id"
+        "api/collaborators/accept-invitation?invitationId=invite-id"
       ),
     });
 

@@ -1,4 +1,4 @@
-import { Column } from "src/utils/types";
+import { Column } from "src/utils/types/types";
 import { Link } from "react-router-dom";
 import { formatOrdinalDate } from "src/utils/common/helpers";
 

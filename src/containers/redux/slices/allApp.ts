@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { AllAppState, FetchAllAppStatePayload } from "../types";
+import { AllAppState, FetchAllAppStatePayload } from "../types/types";
 
 const initialState: AllAppState = {
   loading: false,

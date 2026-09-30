@@ -4,7 +4,7 @@ import { useAllAppsHelper } from "../helper";
 import * as api from "src/apis/api";
 import { showAlert } from "src/utils/alert";
 import { useDispatch, useSelector } from "react-redux";
-import { apiRoutes } from "src/utils/common/constants";
+import { apiRoutes } from "src/utils/common/constants/constants";
 
 jest.mock("src/apis/api", () => ({
   postDataApi: jest.fn(),

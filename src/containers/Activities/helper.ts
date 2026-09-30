@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getDataApi } from "src/apis/api";
 import { showAlert } from "src/utils/alert";
-import { apiRoutes, getErrorMessage } from "src/utils/common/constants";
+import { apiRoutes, getErrorMessage } from "src/utils/common/constants/constants";
 import {
   readSavedActivitiesSearch,
   writeSavedActivitiesSearch,

@@ -1,5 +1,5 @@
 import { Apple } from "lucide-react";
-import { AndroidIcon } from "src/utils/common/constants";
+import { AndroidIcon } from "src/utils/common/constants/constants";
 
 export const OsBrandIcon = ({ osType }: { osType?: string }) => {
   const isIos = osType?.toUpperCase() === "IOS";

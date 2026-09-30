@@ -1,6 +1,6 @@
 import { Formik } from "formik";
-import CustomModal from "src/components/common/Modal";
-import InputField from "src/components/common/InputField";
+import CustomModal from "src/components/common/Modal/Modal";
+import InputField from "src/components/common/InputField/InputField";
 import {
   passwordInitialValues,
   passwordValidationSchema,

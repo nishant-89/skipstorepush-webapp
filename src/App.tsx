@@ -1,6 +1,6 @@
 import { Provider } from "react-redux";
 import store from "src/redux/store";
-import RoutesManager from "./routes";
+import RoutesManager from "./routes/routes";
 import { Bounce, ToastContainer } from "react-toastify";
 import "src/components/common/ToastAlert/toast.scss";
 

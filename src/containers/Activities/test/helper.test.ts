@@ -6,7 +6,7 @@ import {
   useActivitiesHelper,
 } from "../helper";
 import * as api from "src/apis/api";
-import { apiRoutes } from "src/utils/common/constants";
+import { apiRoutes } from "src/utils/common/constants/constants";
 import { showAlert } from "src/utils/alert";
 
 jest.mock("src/apis/api", () => ({

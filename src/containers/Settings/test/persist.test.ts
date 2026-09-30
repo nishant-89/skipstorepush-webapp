@@ -1,7 +1,7 @@
 import { persistUserSettings } from "src/utils/persistUserSettings";
 import { applyUserSettings } from "src/utils/userSettings";
 import { patchDataApi } from "src/apis/api";
-import { apiRoutes } from "src/utils/common/constants";
+import { apiRoutes } from "src/utils/common/constants/constants";
 
 jest.mock("src/apis/api", () => ({
   patchDataApi: jest.fn(),

@@ -9,7 +9,7 @@ import {
 } from "src/containers/redux/slices/release";
 import { handleRefresh as handleCollabRefresh } from "src/containers/redux/slices/collaborators";
 import { RootState } from "src/redux/rootReducers";
-import { apiRoutes, getErrorMessage } from "src/utils/common/constants";
+import { apiRoutes, getErrorMessage } from "src/utils/common/constants/constants";
 import { showAlert } from "src/utils/alert";
 import ROUTES from "src/routes/routesPaths";
 import { setLoading } from "src/redux/slices/globalSlice";

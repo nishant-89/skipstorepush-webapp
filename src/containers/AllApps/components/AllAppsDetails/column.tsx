@@ -1,8 +1,8 @@
-import { Column } from "src/utils/types";
+import { Column } from "src/utils/types/types";
 import { Link } from "react-router-dom";
 import { capitalizeFirstLetter, DateFormatter } from "src/utils/common/helpers";
 import { COLLABRATOR_RESPONSE_TYPE, RELEASE_RESPONSE_TYPE } from "../../types";
-import { TableDeleteIcon } from "src/utils/common/constants";
+import { TableDeleteIcon } from "src/utils/common/constants/constants";
 
 // release table columns
 export const getReleaseColumns = (

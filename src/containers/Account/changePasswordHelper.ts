@@ -5,8 +5,8 @@ import { fetchProfileDataRequest } from "src/containers/redux/slices/profile";
 import { setLoading } from "src/redux/slices/globalSlice";
 import { useDispatch } from "react-redux";
 import { showAlert } from "src/utils/alert";
-import { apiRoutes, getErrorMessage } from "src/utils/common/constants";
-import { ChangePasswordResponse } from "../redux/types";
+import { apiRoutes, getErrorMessage } from "src/utils/common/constants/constants";
+import { ChangePasswordResponse } from "../redux/types/types";
 
 export type PasswordFormValues = {
   currentPassword: string;

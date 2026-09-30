@@ -1,10 +1,10 @@
 import React from "react";
-import ButtonComp from "src/components/common/Button";
+import ButtonComp from "src/components/common/Button/Button";
 import TableDataLoader from "src/components/common/Loader/tableDataLoader";
 
 import InviteCollaborateModal from "src/components/common/Modal/inviteCollaborateModal";
-import TableComponent from "src/components/common/Table";
-import { InviteShareIcon } from "src/utils/common/constants";
+import TableComponent from "src/components/common/Table/Table";
+import { InviteShareIcon } from "src/utils/common/constants/constants";
 import { COLLABRATOR_RESPONSE_TYPE, InviteFormValues } from "../../types";
 
 import CollabDeleteModal from "src/components/common/Modal/deleteModal";

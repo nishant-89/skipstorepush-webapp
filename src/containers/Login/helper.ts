@@ -8,10 +8,10 @@ import {
   fetchAuthenticateToken,
   fetchAuthenticateTokenSuccess,
 } from "src/containers/redux/slices/auth";
-import { AuthResponse } from "src/containers/redux/types";
+import { AuthResponse } from "src/containers/redux/types/types";
 import { setLoading } from "src/redux/slices/globalSlice";
 import { showAlert } from "src/utils/alert";
-import { apiRoutes, getErrorMessage } from "src/utils/common/constants";
+import { apiRoutes, getErrorMessage } from "src/utils/common/constants/constants";
 import { Redirect } from "./constant";
 import ROUTES from "src/routes/routesPaths";
 

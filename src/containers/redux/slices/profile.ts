@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Profile, ProfileDataState, UserSettings } from "../types";
+import { Profile, ProfileDataState, UserSettings } from "../types/types";
 
 const initialState: ProfileDataState = {
   loading: false,

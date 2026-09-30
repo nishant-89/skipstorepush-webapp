@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { ReleaseState, FetchReleaseStatePayload } from "../types";
+import { ReleaseState, FetchReleaseStatePayload } from "../types/types";
 
 const initialState: ReleaseState = {
   loading: true,

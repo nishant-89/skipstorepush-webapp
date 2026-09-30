@@ -1,5 +1,5 @@
-import { logoutIcon } from "src/utils/common/constants";
-import CustomModal from ".";
+import { logoutIcon } from "src/utils/common/constants/constants";
+import CustomModal from "./Modal";
 import { useModalHelper } from "./helper";
 
 interface LogoutProps {

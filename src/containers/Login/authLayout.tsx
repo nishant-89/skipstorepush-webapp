@@ -1,6 +1,6 @@
-import { skipstore } from "src/utils/common/constants";
+import { skipstore } from "src/utils/common/constants/constants";
 import { ReactNode } from "react";
-import ThemeToggle from "src/components/common/ThemeToggle";
+import ThemeToggle from "src/components/common/ThemeToggle/ThemeToggle";
 
 interface AuthLayoutProps {
   title: string;

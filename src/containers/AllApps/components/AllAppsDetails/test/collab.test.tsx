@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import CollaboratorSection from "../collaborator";
 
-jest.mock("src/components/common/Button", () => (props: any) => (
+jest.mock("src/components/common/Button/Button", () => (props: any) => (
   <button onClick={props.onClick}>{props.label}</button>
 ));
 
@@ -9,7 +9,7 @@ jest.mock("src/components/common/Loader/tableDataLoader", () => () => (
   <div data-testid="table-loader">Loading...</div>
 ));
 
-jest.mock("src/components/common/Table", () => (props: any) => (
+jest.mock("src/components/common/Table/Table", () => (props: any) => (
   <div data-testid="table-component">
     <div>Mock Table</div>
     <div>Rows: {props.rowsPerPage}</div>

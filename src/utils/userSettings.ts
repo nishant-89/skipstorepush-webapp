@@ -1,4 +1,4 @@
-import { UserSettings, UserSettingsUpdate } from "src/containers/redux/types";
+import { UserSettings, UserSettingsUpdate } from "src/containers/redux/types/types";
 import { applyTheme, ThemeName } from "src/utils/theme";
 
 export const NAV_PIN_STORAGE_KEY = "skipstore_nav_pinned";

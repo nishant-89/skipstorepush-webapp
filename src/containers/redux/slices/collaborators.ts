@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { CollaboratorsState, FetchCollaboratorsStatePayload } from "../types";
+import { CollaboratorsState, FetchCollaboratorsStatePayload } from "../types/types";
 
 const initialState: CollaboratorsState = {
   loading: true,

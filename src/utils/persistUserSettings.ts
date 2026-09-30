@@ -1,6 +1,6 @@
 import { patchDataApi } from "src/apis/api";
-import { UserSettings, UserSettingsUpdate } from "src/containers/redux/types";
-import { apiRoutes } from "src/utils/common/constants";
+import { UserSettings, UserSettingsUpdate } from "src/containers/redux/types/types";
+import { apiRoutes } from "src/utils/common/constants/constants";
 import { applyUserSettings } from "src/utils/userSettings";
 
 type SettingsResponse = {

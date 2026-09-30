@@ -1,7 +1,7 @@
 import { Modal, Button } from "@mui/material";
 import { Formik, Form } from "formik";
-import InputField from "src/components/common/InputField";
-import { InviteCollaboratorIcon } from "src/utils/common/constants";
+import InputField from "src/components/common/InputField/InputField";
+import { InviteCollaboratorIcon } from "src/utils/common/constants/constants";
 import { validationSchema } from "src/containers/AllApps/components/AllAppsDetails/constant";
 import { InviteFormValues } from "src/containers/AllApps/types";
 

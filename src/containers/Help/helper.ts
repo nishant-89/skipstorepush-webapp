@@ -2,8 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 import { getDataApi } from "src/apis/api";
 import { setLoading } from "src/redux/slices/globalSlice";
 import { useDispatch } from "react-redux";
-import { apiRoutes, getErrorMessage } from "src/utils/common/constants";
-import { FaqData, FaqGroup, FaqResponse, FaqStillStuck } from "../redux/types";
+import { apiRoutes, getErrorMessage } from "src/utils/common/constants/constants";
+import { FaqData, FaqGroup, FaqResponse, FaqStillStuck } from "../redux/types/types";
 import { showAlert } from "src/utils/alert";
 
 const emptyFaqData: FaqData = {

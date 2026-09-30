@@ -1,6 +1,6 @@
 import UseBreadCrumbHelper from "../helpers";
 import { matchPath, useLocation } from "react-router-dom";
-import * as SideNav from "src/components/layout/SideNav";
+import * as SideNav from "src/components/layout/SideNav/SideNav";
 import { renderHook } from "@testing-library/react";
 
 jest.mock("react-router-dom", () => ({

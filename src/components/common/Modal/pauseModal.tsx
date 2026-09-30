@@ -1,5 +1,5 @@
 import { Button, Modal } from "@mui/material";
-import { PauseModalIcon } from "src/utils/common/constants";
+import { PauseModalIcon } from "src/utils/common/constants/constants";
 
 import "./index.scss";
 

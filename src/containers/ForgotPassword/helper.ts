@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { postDataApi } from "src/apis/api";
 import { setLoading } from "src/redux/slices/globalSlice";
 import { showAlert } from "src/utils/alert";
-import { apiRoutes, getErrorMessage } from "src/utils/common/constants";
+import { apiRoutes, getErrorMessage } from "src/utils/common/constants/constants";
 import ROUTES from "src/routes/routesPaths";
 
 export const PENDING_RESET_EMAIL_KEY = "skipstore_pending_reset_email";

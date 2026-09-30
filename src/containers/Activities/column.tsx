@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Column } from "src/utils/types";
+import { Column } from "src/utils/types/types";
 import { formatDateTime } from "src/utils/common/helpers";
 import {
   canOpenActivityApp,

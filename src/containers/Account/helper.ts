@@ -5,7 +5,7 @@ import { fetchProfileDataRequest } from "src/containers/redux/slices/profile";
 import { setLoading } from "src/redux/slices/globalSlice";
 import { RootState } from "src/redux/rootReducers";
 import { showAlert } from "src/utils/alert";
-import { apiRoutes, getErrorMessage } from "src/utils/common/constants";
+import { apiRoutes, getErrorMessage } from "src/utils/common/constants/constants";
 
 export const PROFILE_IMAGE_ACCEPT =
   ".jpg,.jpeg,.png,.gif,.webp,.svg,.bmp,.ico,.avif";

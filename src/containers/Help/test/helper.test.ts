@@ -1,7 +1,7 @@
 import { renderHook, act, waitFor } from "@testing-library/react";
 import { useHelpHelper } from "../helper";
 import * as api from "src/apis/api";
-import { apiRoutes } from "src/utils/common/constants";
+import { apiRoutes } from "src/utils/common/constants/constants";
 
 const mockDispatch = jest.fn();
 

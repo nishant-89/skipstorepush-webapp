@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProfileDataRequest } from "src/containers/redux/slices/profile";
-import { UserSettings, UserSettingsUpdate } from "src/containers/redux/types";
+import { UserSettings, UserSettingsUpdate } from "src/containers/redux/types/types";
 import { RootState } from "src/redux/rootReducers";
 import { persistUserSettings } from "src/utils/persistUserSettings";
 import { showAlert } from "src/utils/alert";
-import { getErrorMessage } from "src/utils/common/constants";
+import { getErrorMessage } from "src/utils/common/constants/constants";
 import {
   LANGUAGE_OPTIONS,
   listTimeZones,

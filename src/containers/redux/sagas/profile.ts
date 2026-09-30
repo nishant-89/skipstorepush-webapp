@@ -8,8 +8,8 @@ import {
 } from "../slices/profile";
 
 import { getDataApi } from "src/apis/api";
-import { ProfileResponse } from "../types";
-import { apiRoutes } from "src/utils/common/constants";
+import { ProfileResponse } from "../types/types";
+import { apiRoutes } from "src/utils/common/constants/constants";
 import { applyUserSettings } from "src/utils/userSettings";
 
 function* fetchProfileDataSaga(_action: PayloadAction) {

@@ -7,7 +7,7 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
-import { Column } from "src/utils/types";
+import { Column } from "src/utils/types/types";
 import { v4 as uuid } from "uuid";
 
 import "./tableDataLoader.scss";
