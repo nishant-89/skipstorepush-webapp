@@ -1,0 +1,142 @@
+@use "../../../scss/variable.scss" as *;
+
+.skipToastContainer {
+  width: min(380px, calc(100vw - 24px)) !important;
+  padding: 0 12px 20px !important;
+  bottom: 20px !important;
+  right: 16px !important;
+  top: auto !important;
+  left: auto !important;
+}
+
+.skipToast {
+  --skip-toast-radius: 12px;
+  position: relative !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  margin-bottom: 12px !important;
+  border-radius: var(--skip-toast-radius) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+  font-family: var(--font);
+  cursor: default;
+
+  .Toastify__toast-body {
+    padding: 0 !important;
+    margin: 0;
+    align-items: stretch;
+  }
+
+  .Toastify__toast-icon,
+  .Toastify__close-button {
+    display: none !important;
+  }
+
+  .Toastify__progress-bar--wrp {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    overflow: hidden;
+    border-radius: 0;
+  }
+
+  .Toastify__progress-bar--bg {
+    opacity: 0.18;
+  }
+
+  .Toastify__progress-bar {
+    height: 3px;
+  }
+}
+
+.skipToast--success .Toastify__progress-bar {
+  background: #ecfdf5;
+}
+
+.skipToast--error .Toastify__progress-bar {
+  background: #fff1f2;
+}
+
+.skipToast--info .Toastify__progress-bar {
+  background: #ecfeff;
+}
+
+.skipToastCard {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  align-items: center;
+  min-height: 72px;
+  padding: 12px 20px 16px 12px;
+  border-radius: 0;
+  color: #f8fafc;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+
+  &--success {
+    background: linear-gradient(135deg, #065f46 0%, #059669 58%, #10b981 100%);
+    box-shadow: 0 18px 40px rgba(5, 150, 105, 0.38);
+  }
+
+  &--error {
+    background: linear-gradient(135deg, #9f1239 0%, #e11d48 58%, #fb7185 100%);
+    box-shadow: 0 18px 40px rgba(225, 29, 72, 0.38);
+  }
+
+  &--info {
+    background: linear-gradient(135deg, #0e7490 0%, #0891b2 58%, #22d3ee 100%);
+    box-shadow: 0 18px 40px rgba(8, 145, 178, 0.38);
+  }
+}
+
+.skipToastMark {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+}
+
+.skipToastCopy {
+  min-width: 0;
+  padding-left: 4px;
+}
+
+.skipToastMessage {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #fff;
+  word-break: break-word;
+}
+
+.skipToastSub {
+  margin: 4px 0 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+html[data-theme="light"] {
+  .skipToastCard--success {
+    background: linear-gradient(135deg, #047857 0%, #059669 100%);
+  }
+
+  .skipToastCard--error {
+    background: linear-gradient(135deg, #be123c 0%, #e11d48 100%);
+  }
+
+  .skipToastCard--info {
+    background: linear-gradient(135deg, #0e7490 0%, #0891b2 100%);
+  }
+}

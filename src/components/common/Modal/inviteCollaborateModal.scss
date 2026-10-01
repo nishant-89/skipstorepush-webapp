@@ -22,7 +22,7 @@
           font-size: 14px;
           font-weight: 400;
           line-height: 20px;
-          color: #60707d;
+          color: var(--color-text-secondary);
           @media screen and (max-width: 1024px) {
             padding-top: 0;
           }

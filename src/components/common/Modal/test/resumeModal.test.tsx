@@ -15,7 +15,7 @@ jest.mock("@mui/material", () => {
 });
 
 // Mock ResumeModalIcon import
-jest.mock("src/utils/common/constants", () => ({
+jest.mock("src/utils/common/constants/constants", () => ({
   ResumeModalIcon: "resume-modal-icon.svg",
 }));
 

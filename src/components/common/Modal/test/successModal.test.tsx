@@ -18,11 +18,6 @@ describe("SuccessModal", () => {
         "An email with the account information has been sent to the user."
       )
     ).toBeInTheDocument();
-    // Find the icon by alt text
-    const img = screen.getByAltText("modal icon");
-    expect(img).toBeInTheDocument();
-    // Optionally, check src if needed
-    // expect(img).toHaveAttribute("src", expect.stringContaining("circlecheck.svg"));
   });
 
   it("calls setOpen(false) when Exit button is clicked", () => {

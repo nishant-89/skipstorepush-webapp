@@ -6,7 +6,7 @@ import releaseReducer from "src/containers/redux/slices/release";
 import collabratorsReducer from "src/containers/redux/slices/collaborators";
 import { GlobalState } from "src/utils/types/redux";
 import globalReducer from "src/redux/slices/globalSlice";
-import { AuthState, ProfileDataState } from "src/containers/redux/types";
+import { AuthState, ProfileDataState } from "src/containers/redux/types/types";
 
 export type RootReducerType = {
   auth: AuthState;

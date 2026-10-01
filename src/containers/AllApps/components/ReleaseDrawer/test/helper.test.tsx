@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setLoading } from "src/redux/slices/globalSlice";
 import { handleRefresh } from "src/containers/redux/slices/release";
-import { getErrorMessage } from "src/utils/common/constants";
+import { getErrorMessage } from "src/utils/common/constants/constants";
 
 // Mocks
 jest.mock("src/apis/api", () => ({
@@ -23,8 +23,8 @@ jest.mock("react-redux", () => ({
   useDispatch: jest.fn(),
   useSelector: jest.fn(),
 }));
-jest.mock("src/utils/common/constants", () => ({
-  ...jest.requireActual("src/utils/common/constants"),
+jest.mock("src/utils/common/constants/constants", () => ({
+  ...jest.requireActual("src/utils/common/constants/constants"),
   getErrorMessage: jest.fn(),
 }));
 
@@ -125,7 +125,7 @@ describe("useReleaseDrawerHelper", () => {
     });
 
     expect(postDataApi).toHaveBeenCalledWith({
-      path: "app-center/v1/apps/environment",
+      path: "api/apps/environments",
       data: { name: "Production", appId: "123" },
     });
   });
@@ -147,7 +147,7 @@ describe("useReleaseDrawerHelper", () => {
 
     expect(mockDispatch).toHaveBeenCalledWith(setLoading(true));
     expect(postDataApi).toHaveBeenCalledWith({
-      path: "app-center/v1/apps/environment",
+      path: "api/apps/environments",
       data: { name: "Production", appId: "123" },
     });
     expect(mockDispatch).toHaveBeenCalledWith(setLoading(false));

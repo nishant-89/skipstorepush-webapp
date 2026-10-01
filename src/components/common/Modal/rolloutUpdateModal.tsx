@@ -1,5 +1,5 @@
 import { Button, Modal } from "@mui/material";
-import { RooloutUpdateIcon } from "src/utils/common/constants";
+import { RooloutUpdateIcon } from "src/utils/common/constants/constants";
 
 import "./index.scss";
 

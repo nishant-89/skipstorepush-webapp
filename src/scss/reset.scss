@@ -16,7 +16,8 @@ body {
   height: 100%;
   padding: size(0);
   margin: size(0);
-  background-color: var(--white);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
   font-family: var(--font);
   font-size: size(14);
   font-weight: 400;
@@ -51,7 +52,7 @@ input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0px 1000px var(--headerBg) inset !important;
   box-shadow: 0 0 0px 1000px var(--headerBg) inset !important;
-  -webkit-text-fill-color: rgba(0, 0, 0, 0.87) !important;
+  -webkit-text-fill-color: var(--color-text-primary) !important;
   font-weight: 400;
 }
 
@@ -67,7 +68,7 @@ input:-webkit-autofill:active {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #0071c2;
+  background-color: var(--color-accent);
   border-radius: size(5);
 }
 
@@ -87,7 +88,7 @@ input:-webkit-autofill:active {
 }
 
 .MuiInputAdornment-root p {
-  color: #1a1a1a;
+  color: var(--color-text-primary);
 }
 
 .MuiTextField-root {
@@ -153,61 +154,8 @@ input:-webkit-autofill:active {
 .MuiAccordionSummary-expandIconWrapper {
   svg {
     path {
-      fill: #000;
+      fill: var(--color-text-primary);
     }
-  }
-}
-
-.MuiButton-text {
-  text-transform: capitalize !important;
-  font-family: var(--font) !important;
-  font-weight: 600 !important;
-  font-size: size(12) !important;
-  color: var(--btnColor) !important;
-  &:disabled {
-    color: var(--borderGray) !important;
-    opacity: 0.8;
-  }
-}
-
-.MuiButton-outlined {
-  height: size(40) !important;
-  min-width: size(120) !important;
-  border-radius: size(10) !important;
-  border: 1px solid var(--borderGray) !important;
-  gap: size(10);
-  font-size: size(14) !important;
-  font-family: var(--font) !important;
-  font-weight: 600 !important;
-  color: var(--colorSecondary) !important;
-  text-transform: capitalize !important;
-  box-shadow: 0px 1px 2px 0px #1018280d !important;
-  &:disabled {
-    color: #bdc4ca !important;
-    border: 1px solid var(--borderGray) !important;
-  }
-}
-
-.MuiButton-contained {
-  height: size(40) !important;
-  min-width: size(120) !important;
-  border-radius: 10px !important;
-  border: 1px solid #2a7bbb !important;
-  background-color: var(--btnColor) !important;
-  gap: size(10);
-  color: var(--white) !important;
-  font-family: var(--font) !important;
-  font-size: size(14) !important;
-  font-weight: 600 !important;
-  text-transform: capitalize !important;
-  box-shadow: -1px 0px 0px 0px #1322951a inset !important;
-  white-space: nowrap;
-  &.addNewBtn {
-    min-width: 85px !important;
-  }
-  &:disabled {
-    background-color: var(--borderGray) !important;
-    border: 0 !important;
   }
 }
 
@@ -217,13 +165,13 @@ input:-webkit-autofill:active {
   background-color: var(--btnPrimary) !important;
   color: var(--white) !important;
   gap: size(8);
-  border-radius: size(10) !important;
+  border-radius: var(--radius-btn) !important;
   font-size: size(14) !important;
   font-weight: 600 !important;
   line-height: size(20) !important;
   opacity: 1;
   font-family: var(--font) !important;
-  box-shadow: 0px 1px 2px 0px #1018280d !important;
+  box-shadow: 0px 1px 2px 0px var(--color-overlay) !important;
   text-transform: capitalize !important;
   border: 1px solid var(--colorPrimary) !important;
   &.select {
@@ -232,24 +180,24 @@ input:-webkit-autofill:active {
     height: 34px !important;
     font-weight: 500 !important;
     &.selectButton {
-      background-color: #2a7bbb !important;
-      box-shadow: 0px 1px 2px 0px #1018280d !important;
-      color: #f7fbff !important;
-      border-color: #2a7bbb !important;
+      background-color: var(--color-accent) !important;
+      box-shadow: 0px 1px 2px 0px var(--color-overlay) !important;
+      color: var(--color-bg-surface) !important;
+      border-color: var(--color-accent) !important;
     }
     &.selectedButton {
-      background-color: #c3daec !important;
-      box-shadow: 0px 1px 2px 0px #1018280d !important;
-      color: #2a7bbb !important;
-      border-color: #c3daec !important;
+      background-color: var(--color-accent-muted) !important;
+      box-shadow: 0px 1px 2px 0px var(--color-overlay) !important;
+      color: var(--color-accent) !important;
+      border-color: var(--color-accent-muted) !important;
     }
   }
   &.Mui-disabled {
     cursor: not-allowed;
-    border: 1px solid #bdc4ca !important;
-    background-color: #bdc4ca !important;
-    box-shadow: 0px 1px 2px 0px #1018280d !important;
-    color: #f7fbff;
+    border: 1px solid var(--color-border) !important;
+    background-color: var(--color-border) !important;
+    box-shadow: 0px 1px 2px 0px var(--color-overlay) !important;
+    color: var(--color-bg-surface);
   }
 }
 
@@ -266,33 +214,33 @@ select::placeholder {
   .MuiPaper-root {
     border-radius: size(12) !important;
     box-shadow:
-      0px 15px 15px -1px #0000000a,
-      0px 5.7px 12px -1px #0000000d,
-      0px 2.6px 8px -1px #0000000f,
-      0px 0.9px 4px -1px #00000014 !important;
+      0px 15px 15px -1px var(--color-overlay),
+      0px 5.7px 12px -1px var(--color-overlay),
+      0px 2.6px 8px -1px var(--color-overlay),
+      0px 0.9px 4px -1px var(--color-overlay) !important;
   }
 }
 
 .tableMenuWrapper {
   min-width: size(133);
   padding: size(10);
-  box-shadow: 0px 0.9px 4px -1px #00000014;
+  box-shadow: 0px 0.9px 4px -1px var(--color-overlay);
   display: flex;
   flex-direction: column;
   .tableMenuList {
     padding: size(13) size(10);
-    background-color: #fff;
+    background-color: var(--color-bg-surface);
     border-radius: size(10);
     font-size: size(12);
     line-height: size(14);
     font-weight: 500;
-    color: #60707d;
+    color: var(--color-text-secondary);
     text-decoration: none;
     cursor: pointer;
     transition: all 0.3s ease;
     &:hover {
       transition: all 0.3s ease;
-      background-color: rgba(0, 109, 228, 0.1);
+      background-color: var(--color-accent-muted);
     }
   }
 }
@@ -301,28 +249,28 @@ select::placeholder {
 .MuiMenu-paper {
   padding: 4px 10px !important;
   box-shadow:
-    0px 15px 15px -1px rgba(0, 0, 0, 0.04),
-    0px 5.7px 12px -1px rgba(0, 0, 0, 0.05),
-    0px 2.6px 8px -1px rgba(0, 0, 0, 0.06),
-    0px 0.9px 4px -1px rgba(0, 0, 0, 0.08) !important;
+    0px 15px 15px -1px var(--color-overlay),
+    0px 5.7px 12px -1px var(--color-overlay),
+    0px 2.6px 8px -1px var(--color-overlay),
+    0px 0.9px 4px -1px var(--color-overlay) !important;
   .MuiList-root {
     .MuiMenuItem-root {
       padding: 10px 10px !important;
-      background: rgba(255, 255, 255, 0.01);
+      background: var(--color-bg-surface);
       border-radius: 10px;
       font-family: var(--font);
       font-size: size(14) !important;
       font-weight: 500 !important;
-      color: var(--btnBlackBg) !important;
+      color: var(--color-text-primary) !important;
       justify-content: flex-start;
       align-items: center;
       line-height: size(24);
       &:hover {
-        background-color: #d2e7ff;
+        background-color: var(--color-accent-muted);
       }
     }
     &.Mui-selected {
-      background-color: #006de41a !important;
+      background-color: var(--color-accent-muted) !important;
     }
   }
 }
@@ -347,12 +295,12 @@ select::placeholder {
 .optionStyle {
   height: size(38);
   padding: 8px 10px;
-  background: rgba(255, 255, 255, 0.01);
-  box-shadow: 0px -1px 0px 0px rgba(211, 218, 230, 0.5) inset;
+  background: var(--color-bg-surface);
+  box-shadow: 0px -1px 0px 0px var(--color-border) inset;
   font-family: var(--font);
   font-size: size(14);
   font-weight: 500;
-  color: var(--btnBlackBg);
+  color: var(--color-text-primary);
   justify-content: center;
   align-items: center;
   &.placeholderText {
@@ -396,7 +344,7 @@ select[value=""] {
 
 .MuiFormControlLabel-label {
   font-weight: 400;
-  color: #60707d;
+  color: var(--color-text-secondary);
   font-family: var(--font) !important;
   font-size: size(14) !important;
   margin-left: size(5) !important;
@@ -418,7 +366,7 @@ select[value=""] {
   }
 
   .MuiOutlinedInput-notchedOutline {
-    border: 1px solid #dfe6ed !important;
+    border: 1px solid var(--color-border) !important;
     border-radius: 0.625rem !important;
   }
   .pagination {
@@ -449,8 +397,8 @@ select[value=""] {
 
       &.active {
         a {
-          background: #bdc4ca;
-          color: #3a4f5f;
+          background: var(--color-border);
+          color: var(--color-text-primary);
           cursor: default;
         }
       }
@@ -462,8 +410,8 @@ select[value=""] {
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid #e5e8ea;
-      background: #f8f9f9;
+      border: 1px solid var(--color-border);
+      background: var(--color-bg-surface);
 
       border-radius: size(10);
       font-weight: 500;
@@ -472,8 +420,8 @@ select[value=""] {
       position: relative;
 
       &:disabled {
-        color: #abb3ba !important;
-        border: 1px solid #d0d5aa !important;
+        color: var(--color-text-secondary) !important;
+        border: 1px solid var(--color-border) !important;
       }
 
       a {
@@ -488,11 +436,11 @@ select[value=""] {
       font-size: size(14);
       font-weight: 500;
       line-height: size(20);
-      color: #3a4f54;
+      color: var(--color-text-primary);
 
       &:disabled {
-        color: #abb3ba !important;
-        border: 1px solid #d0d5aa !important;
+        color: var(--color-text-secondary) !important;
+        border: 1px solid var(--color-border) !important;
       }
       img {
         width: size(14);
@@ -505,7 +453,7 @@ select[value=""] {
       font-size: size(14);
       font-weight: 500;
       line-height: size(20);
-      color: #3a4f54;
+      color: var(--color-text-primary);
     }
   }
   .customSelect {
@@ -531,7 +479,7 @@ select[value=""] {
       border-radius: size(10) !important;
       font-family: var(--font) !important;
       font-size: 16px !important;
-      color: #3a4f5f;
+      color: var(--color-text-primary);
       font-weight: 500;
     }
     .MuiFormControl-root {
@@ -553,7 +501,7 @@ select[value=""] {
     .MuiInputBase-root,
     .MuiOutlinedInput-root {
       border-radius: size(10);
-      box-shadow: 0px 1px 2px 0px #1018280d;
+      box-shadow: 0px 1px 2px 0px var(--color-overlay);
       border: 0 !important;
     }
     .MuiSelect-select {
@@ -630,10 +578,10 @@ select[value=""] {
     margin-bottom: 0px;
     display: block;
     width: fit-content;
-    color: #3a4f5f;
+    color: var(--color-text-primary);
     font-weight: 500;
     font-size: 14px;
-    font-family: "Inter", sans-serif !important;
+    font-family: var(--font-ui) !important;
     &.tableTextBreak {
       word-break: break-all;
     }
@@ -650,9 +598,9 @@ select[value=""] {
     }
   }
   .contactInfo {
-    color: #85929c;
+    color: var(--color-text-secondary);
     font-size: 12px;
-    font-family: "Inter", sans-serif !important;
+    font-family: var(--font-ui) !important;
   }
 }
 
@@ -673,7 +621,7 @@ select[value=""] {
 }
 
 .MuiTableContainer-root {
-  border: 1px solid #bdc4ca;
+  border: 1px solid var(--color-border);
   border-radius: 12px;
 }
 .MuiTableSortLabel-root {
@@ -713,7 +661,7 @@ select[value=""] {
   gap: 10px;
   font-size: size(14);
   font-weight: 500;
-  font-family: "Inter", sans-serif !important;
+  font-family: var(--font-ui) !important;
   &.numericAlign {
     text-align: right !important;
     width: fit-content;
@@ -726,8 +674,8 @@ select[value=""] {
   div {
     font-size: size(14);
     font-weight: 500;
-    font-family: "Inter", sans-serif !important;
-    color: #3a4f5f;
+    font-family: var(--font-ui) !important;
+    color: var(--color-text-primary);
     a {
       color: var(--tableLink) !important;
     }
@@ -735,7 +683,7 @@ select[value=""] {
   span {
     font-size: size(14);
     text-align: left !important;
-    font-family: "Inter", sans-serif !important;
+    font-family: var(--font-ui) !important;
   }
 }
 
@@ -761,45 +709,9 @@ select[value=""] {
   }
 }
 
-.Toastify__toast-container {
-  max-width: fit-content !important;
-  min-width: fit-content !important;
-  width: fit-content !important;
-  .Toastify__toast-theme--light {
-    margin: -4px !important;
-    min-height: auto !important;
-    padding: 0;
-    border: 1px solid #bdc4ca;
-    box-shadow: none;
-    border-radius: 12px;
-    background-color: var(--white);
-    height: auto !important;
- 
-    .alert-message,
-    .alert-sub-message {
-      margin: 0;
-      font-family: var(--font) !important;
-      font-size: 14px;
-      font-weight: 600;
-      line-height: 20px;
-      color: #3a4f5f;  
-    }
-    .Toastify__toast-body {
-      padding: 8px 8px 12px;
-      .Toastify__toast-icon {
-        width: 38px;
-        margin-right: 9px;
-        img {
-          width: 38px;
-        }
-      }
-    }
-  }
-}
-
 .MuiInputBase-root {
   height: size(44);
-  box-shadow: 0px 1px 2px 0px #1018280d;
+  box-shadow: 0px 1px 2px 0px var(--color-overlay);
   input::placeholder {
     color: var(--disableBg) !important;
     opacity: 1;
@@ -817,7 +729,7 @@ label {
 
 .MuiPaper-root {
   border-radius: size(12) !important;
-  box-shadow: 0px 15px 15px -1px #0000000a !important;
+  box-shadow: 0px 15px 15px -1px var(--color-overlay) !important;
 }
 
 .noSubscriptionFound {
@@ -837,13 +749,14 @@ label {
   padding: 0 9px !important;
   font-size: 14px !important;
   font-weight: 500 !important;
-  border: 1px solid #bdc4ca !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-btn) !important;
   color: var(--colorSecondary) !important;
   gap: size(6) !important;
   &.active {
-    background: #c3daec !important;
-    border: 1px solid transparent !important;
-    color: #2a7bbb !important;
+    background: var(--color-accent-muted) !important;
+    border: 1px solid var(--color-accent) !important;
+    color: var(--color-accent) !important;
     img {
       filter: invert(39%) sepia(86%) saturate(608%) hue-rotate(169deg)
         brightness(89%) contrast(84%);
@@ -874,11 +787,11 @@ label {
 .modalBackdrop,
 .customDrawerBackdrop {
   .MuiModal-backdrop {
-    background: rgba(8, 16, 23, 0.5) !important;
+    background: var(--color-overlay) !important;
     backdrop-filter: blur(6px);
   }
   &.MuiModal-backdrop {
-    background: rgba(8, 16, 23, 0.5) !important;
+    background: var(--color-overlay) !important;
     backdrop-filter: blur(6px);
   }
 }
@@ -917,14 +830,14 @@ label {
     width: 132px !important;
     .MuiInputBase-root {
       height: 40px;
-      box-shadow: 0px 1px 2px 0px #1018280d;
+      box-shadow: 0px 1px 2px 0px var(--color-overlay);
     }
     .MuiSelect-select {
       padding-left: 15px !important;
       font-family: var(--font) !important;
       font-size: 14px !important;
       font-weight: 500 !important;
-      color: #3a4f5f !important;
+      color: var(--color-text-primary) !important;
     }
     .MuiFormControl-root {
       width: 100%!important;
@@ -969,7 +882,7 @@ label {
     justify-content: flex-end;
     gap: 20px;
     padding: 20px;
-    border: 1px solid #bdc4ca;
+    border: 1px solid var(--color-border);
     border-radius: 12px 12px 0 0;
   }
   .MuiTableContainer-root {
@@ -985,7 +898,7 @@ label {
 .loaderMainWrapper {
   width: 100%;
   height: 100%;
-  background: #00000059;
+  background: var(--color-overlay);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1045,7 +958,7 @@ input[type="number"] {
       }
     }
     .innerLayoutMainWrapper {
-      width: calc(100% - 76px);
+      width: 100%;
     }
   }
 }
@@ -1086,20 +999,20 @@ input[type="number"] {
 
 .Mui-disabled .MuiInputBase-input {
   color: var(--disableFontColor) !important;
-  -webkit-text-fill-color: rgba(0, 0, 0, 0.6) !important;
+  -webkit-text-fill-color: var(--color-text-secondary) !important;
 }
 
 .Mui-disabled .MuiOutlinedInput-notchedOutline {
-  border: 1px solid #bdc4ca !important;
+  border: 1px solid var(--color-border) !important;
   border-radius: 0.625rem !important;
 }
 
 .innerLayoutMainWrapper {
-  height: calc(100vh - 80px);
+  height: calc(100vh - var(--shell-header-height));
 }
 
 textarea::placeholder {
-  color: #abb3ba;
+  color: var(--color-text-secondary);
 }
 
 .extraCount {
@@ -1132,16 +1045,16 @@ textarea::placeholder {
     background: var(--cardBackground);
   }
   .notFoundwrap {
-    border: 0.5px solid #bdc4ca;
+    border: 0.5px solid var(--color-border);
   }
 }
 
 .selectOwnerBtn {
   &.active {
-    background: #c3daec !important;
-    box-shadow: 0px 1px 2px 0px #1018280d !important;
+    background: var(--color-accent-muted) !important;
+    box-shadow: 0px 1px 2px 0px var(--color-overlay) !important;
     border: 0 !important;
-    color: #2a7bbb !important;
+    color: var(--color-accent) !important;
   }
 }
 
@@ -1167,17 +1080,17 @@ textarea::placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(45deg, #f4f2f3 0%, #e4edf4 100%);
+  background: linear-gradient(45deg, var(--color-bg-primary) 0%, var(--color-bg-surface) 100%);
   .cardWrapper {
     max-width: 500px;
     padding: 30px;
     border-radius: 12px;
-    background: #fff;
+    background: var(--color-bg-surface);
     .content {
       margin-bottom: 70px;
       font-size: 16px;
       font-weight: 500;
-      color: rgba(58, 79, 95, 1);
+      color: var(--color-text-primary);
     }
   }
 }
@@ -1187,7 +1100,7 @@ textarea::placeholder {
     font-family: var(--font) !important;
     font-size: 16px !important;
     font-weight: 400 !important;
-    color: #abb3ba !important;
+    color: var(--color-text-secondary) !important;
   }
 }
 
@@ -1196,7 +1109,7 @@ textarea::placeholder {
     font-family: var(--font) !important;
     font-size: 16px !important;
     font-weight: 400 !important;
-    color: #abb3ba !important;
+    color: var(--color-text-secondary) !important;
   }
 }
 
@@ -1292,7 +1205,7 @@ textarea::placeholder {
       font-size: size(16) !important;
       font-weight: 500;
       line-height: size(28);
-      color: #3a4f5f;
+      color: var(--color-text-primary);
       display: inline-block;
       vertical-align: middle;
     }
@@ -1302,20 +1215,20 @@ textarea::placeholder {
 // =========Date Range Picker==========//
 .employeeDatePopoverWrapper {
   .MuiPopover-paper {
-    box-shadow: 0px 8px 8px -4px #10182808;
-    border: 1px solid #eaecf0;
+    box-shadow: 0px 8px 8px -4px var(--color-text-primary)08;
+    border: 1px solid var(--color-border);
     border-radius: size(12);
   }
 }
 
 .employeeDatePicker {
-  background: var(--white);
+  background: var(--color-bg-surface);
   padding: 10px 0 0 0;
   border-radius: 12px;
   width: size(328);
   z-index: 3;
   .rdrDayPassive .rdrDayNumber span {
-    color: #667085;
+    color: var(--color-text-secondary);
   }
   .rdrDayEndPreview,
   .rdrDayStartPreview {
@@ -1334,15 +1247,15 @@ textarea::placeholder {
   .rdrDayHovered {
     opacity: 1;
     .rdrSelected {
-      background-color: #2a7bbb;
+      background-color: var(--color-accent);
     }
     .rdrSelected + span + .rdrDayNumber {
       width: 100%;
       height: 100%;
-      background-color: #2a7bbb;
+      background-color: var(--color-accent);
       border-radius: 50%;
       span {
-        color: #ffffff;
+        color: var(--color-text-primary);
         opacity: 1;
       }
     }
@@ -1359,7 +1272,7 @@ textarea::placeholder {
       background: rgba(195, 218, 236, 0.4);
       border-radius: 50%;
       span {
-        color: #1d2429;
+        color: var(--color-text-primary);
         opacity: 1;
       }
     }
@@ -1372,7 +1285,7 @@ textarea::placeholder {
   .rdrCalendarWrapper {
     width: 100%;
     .rdrNextPrevButton {
-      border: 1.5px solid #3a4f5f;
+      border: 1.5px solid var(--color-text-primary);
       background: transparent;
       position: relative;
       margin: 0 14px;
@@ -1409,7 +1322,7 @@ textarea::placeholder {
         select {
           font-weight: 600;
           padding-right: size(23);
-          color: #3a4f5f;
+          color: var(--color-text-primary);
           font-family: var(--font);
         }
       }
@@ -1417,7 +1330,7 @@ textarea::placeholder {
         select {
           font-weight: 600;
           padding-right: size(23);
-          color: #3a4f5f;
+          color: var(--color-text-primary);
           font-family: var(--font);
         }
       }
@@ -1429,7 +1342,7 @@ textarea::placeholder {
         position: relative;
         border: 1px solid var(--borderGrayBg);
         background: transparent;
-        box-shadow: 0px 1px 2px 0px #1018280d;
+        box-shadow: 0px 1px 2px 0px var(--color-overlay);
         border-radius: 8px;
         input {
           color: var(--colorSecondary);
@@ -1465,7 +1378,7 @@ textarea::placeholder {
     }
     .rdrMonths {
       padding: 0 0 1px 0 !important;
-      border-bottom: 1px solid #eaecf0;
+      border-bottom: 1px solid var(--color-border);
       .rdrMonth {
         padding-left: 24px !important;
         padding-right: 24px !important;
@@ -1477,9 +1390,9 @@ textarea::placeholder {
       .rdrWeekDays {
         justify-content: space-between;
         .rdrWeekDay {
-          color: #344054;
+          color: var(--color-text-primary);
           font-size: size(14);
-          font-family: "Inter", sans-serif;
+          font-family: var(--font-ui);
           font-weight: 500;
         }
       }
@@ -1489,12 +1402,12 @@ textarea::placeholder {
         top: 0;
         bottom: 0;
         border-radius: 50%;
-        color: #2a7bbb !important;
+        color: var(--color-accent) !important;
       }
       .rdrDays {
         justify-content: space-between;
         .rdrDayToday {
-          background-color: #c3daec66 !important;
+          background-color: var(--color-accent-muted) !important;
         }
         button {
           width: 40px;
@@ -1504,8 +1417,8 @@ textarea::placeholder {
           justify-content: center;
           align-items: center;
           border: 0;
-          color: #344054 !important;
-          font-family: "Inter", sans-serif;
+          color: var(--color-text-primary) !important;
+          font-family: var(--font-ui);
           font-size: 14px;
           font-weight: 400;
           line-height: normal;
@@ -1526,7 +1439,7 @@ textarea::placeholder {
             bottom: 0;
             border-radius: 50%;
             span {
-              font-family: "Inter", sans-serif;
+              font-family: var(--font-ui);
               font-size: size(14);
               font-weight: 400;
               line-height: normal;
@@ -1565,7 +1478,7 @@ textarea::placeholder {
     padding: 10px 30px 10px 10px;
     border-radius: 4px;
     outline: 0;
-    color: #3a4f5f;
+    color: var(--color-text-primary);
     background-image: url("src/assets/images/select-dropdown-calendar.svg");
     background-repeat: no-repeat;
     background-position: right 6px center;
@@ -1597,9 +1510,9 @@ textarea::placeholder {
       line-height: normal;
       color: var(--inputTextColor) !important;
       border-radius: size(10);
-      box-shadow: 0px 1px 2px 0px #1018280d;
+      box-shadow: 0px 1px 2px 0px var(--color-overlay);
       background-color: transparent !important;
-      border: 1px solid #bdc4ca !important;
+      border: 1px solid var(--color-border) !important;
       position: relative;
       .noborder {
         border: none;
@@ -1611,7 +1524,7 @@ textarea::placeholder {
         width: 100%;
         height: 100%;
         &::placeholder {
-          font-family: var(--fonts);
+          font-family: var(--font);
           font-size: 16px;
           font-weight: 400;
           line-height: 24px;
@@ -1746,7 +1659,7 @@ textarea::placeholder {
 .SettingsDrawerPaper {
   width: 400px !important;
   border-radius: 16px 0 0 16px !important;
-  background-color: #ffffff !important;
+  background-color: var(--color-bg-surface) !important;
   box-shadow: none !important;
   overflow: hidden;
 }
@@ -1754,10 +1667,10 @@ textarea::placeholder {
 .MuiMenu-paper.select-custom-backdrop {
   padding: 16px !important;
   box-shadow:
-    0px 15px 15px -1px #0000000a,
-    0px 5.7px 12px -1px #0000000d,
-    0px 2.6px 8px -1px #0000000f,
-    0px 0.9px 4px -1px #00000014 !important;
+    0px 15px 15px -1px var(--color-overlay),
+    0px 5.7px 12px -1px var(--color-overlay),
+    0px 2.6px 8px -1px var(--color-overlay),
+    0px 0.9px 4px -1px var(--color-overlay) !important;
   .MuiList-root {
     padding: 0 !important;
     .MuiMenuItem-root {
@@ -1766,19 +1679,19 @@ textarea::placeholder {
       font-family: var(--font) !important;
       font-size: size(14) !important;
       font-weight: 500 !important;
-      color: #3a4f5f !important;
+      color: var(--color-text-primary) !important;
       justify-content: flex-start;
       align-items: center;
       line-height: 17px;
       transition: all 0.3s ease-in;
       &:hover {
-        background-color: #c3daec !important;
-        color: #2a7bbb !important;
+        background-color: var(--color-accent-muted) !important;
+        color: var(--color-accent) !important;
         font-weight: 600 !important;
       }
       &.Mui-selected {
-        background-color: #c3daec !important;
-        color: #2a7bbb !important;
+        background-color: var(--color-accent-muted) !important;
+        color: var(--color-accent) !important;
         font-weight: 600 !important;
       }
       &:not(:last-child) {
@@ -1786,7 +1699,7 @@ textarea::placeholder {
       }
     }
     &.Mui-selected {
-      background-color: #006de41a !important;
+      background-color: var(--color-accent-muted) !important;
     }
   }
   .MuiList-root {

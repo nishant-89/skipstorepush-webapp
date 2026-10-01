@@ -3,8 +3,8 @@
 
 .header {
   width: 100%;
-  height: 80px;
-  padding: 23px 32px;
+  height: var(--shell-header-height);
+  padding: 12px 28px;
   background-color: var(--headerBg);
   border-bottom: 1px solid var(--headerBorder);
   display: flex;
@@ -12,23 +12,39 @@
   align-items: center;
   position: relative;
   z-index: 999;
-  overflow: hidden;
 
   .leftWrapper {
     display: flex;
     align-items: center;
+    gap: 14px;
     .logo {
-      width: 92px;
+      width: 84px;
       img {
         width: 100%;
       }
     }
+    .productMark {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+      .productName {
+        color: var(--color-text-primary);
+        font-size: 14px;
+        font-weight: 700;
+      }
+      .productMeta {
+        color: var(--color-text-secondary);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+    }
     .logoBox {
       max-width: 100px;
-      margin-left: 12px;
       padding: 4px 12px;
-      background-color: #ffffff;
-      border-radius: 30px;
+      background-color: var(--color-accent-muted);
+      border-radius: var(--radius-pill);
       .logoTxt {
         max-width: 86px;
         img {
@@ -42,7 +58,7 @@
     .actionBtnWrap {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
 
       .actionBtn {
         padding: 0;
@@ -59,15 +75,15 @@
         }
 
         .userImage {
-          width: 24px;
-          height: 24px;
+          width: 36px;
+          height: 36px;
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
           position: relative;
-          background-color: #3a4f5f;
-          outline: 4px solid #c3daec;
+          background-color: var(--color-accent);
+          outline: 4px solid var(--color-accent-muted);
 
           .userText {
             display: flex;
@@ -75,8 +91,15 @@
             justify-content: center;
             font-size: 12px;
             font-weight: 700;
-            color: white;
+            color: var(--color-text-primary);
             white-space: nowrap;
+          }
+
+          .avtarImg{
+            height: 32px;
+            width: 32px;
+            object-fit: cover;
+            border-radius: 50%;
           }
         }
 
@@ -113,14 +136,14 @@
       margin-left: -12px !important;
       padding: 8px;
       border-radius: 12px;
-      background-color: var(--white);
-      box-shadow: 2px 2px 20px 4px rgba(167, 174, 186, 0.12) !important;
+      background-color: var(--color-bg-surface);
+      box-shadow: 2px 2px 20px 4px var(--color-overlay) !important;
 
       .MuiList-root {
         .MuiMenuItem-root {
           border-radius: 8px;
           padding: 12px 12px !important;
-          background: var(--white);
+          background: var(--color-bg-surface);
           box-shadow: none;
           font-family: var(--font) !important;
           font-size: size(12) !important;
@@ -151,12 +174,12 @@
       min-width: 140px !important;
       padding: 10px !important;
       border-radius: 12px;
-      background-color: var(--white);
+      background-color: var(--color-bg-surface);
       box-shadow:
-        0px 15px 15px -1px #0000000a,
-        0px 5.7px 12px -1px #0000000d,
-        0px 2.6px 8px -1px #0000000f,
-        0px 0.9px 4px -1px #00000014 !important;
+        0px 15px 15px -1px var(--color-overlay),
+        0px 5.7px 12px -1px var(--color-overlay),
+        0px 2.6px 8px -1px var(--color-overlay),
+        0px 0.9px 4px -1px var(--color-overlay) !important;
 
       .MuiList-root {
         padding-top: 0 !important;
@@ -165,7 +188,7 @@
         .MuiMenuItem-root {
           border-radius: 8px;
           padding: 10px 10px !important;
-          background: var(--white);
+          background: var(--color-bg-surface);
           box-shadow: none;
           font-family: var(--font) !important;
           font-size: size(12) !important;
@@ -290,12 +313,12 @@
             .switchTxt {
               padding-left: 8px;
               margin: 0;
-              font-family: "Inter", sans-serif;
+              font-family: var(--font-ui);
               font-weight: 500;
               font-size: 11px;
               line-height: normal;
               text-align: center;
-              color: #60707d;
+              color: var(--color-text-secondary);
             }
 
             .MuiSwitch-root {
@@ -305,7 +328,7 @@
 
               .MuiButtonBase-root {
                 + .MuiSwitch-track {
-                  background: #e5e8ea;
+                  background: var(--color-border);
                   opacity: 1;
                 }
               }
@@ -326,8 +349,8 @@
 
               .MuiSwitch-thumb {
                 box-shadow:
-                  0px 1px 2px 0px #1018280f,
-                  0px 1px 3px 0px #1018281a;
+                  0px 1px 2px 0px var(--color-overlay),
+                  0px 1px 3px 0px var(--color-overlay);
                 width: 14px;
                 height: 14px;
                 border-radius: 50%;
@@ -346,7 +369,7 @@
                   width: 14px;
                   height: 14px;
                   border-radius: 50%;
-                  background: #ffffff;
+                  background: var(--color-bg-surface);
                 }
               }
 
@@ -362,8 +385,8 @@
                 opacity: 0.6;
                 cursor: not-allowed;
                 box-shadow:
-                  0px 1px 2px 0px #1018280f,
-                  0px 1px 3px 0px #1018281a;
+                  0px 1px 2px 0px var(--color-overlay),
+                  0px 1px 3px 0px var(--color-overlay);
               }
 
               &:hover {
@@ -461,11 +484,11 @@
                   height: 6px;
                   padding: 0;
                   border-radius: 50%;
-                  background-color: #2a7bbb;
+                  background-color: var(--color-accent);
                 }
 
                 &:hover {
-                  background-color: #2a7bba1a;
+                  background-color: var(--color-accent-muted);
                 }
               }
             }
@@ -506,7 +529,7 @@
               font-weight: 500;
               font-size: 12px;
               line-height: 130%;
-              color: #85929c;
+              color: var(--color-text-secondary);
             }
           }
         }

@@ -1,5 +1,5 @@
-import CustomModal from ".";
-import { CircleCheck } from "src/utils/common/constants";
+import CustomModal from "./Modal";
+import { CircleCheck } from "src/utils/common/constants/constants";
 
 interface ModalProps {
   open: boolean;

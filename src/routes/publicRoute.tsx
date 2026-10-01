@@ -14,7 +14,7 @@ const PublicRoute = ({ children }: { children: ReactNode }): ReactElement => {
       return <Navigate to={redirectPath} replace />;
     }
 
-    return <Navigate to={ROUTES.ALL_APPS} replace />;
+    return <Navigate to={ROUTES.DASHBOARD} replace />;
   }
 
   return children as ReactElement;

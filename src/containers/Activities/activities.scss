@@ -1,0 +1,46 @@
+@use "../../scss/variable.scss" as *;
+@use "../../scss/mixin.scss" as *;
+
+.activitiesPage {
+  .TopSection {
+    justify-content: flex-end;
+  }
+
+  .tableSection.appTable .MuiTableCell-root:first-of-type {
+    width: 22% !important;
+  }
+
+  .activityTitleCell {
+    min-width: 0;
+  }
+
+  .activityTitle {
+    margin: 0;
+    color: var(--color-text-primary);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .activitySubtitle {
+    margin: 4px 0 0;
+    color: var(--color-text-secondary);
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .activityStatus {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    vertical-align: middle;
+
+    &.success {
+      background: var(--color-accent-success);
+    }
+
+    &.failed {
+      background: var(--color-error);
+    }
+  }
+}

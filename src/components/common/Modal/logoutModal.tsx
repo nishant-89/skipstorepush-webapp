@@ -1,5 +1,5 @@
-import { logoutIcon } from "src/utils/common/constants";
-import CustomModal from ".";
+import { logoutIcon } from "src/utils/common/constants/constants";
+import CustomModal from "./Modal";
 import { useModalHelper } from "./helper";
 
 interface LogoutProps {
@@ -17,7 +17,7 @@ const LogoutModal: React.FC<LogoutProps> = ({
   };
   return (
     <CustomModal
-      title="Are You Sure You Want To Logout?"
+      title="Done for today?"
       description=""
       actionTitle="Logout"
       secondaryTitle="Cancel"

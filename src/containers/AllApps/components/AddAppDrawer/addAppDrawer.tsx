@@ -1,13 +1,13 @@
 import { Drawer, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { Formik, Form } from "formik";
-import InputField from "src/components/common/InputField";
-import ButtonComp from "src/components/common/Button";
+import InputField from "src/components/common/InputField/InputField";
+import ButtonComp from "src/components/common/Button/Button";
 import {
   CloseImageIcon,
   DrawerCloseIcon,
   ImageUploadIcon,
   ProfileImageIcon,
-} from "src/utils/common/constants";
+} from "src/utils/common/constants/constants";
 
 import { validationSchema } from "./constant";
 import { useAllAppsHelper } from "./helper";

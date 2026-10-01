@@ -1,10 +1,10 @@
 import React from "react";
-import ButtonComp from "src/components/common/Button";
+import ButtonComp from "src/components/common/Button/Button";
 import TableDataLoader from "src/components/common/Loader/tableDataLoader";
 
 import InviteCollaborateModal from "src/components/common/Modal/inviteCollaborateModal";
-import TableComponent from "src/components/common/Table";
-import { InviteShareIcon } from "src/utils/common/constants";
+import TableComponent from "src/components/common/Table/Table";
+import { InviteShareIcon } from "src/utils/common/constants/constants";
 import { COLLABRATOR_RESPONSE_TYPE, InviteFormValues } from "../../types";
 
 import CollabDeleteModal from "src/components/common/Modal/deleteModal";
@@ -26,12 +26,16 @@ interface CollaboratorSectionProps {
     inviteDesc: string;
     deleteCollabTitle: string;
     deleteCollabDesc: string;
+    removeCollabTitle: string;
+    removeCollabDesc: string;
   };
   isOwner: boolean;
-  handleCollabModel: (value: string) => void;
+  handleCollabModel: (collaborator: COLLABRATOR_RESPONSE_TYPE) => void;
   delCollab: boolean;
   setDelCollab: React.Dispatch<React.SetStateAction<boolean>>;
   handleDeleteCollab: () => void;
+  collabTarget?: { type: "invite" | "member" } | null;
+  onCloseCollabModal?: () => void;
 }
 
 const CollaboratorSection: React.FC<CollaboratorSectionProps> = ({
@@ -51,8 +55,11 @@ const CollaboratorSection: React.FC<CollaboratorSectionProps> = ({
   delCollab,
   setDelCollab,
   handleDeleteCollab,
+  collabTarget,
+  onCloseCollabModal,
 }) => {
   const columns = getCollabratorColumns(handleCollabModel, isOwner);
+  const isMemberRemoval = collabTarget?.type === "member";
   return (
     <div className="collaboratorWrapper">
       <div className="collaboratorHeader">
@@ -98,10 +105,17 @@ const CollaboratorSection: React.FC<CollaboratorSectionProps> = ({
       />
       <CollabDeleteModal
         open={delCollab}
-        title={Modal?.deleteCollabTitle}
-        description={Modal?.deleteCollabDesc}
+        title={
+          isMemberRemoval ? Modal?.removeCollabTitle : Modal?.deleteCollabTitle
+        }
+        description={
+          isMemberRemoval ? Modal?.removeCollabDesc : Modal?.deleteCollabDesc
+        }
         isCollabModal={true}
-        onClose={() => setDelCollab(false)}
+        confirmLabel={isMemberRemoval ? "Remove" : "Delete"}
+        onClose={() =>
+          onCloseCollabModal ? onCloseCollabModal() : setDelCollab(false)
+        }
         onSubmit={handleDeleteCollab}
       />
     </div>

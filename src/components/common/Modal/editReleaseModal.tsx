@@ -1,5 +1,5 @@
 import { Button, Modal, TextareaAutosize } from "@mui/material";
-import { EditReleaseModalIcon } from "src/utils/common/constants";
+import { EditReleaseModalIcon } from "src/utils/common/constants/constants";
 
 import "./editReleaseModal.scss";
 import "./index.scss";

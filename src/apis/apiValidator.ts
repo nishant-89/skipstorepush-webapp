@@ -1,7 +1,7 @@
 import { $axios } from "./axios.instance";
 import ROUTES from "src/routes/routesPaths";
 import { v4 as uuidv4 } from "uuid";
-import { deviceType } from "src/utils/common/constants";
+import { deviceType } from "src/utils/common/constants/constants";
 import { getDeviceIdData, setDeviceIdData } from "src/utils/common/session";
 
 export const getDeviceType = (): number => {

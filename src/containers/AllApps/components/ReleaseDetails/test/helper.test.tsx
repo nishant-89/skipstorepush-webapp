@@ -3,12 +3,12 @@ import { useReleaseDetailsHelper } from "../helper";
 import * as reactRedux from "react-redux";
 import * as reactRouter from "react-router-dom";
 import * as api from "src/apis/api";
-import * as constants from "src/utils/common/constants";
+import * as constants from "src/utils/common/constants/constants";
 import * as alertUtil from "src/utils/alert";
 import { RELEASE_DETAIL_RESPONSE_TYPE } from "../../../types";
 
-jest.mock("src/utils/common/constants", () => ({
-  ...jest.requireActual("src/utils/common/constants"),
+jest.mock("src/utils/common/constants/constants", () => ({
+  ...jest.requireActual("src/utils/common/constants/constants"),
   getErrorMessage: jest.fn(),
 }));
 

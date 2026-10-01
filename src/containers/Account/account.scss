@@ -1,0 +1,260 @@
+@use "../../scss/variable.scss" as *;
+@use "../../scss/mixin.scss" as *;
+
+.accountPage {
+  .accountLayout {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+    max-width: 1080px;
+  }
+
+  .accountNav {
+    display: flex;
+    flex-direction: column;
+    min-height: 420px;
+    padding: 16px 12px 12px;
+  }
+
+  .accountNavList {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+  }
+
+  .accountNavItem,
+  .accountNavSignOut {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 12px;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--color-text-secondary);
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+
+    svg,
+    img {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+    }
+
+    &:hover {
+      background: var(--color-accent-muted);
+      color: var(--color-text-primary);
+    }
+
+    &:focus-visible {
+      outline: 2px dashed var(--color-accent-secondary);
+      outline-offset: 2px;
+    }
+  }
+
+  .accountNavItem.isActive {
+    background: var(--color-accent-muted);
+    color: var(--color-accent);
+  }
+
+  .accountNavSignOut {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--color-border);
+    border-radius: 0;
+    color: var(--color-error);
+
+    &:hover {
+      background: transparent;
+      color: var(--color-error);
+    }
+  }
+
+  .accountMain {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .accountMainHead {
+    h1 {
+      margin: 0;
+      color: var(--color-text-primary);
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    p {
+      margin: 6px 0 0;
+      color: var(--color-text-secondary);
+      font-size: 14px;
+    }
+  }
+
+  .accountHero {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .accountPanel {
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    background: var(--color-bg-primary);
+
+    h3 {
+      margin: 0 0 14px;
+      color: var(--color-text-primary);
+      font-size: 15px;
+      font-weight: 600;
+    }
+  }
+
+  .accountIdentity {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    min-height: 220px;
+
+    h2 {
+      margin: 12px 0 0;
+      color: var(--color-text-primary);
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .githubHandle {
+      margin: 4px 0 0;
+      color: var(--color-text-secondary);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .authBadge {
+      margin: 4px 0 0;
+      color: var(--color-accent);
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .textLinkBtn {
+      margin-top: 8px;
+    }
+  }
+
+  .profileImageInput {
+    display: none;
+  }
+
+  .profileImageButton {
+    position: relative;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .profileImage {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    background: var(--color-bg-surface);
+    border: 2px solid var(--color-border);
+  }
+
+  .profileImageOverlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--color-overlay);
+    color: var(--on-accent);
+    font-size: 12px;
+    font-weight: 600;
+    opacity: 0;
+  }
+
+  .profileImageButton:hover .profileImageOverlay,
+  .profileImageButton:focus-visible .profileImageOverlay {
+    opacity: 1;
+  }
+
+  .accountFieldGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .accountField {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-height: 64px;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+  }
+
+  .accountFieldLabel {
+    color: var(--color-text-secondary);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .accountFieldValue {
+    color: var(--color-text-primary);
+    font-size: 14px;
+    font-weight: 500;
+    word-break: break-word;
+
+    &.isMono {
+      font-family: var(--font-mono);
+      letter-spacing: 0.12em;
+    }
+  }
+
+  .accountPanelActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 16px;
+  }
+}
+
+.changePasswordFields {
+  text-align: left;
+  margin-top: 16px;
+}
+
+@media screen and (max-width: 960px) {
+  .accountPage {
+    .accountLayout,
+    .accountHero,
+    .accountFieldGrid {
+      grid-template-columns: 1fr;
+    }
+
+    .accountNav {
+      min-height: 0;
+    }
+  }
+}

@@ -27,7 +27,7 @@ describe("LogoutModal", () => {
   it("renders modal with title and buttons when open", () => {
     render(<LogoutModal isOpen={true} handleClose={handleCloseMock} />);
     expect(
-      screen.getByText("Are You Sure You Want To Logout?")
+      screen.getByText("Done for today?")
     ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /logout/i })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /cancel/i })).toBeInTheDocument();
@@ -36,7 +36,7 @@ describe("LogoutModal", () => {
   it("does not render modal when open is false", () => {
     render(<LogoutModal isOpen={false} handleClose={handleCloseMock} />);
     expect(
-      screen.queryByText("Are You Sure You Want To Logout?")
+      screen.queryByText("Done for today?")
     ).not.toBeInTheDocument();
   });
 

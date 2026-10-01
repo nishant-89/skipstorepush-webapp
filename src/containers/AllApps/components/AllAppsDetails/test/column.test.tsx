@@ -61,11 +61,10 @@ describe("getReleaseColumns", () => {
   it("should render status with correct label and color", () => {
     const columns = getReleaseColumns(appId);
     const StatusCell = columns[2].renderCell!;
-    const { getByText, container } = render(StatusCell(mockReleaseData));
+    const { getByText } = render(StatusCell(mockReleaseData));
 
     expect(getByText("LIVE")).toBeInTheDocument();
-    const dot = container.querySelector("span");
-    expect(dot).toHaveStyle("background-color: #17B26A");
+    expect(getByText("LIVE")).toHaveClass("success");
   });
 
   it("should render status as 'Rollback' if status is ROLLED_BACK", () => {
@@ -220,11 +219,10 @@ describe("getReleaseColumns", () => {
     const columns = getReleaseColumns("testApp");
     const StatusCell = columns[2].renderCell!;
     const data = { status: "PAUSED" } as any;
-    const { getByText, container } = render(StatusCell(data));
+    const { getByText } = render(StatusCell(data));
     // The code will render PAUSED (uppercase)
     expect(getByText("PAUSED")).toBeInTheDocument();
-    const dot = container.querySelector("span");
-    expect(dot).toHaveStyle("background-color: #F79009");
+    expect(getByText("PAUSED")).toHaveClass("pending");
   });
 
   it("should throw if status is undefined (capitalizeFirstLetter called with undefined)", () => {
@@ -422,13 +420,43 @@ describe("getCollabratorColumns", () => {
     ).toBeInTheDocument();
   });
 
-  it("does not render delete icon if status is not pending", () => {
+  it("renders delete icon if status is accepted and isOwner is true", () => {
     const columns = require("../column").getCollabratorColumns(
       handleCollabDel,
       true
     );
     const DeleteCell = columns[4].renderCell!;
-    const { container } = render(<>{DeleteCell(base)}</>);
+    const { container } = render(
+      <>{DeleteCell({ ...base, status: "accepted" })}</>
+    );
+    expect(
+      container.querySelector('img[alt="Delete Icon"]')
+    ).toBeInTheDocument();
+  });
+
+  it("does not render delete icon if status is declined", () => {
+    const columns = require("../column").getCollabratorColumns(
+      handleCollabDel,
+      true
+    );
+    const DeleteCell = columns[4].renderCell!;
+    const { container } = render(
+      <>{DeleteCell({ ...base, status: "declined" })}</>
+    );
+    expect(
+      container.querySelector('img[alt="Delete Icon"]')
+    ).not.toBeInTheDocument();
+  });
+
+  it("does not render delete icon for the owner row", () => {
+    const columns = require("../column").getCollabratorColumns(
+      handleCollabDel,
+      true
+    );
+    const DeleteCell = columns[4].renderCell!;
+    const { container } = render(
+      <>{DeleteCell({ ...base, role: "Owner", status: "accepted" })}</>
+    );
     expect(
       container.querySelector('img[alt="Delete Icon"]')
     ).not.toBeInTheDocument();
@@ -448,32 +476,33 @@ describe("getCollabratorColumns", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("calls handleCollabDel with email if clicked and status is pending", () => {
+  it("calls handleCollabDel with collaborator if clicked and status is pending", () => {
+    const columns = require("../column").getCollabratorColumns(
+      handleCollabDel,
+      true
+    );
+    const DeleteCell = columns[4].renderCell!;
+    const pending = { ...base, status: "pending" };
+    const { container } = render(<>{DeleteCell(pending)}</>);
+    const span = container.querySelector("span");
+    if (span) {
+      span.click();
+      expect(handleCollabDel).toHaveBeenCalledWith(pending);
+    }
+  });
+
+  it("does not call handleCollabDel if clicked and status is declined", () => {
     const columns = require("../column").getCollabratorColumns(
       handleCollabDel,
       true
     );
     const DeleteCell = columns[4].renderCell!;
     const { container } = render(
-      <>{DeleteCell({ ...base, status: "pending" })}</>
+      <>{DeleteCell({ ...base, status: "declined" })}</>
     );
     const span = container.querySelector("span");
     if (span) {
-      span.click();
-      expect(handleCollabDel).toHaveBeenCalledWith("abc@example.com");
-    }
-  });
-
-  it("does not call handleCollabDel if clicked and status is not pending", () => {
-    const columns = require("../column").getCollabratorColumns(
-      handleCollabDel,
-      true
-    );
-    const DeleteCell = columns[4].renderCell!;
-    const { container } = render(<>{DeleteCell(base)}</>);
-    const span = container.querySelector("span");
-    if (span) {
-      handleCollabDel.mockClear(); // reset before click
+      handleCollabDel.mockClear();
       span.click();
       expect(handleCollabDel).not.toHaveBeenCalled();
     }

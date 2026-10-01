@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 import { RootReducerType } from "src/redux/rootReducers";
 import { useSelector } from "react-redux";
 import ROUTES from "./routesPaths";
-import NoData from "src/components/common/NoData";
+import NoData from "src/components/common/NoData/NoData";
 
 const PrivateRoute = ({ children }: { children: ReactNode }) => {
   const location = useLocation();

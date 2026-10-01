@@ -8,8 +8,8 @@ import {
 import { postDataApi } from "src/apis/api";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { showAlert } from "src/utils/alert";
-import { apiRoutes, getErrorMessage } from "src/utils/common/constants";
-import { AuthData, AuthResponse } from "../types";
+import { apiRoutes, getErrorMessage } from "src/utils/common/constants/constants";
+import { AuthData, AuthResponse } from "../types/types";
 import { setLoading } from "src/redux/slices/globalSlice";
 
 function* AuthenticateTokenSaga(action: PayloadAction<AuthenticatePayload>) {

@@ -24,14 +24,14 @@
     }
     .searchInput {
       .MuiOutlinedInput-notchedOutline {
-        border: 0.75px solid var(--borderGray) !important;
+        border: 1px solid var(--color-border) !important;
         border-radius: size(4) !important;
       }
       .MuiOutlinedInput-input {
         padding: 10px 10px 10px 0px !important;
         padding-left: 0 !important;
         font-family: var(--font) !important;
-        color: #3a4f5f;
+        color: var(--color-text-primary);
         font-size: size(14) !important;
         font-weight: 700 !important;
         text-transform: capitalize;

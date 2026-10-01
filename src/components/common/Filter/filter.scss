@@ -5,8 +5,8 @@
     height: 11px;
     border-radius: 50%;
     width: 11px;
-    border: 1px solid #f9f9fc;
-    background-color: #f26258;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-error);
   }
 }
 
@@ -36,7 +36,7 @@
       font-weight: 600;
       font-size: 14px;
       line-height: 24px;
-      color: #3a4f5f;
+      color: var(--color-text-primary);
     }
     .checkboxSection {
       max-height: 150px;
@@ -51,7 +51,7 @@
           margin-left: size(8) !important;
           font-family: var(--font) !important;
           font-weight: 500 !important;
-          color: #3a4f5f !important;
+          color: var(--color-text-primary) !important;
           word-break: break-word;
         }
         .MuiFormControlLabel-root {
@@ -179,7 +179,7 @@
           color: var(--colorSecondary);
           padding-left: 30px;
           &.placeholder {
-            color: #abb3ba;
+            color: var(--color-text-secondary);
           }
         }
         &::before {
@@ -214,7 +214,7 @@
   input::placeholder {
     font-size: 14px !important;
     font-weight: 400;
-    color: #abb3ba;
+    color: var(--color-text-secondary);
   }
   .bottomWrapper {
     margin-top: 12px;
@@ -279,8 +279,8 @@
 // =========Date Range Picker==========//
 .datePicker_customer {
   right: 0px;
-  background: var(--white);
-  border: 1px solid #eaecf0;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
   padding: 9px 0 0 0;
   border-radius: 12px;
   width: size(656);
@@ -301,7 +301,7 @@
     .rdrCalendarWrapper {
       width: 100%;
       .rdrNextPrevButton {
-        border: 1.5px solid #3a4f5f;
+        border: 1.5px solid var(--color-text-primary);
         background: transparent;
       }
       .rdrMonthAndYearWrapper {
@@ -327,7 +327,7 @@
           position: relative;
           border: 1px solid var(--borderGrayBg);
           background: transparent;
-          box-shadow: 0px 1px 2px 0px #1018280d;
+          box-shadow: 0px 1px 2px 0px var(--color-overlay);
           border-radius: 8px;
           input {
             color: var(--colorSecondary);
@@ -360,7 +360,7 @@
       }
       .rdrMonths {
         padding: 0 0px 10px;
-        border-bottom: 1px solid #eaecf0;
+        border-bottom: 1px solid var(--color-border);
         .rdrMonthName {
           color: var(--colorSecondary);
         }
@@ -368,7 +368,7 @@
           .rdrWeekDay {
             color: var(--colorSecondary);
             font-size: size(14);
-            font-family: "Inter", sans-serif;
+            font-family: var(--font-ui);
             font-weight: 500;
           }
         }
@@ -376,7 +376,7 @@
           button {
             height: 40px;
             .rdrInRange {
-              background: #c3daec66;
+              background: var(--color-accent-muted);
               & ~ .rdrDayNumber {
                 span {
                   color: var(--inputColor);
@@ -397,7 +397,7 @@
               width: 100%;
               height: 100%;
               span {
-                font-family: "Inter", sans-serif;
+                font-family: var(--font-ui);
                 font-size: size(14);
                 font-weight: 400;
                 &::after {
@@ -416,7 +416,7 @@
               top: 0;
               right: 0;
               height: 100%;
-              border: 1px solid #eaecf0;
+              border: 1px solid var(--color-border);
             }
           }
         }

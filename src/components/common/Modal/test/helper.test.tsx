@@ -4,7 +4,7 @@ import * as reactRedux from "react-redux";
 import * as reactRouterDom from "react-router-dom";
 import * as api from "src/apis/api";
 import * as alertUtils from "src/utils/alert";
-import * as constants from "src/utils/common/constants";
+import * as constants from "src/utils/common/constants/constants";
 import * as authSlice from "src/containers/redux/slices/auth";
 import * as globalSlice from "src/redux/slices/globalSlice";
 import ROUTES from "src/routes/routesPaths";
@@ -13,8 +13,8 @@ jest.mock("react-redux", () => ({ useDispatch: jest.fn() }));
 jest.mock("react-router-dom", () => ({ useNavigate: jest.fn() }));
 jest.mock("src/apis/api", () => ({ postDataApi: jest.fn() }));
 jest.mock("src/utils/alert", () => ({ showAlert: jest.fn() }));
-jest.mock("src/utils/common/constants", () => ({
-  ...jest.requireActual("src/utils/common/constants"),
+jest.mock("src/utils/common/constants/constants", () => ({
+  ...jest.requireActual("src/utils/common/constants/constants"),
   getErrorMessage: jest.fn(),
 }));
 

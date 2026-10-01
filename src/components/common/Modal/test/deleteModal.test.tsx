@@ -42,6 +42,17 @@ describe("SettingDeleteModal", () => {
     ).not.toBeInTheDocument();
   });
 
+  it("renders custom confirm label when provided", () => {
+    render(
+      <SettingDeleteModal {...defaultProps} confirmLabel="Remove" />
+    );
+
+    expect(screen.getByRole("button", { name: /remove/i })).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: /confirm/i })
+    ).not.toBeInTheDocument();
+  });
+
   it("renders confirm button text when isCollabModal is false", () => {
     render(<SettingDeleteModal {...defaultProps} isCollabModal={false} />);
 

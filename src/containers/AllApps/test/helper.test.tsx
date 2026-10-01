@@ -2,7 +2,6 @@
 import { renderHook, act } from "@testing-library/react";
 import { useAllAppsHelper } from "../helper";
 import * as allAppActions from "../../redux/slices/allApp";
-import * as profileActions from "../../redux/slices/profile";
 import { useDispatch, useSelector } from "react-redux";
 
 jest.mock("react-redux", () => ({
@@ -24,6 +23,7 @@ describe("useAllAppsHelper", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    window.localStorage.clear();
 
     (useDispatch as unknown as jest.Mock).mockReturnValue(mockDispatch);
 
@@ -42,6 +42,17 @@ describe("useAllAppsHelper", () => {
         },
       })
     );
+  });
+
+  it("restores saved app filters", () => {
+    window.localStorage.setItem(
+      "skipstore_all_apps_filters",
+      JSON.stringify({ os: ["IOS"], search: "store" })
+    );
+    const { result } = renderHook(() => useAllAppsHelper());
+    expect(result.current.selectedFilters).toEqual(["IOS"]);
+    expect(result.current.searchTerm).toBe("store");
+    expect(result.current.isRedIndicator).toBe(true);
   });
 
   it("should initialize with correct default values", () => {
@@ -117,13 +128,6 @@ describe("useAllAppsHelper", () => {
 
     expect(result.current.selectedFilters).toEqual(["ios"]);
     expect(result.current.isRedIndicator).toBe(true);
-  });
-
-  it("should dispatch fetchProfileDataRequest on mount", () => {
-    renderHook(() => useAllAppsHelper());
-    expect(mockDispatch).toHaveBeenCalledWith(
-      profileActions.fetchProfileDataRequest()
-    );
   });
 
   it("should dispatch handleRefresh if search term or filters change and page is already 0", () => {

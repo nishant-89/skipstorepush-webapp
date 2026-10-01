@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import CollaboratorSection from "../collaborator";
 
-jest.mock("src/components/common/Button", () => (props: any) => (
+jest.mock("src/components/common/Button/Button", () => (props: any) => (
   <button onClick={props.onClick}>{props.label}</button>
 ));
 
@@ -9,7 +9,7 @@ jest.mock("src/components/common/Loader/tableDataLoader", () => () => (
   <div data-testid="table-loader">Loading...</div>
 ));
 
-jest.mock("src/components/common/Table", () => (props: any) => (
+jest.mock("src/components/common/Table/Table", () => (props: any) => (
   <div data-testid="table-component">
     <div>Mock Table</div>
     <div>Rows: {props.rowsPerPage}</div>
@@ -60,6 +60,9 @@ describe("CollaboratorSection", () => {
       inviteDesc: "Enter email to invite",
       deleteCollabTitle: "Are you sure you want to delete this collaborator?",
       deleteCollabDesc: "This action will remove their access permanently.",
+      removeCollabTitle: "Remove collaborator?",
+      removeCollabDesc:
+        "This person will lose access to the app. Releases they already published will stay.",
     },
 
     isOwner: true,
@@ -115,5 +118,43 @@ describe("CollaboratorSection", () => {
     expect(defaultProps.handleInvite).toHaveBeenCalledWith({
       email: "test@example.com",
     });
+  });
+
+  it("should ask to remove or cancel before removing an accepted collaborator", () => {
+    const onCloseCollabModal = jest.fn();
+    render(
+      <CollaboratorSection
+        {...defaultProps}
+        delCollab={true}
+        collabTarget={{ type: "member" }}
+        onCloseCollabModal={onCloseCollabModal}
+      />
+    );
+
+    expect(screen.getByText("Remove collaborator?")).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "This person will lose access to the app. Releases they already published will stay."
+      )
+    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /cancel/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /remove/i })).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: /cancel/i }));
+    expect(onCloseCollabModal).toHaveBeenCalled();
+    expect(defaultProps.handleDeleteCollab).not.toHaveBeenCalled();
+  });
+
+  it("should call handleDeleteCollab only after remove is confirmed", () => {
+    render(
+      <CollaboratorSection
+        {...defaultProps}
+        delCollab={true}
+        collabTarget={{ type: "member" }}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: /remove/i }));
+    expect(defaultProps.handleDeleteCollab).toHaveBeenCalled();
   });
 });

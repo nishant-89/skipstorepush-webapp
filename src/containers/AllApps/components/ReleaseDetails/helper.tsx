@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getDataApi, patchDataApi, postDataApi } from "src/apis/api";
-import { apiRoutes, getErrorMessage } from "src/utils/common/constants";
+import { apiRoutes, getErrorMessage } from "src/utils/common/constants/constants";
 import { showAlert } from "src/utils/alert";
 import { setLoading } from "src/redux/slices/globalSlice";
 import { useDispatch, useSelector } from "react-redux";

@@ -12,8 +12,8 @@ import { getDataApi } from "src/apis/api";
 import {
   CollaboratorsResponse,
   FetchCollaboratorsStatePayload,
-} from "../types";
-import { apiRoutes, getErrorMessage } from "src/utils/common/constants";
+} from "../types/types";
+import { apiRoutes, getErrorMessage } from "src/utils/common/constants/constants";
 
 function* fetchCollaboratorsSaga(
   action: PayloadAction<FetchCollaboratorsStatePayload>
