@@ -26,6 +26,7 @@ export const apiRoutes = {
   Faqs: "api/user/faq",
   UserSettings: "api/user/settings",
   Activities: "api/activities",
+  Dashboard: "api/dashboard",
   Notifications: "api/notifications",
   NotificationsUnread: "api/notifications/unread-count",
   NotificationsReadAll: "api/notifications/read-all",

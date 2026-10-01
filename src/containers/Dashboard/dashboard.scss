@@ -1,0 +1,313 @@
+@use "../../scss/variable.scss" as *;
+@use "../../scss/mixin.scss" as *;
+
+.dashboardPage {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dashboardStats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 860px) {
+  .dashboardStats {
+    grid-template-columns: 1fr;
+  }
+}
+
+.statCard {
+  padding: 20px 22px;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.statLabel {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.statValue {
+  margin: 10px 0 6px;
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--color-text-primary);
+}
+
+.statHint {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.dashboardOnboard {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.onboardHead {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+
+  h2 {
+    margin: 0 0 8px;
+    font-size: 20px;
+    color: var(--color-text-primary);
+  }
+
+  p {
+    margin: 0;
+    max-width: 62ch;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+  }
+}
+
+.onboardGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 860px) {
+  .onboardGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.onboardField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fieldLabel {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.fieldRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+
+  code {
+    flex: 1;
+    min-width: 0;
+    padding: 8px 10px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.appSelect {
+  max-width: 360px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-ui);
+}
+
+.cliBlock {
+  margin: 0;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.7;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.emptyHint {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+}
+
+.envList {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 860px) {
+  .envList {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dashboardCharts {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 960px) {
+  .dashboardCharts {
+    grid-template-columns: 1fr;
+  }
+}
+
+.chartCard {
+  padding: 20px 22px;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+
+  h2 {
+    margin: 0 0 4px;
+    font-size: 16px;
+    color: var(--color-text-primary);
+  }
+}
+
+.chartHint {
+  margin: 0 0 14px;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.chartLegend {
+  display: flex;
+  gap: 16px;
+  margin: 0 0 14px;
+  padding: 0;
+  list-style: none;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 6px;
+  border-radius: 2px;
+  vertical-align: -1px;
+}
+
+.swatch--ios {
+  background: var(--color-accent-secondary);
+}
+
+.swatch--android {
+  background: var(--color-accent);
+}
+
+.groupedBars {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.groupedRow {
+  display: grid;
+  grid-template-columns: 88px 1fr 72px;
+  gap: 10px;
+  align-items: center;
+}
+
+.groupedLabel,
+.groupedValues {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.groupedValues {
+  text-align: right;
+  font-family: var(--font-mono);
+}
+
+.groupedTrack {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.groupedBar {
+  height: 8px;
+  border-radius: 99px;
+  min-width: 0;
+}
+
+.groupedBar--ios {
+  background: var(--color-accent-secondary);
+}
+
+.groupedBar--android {
+  background: var(--color-accent);
+}
+
+.weekChart {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 8px;
+  height: 180px;
+  align-items: stretch;
+}
+
+.weekCol {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
+}
+
+.weekTrack {
+  display: flex;
+  flex: 1;
+  align-items: flex-end;
+  min-height: 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.weekBar {
+  width: 100%;
+  background: var(--color-accent);
+  border-radius: 3px 3px 0 0;
+}
+
+.weekTick {
+  margin-top: 8px;
+  font-size: 10px;
+  line-height: 1.2;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
