@@ -12,6 +12,7 @@ interface CustomModalProps {
   mainClass?: string;
   isPrimaryButtonDisable?: boolean;
   isCollabModal?: boolean;
+  confirmLabel?: string;
 }
 
 const SettingDeleteModal = ({
@@ -23,7 +24,10 @@ const SettingDeleteModal = ({
   mainClass = "",
   isCollabModal = false,
   isPrimaryButtonDisable = false,
+  confirmLabel,
 }: CustomModalProps) => {
+  const primaryLabel =
+    confirmLabel ?? (isCollabModal ? "Delete" : "Confirm");
   return (
     <Modal
       open={open}
@@ -52,7 +56,7 @@ const SettingDeleteModal = ({
               className="exitBtn"
               onClick={onSubmit}
             >
-              {isCollabModal ? "Delete" : "Confirm"}
+              {primaryLabel}
             </Button>
           </div>
         </div>

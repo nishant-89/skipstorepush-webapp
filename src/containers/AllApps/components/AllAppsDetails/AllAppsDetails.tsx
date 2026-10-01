@@ -109,6 +109,8 @@ const AllAppsDetails = () => {
     setDelCollab,
     delCollab,
     handleDeleteCollab,
+    collabTarget,
+    clearCollabRemoval,
   } = useAllAppsDetailHelper();
 
   const renderTableContent = () => {
@@ -367,6 +369,8 @@ const AllAppsDetails = () => {
                   delCollab={delCollab}
                   setDelCollab={setDelCollab}
                   handleDeleteCollab={handleDeleteCollab}
+                  collabTarget={collabTarget}
+                  onCloseCollabModal={clearCollabRemoval}
                 />
               </div>
             </CustomTabPanel>

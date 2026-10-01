@@ -2,6 +2,8 @@ export type UserData = {
   userId: number;
   email: string;
   userName: string;
+  fullName?: string;
+  username?: string;
   image: string;
   azureUserId: string;
   id: string;
@@ -71,6 +73,7 @@ export interface Profile {
   oauthId?: string;
   email: string;
   fullName: string;
+  username?: string;
   profileImage?: string;
   authType: AuthType;
   createdDate: string;

@@ -83,7 +83,16 @@
           white-space: normal !important;
           word-break: break-word !important;
         }
-        &:first-of-type {
+        &:first-of-type,
+        .osCol {
+          width: 1% !important;
+          white-space: nowrap !important;
+          word-break: normal !important;
+          text-align: left !important;
+          padding-left: 12px;
+          padding-right: 8px;
+        }
+        &:nth-of-type(2) {
           width: 45% !important;
           @media screen and (max-width: 1500px) {
             width: 40% !important;
@@ -92,7 +101,7 @@
             width: 30% !important;
           }
         }
-        &:not(first-of-type) {
+        &:not(:first-of-type) {
           text-align: left !important;
         }
       }

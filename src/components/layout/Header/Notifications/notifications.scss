@@ -174,10 +174,15 @@
 }
 
 .notifyMessage {
-  color: var(--color-text-primary);
+  color: var(--color-text-secondary);
   font-size: 13px;
-  font-weight: 600;
-  line-height: 1.35;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.notifyHighlight {
+  color: var(--color-text-primary);
+  font-weight: 500;
 }
 
 .notifyMeta {

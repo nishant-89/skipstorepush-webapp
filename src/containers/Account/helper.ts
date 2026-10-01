@@ -62,8 +62,9 @@ export const useAccountHelper = () => {
   }, [dispatch]);
 
   const isGithubAuth = data?.authType === "GITHUB";
-  const githubProfileUrl = data?.fullName
-    ? `https://github.com/${data.fullName}`
+  const githubUsername = data?.username?.trim() || "";
+  const githubProfileUrl = githubUsername
+    ? `https://github.com/${encodeURIComponent(githubUsername)}`
     : "";
 
   const openAccessKeyModal = () => setIsAccessKeyModalOpen(true);
@@ -113,6 +114,7 @@ export const useAccountHelper = () => {
     error,
     accessKey: user?.accessKey || "",
     isGithubAuth,
+    githubUsername,
     githubProfileUrl,
     isPasswordModalOpen,
     isAccessKeyModalOpen,

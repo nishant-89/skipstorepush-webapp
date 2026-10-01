@@ -1,6 +1,7 @@
 export const NOTIFICATION_TYPE = {
   COLLABORATOR_INVITED: "COLLABORATOR_INVITED",
   COLLABORATOR_ACCEPTED: "COLLABORATOR_ACCEPTED",
+  COLLABORATOR_DECLINED: "COLLABORATOR_DECLINED",
   COLLABORATOR_REMOVED: "COLLABORATOR_REMOVED",
   INVITATION_REVOKED: "INVITATION_REVOKED",
   RELEASE_CREATED: "RELEASE_CREATED",
@@ -29,6 +30,7 @@ export type NotificationItem = {
   actorProfileImage?: string | null;
   appExists?: boolean;
   accepted?: boolean;
+  declined?: boolean;
   inviteOpen?: boolean;
 };
 

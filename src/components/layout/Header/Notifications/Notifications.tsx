@@ -5,19 +5,21 @@ import { Bell } from "lucide-react";
 import Popover from "@mui/material/Popover";
 import { getDataApi, patchDataApi } from "src/apis/api";
 import ButtonComp from "src/components/common/Button/Button";
-import { apiRoutes } from "src/utils/common/constants/constants";
+import { apiRoutes, getErrorMessage } from "src/utils/common/constants/constants";
 import ROUTES from "src/routes/routesPaths";
 import { RootState } from "src/redux/rootReducers";
 import {
   NOTIFICATIONS_UNREAD_REFRESH,
 } from "src/utils/notifications";
+import { showAlert } from "src/utils/alert";
 import {
   formatRelativeTime,
   getActorImage,
   getActorInitials,
+  getHighlightedMessageParts,
   getNotificationDestination,
   isCollaboratorInvite,
-  canAcceptInvite,
+  canRespondToInvite,
 } from "./helper";
 import { NotificationItem, NotificationsListData } from "./types";
 import "./notifications.scss";
@@ -39,6 +41,7 @@ const Notifications = () => {
   const [page, setPage] = useState(1);
   const [loadingList, setLoadingList] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const [inviteActionId, setInviteActionId] = useState<number | null>(null);
   const fetchingRef = useRef(false);
   const open = Boolean(anchorEl);
 
@@ -134,7 +137,7 @@ const Notifications = () => {
   };
 
   const handleAccept = async (item: NotificationItem) => {
-    if (!canAcceptInvite(item)) {
+    if (!canRespondToInvite(item) || inviteActionId === item.id) {
       return;
     }
     if (!item.isRead) {
@@ -146,14 +149,62 @@ const Notifications = () => {
           ? {
               ...row,
               accepted: true,
+              declined: false,
               inviteOpen: false,
-              payload: { ...(row.payload ?? {}), accepted: true, inviteOpen: false },
+              payload: {
+                ...(row.payload ?? {}),
+                accepted: true,
+                declined: false,
+                inviteOpen: false,
+              },
             }
           : row
       )
     );
     handleClose();
     navigate(getNotificationDestination(item) || ROUTES.ALL_APPS);
+  };
+
+  const handleDecline = async (item: NotificationItem) => {
+    if (!canRespondToInvite(item) || inviteActionId === item.id) {
+      return;
+    }
+    setInviteActionId(item.id);
+    try {
+      const response = (await getDataApi({
+        path: `${apiRoutes.DeclineInvite}?invitationId=${item.targetId}`,
+      })) as { success?: boolean; statusCode?: number; message?: string };
+
+      if (response?.success || response?.statusCode === 200) {
+        if (!item.isRead) {
+          await markRead(item.id);
+        }
+        setItems((current) =>
+          current.map((row) =>
+            row.id === item.id
+              ? {
+                  ...row,
+                  declined: true,
+                  accepted: false,
+                  inviteOpen: false,
+                  payload: {
+                    ...(row.payload ?? {}),
+                    declined: true,
+                    accepted: false,
+                    inviteOpen: false,
+                  },
+                }
+              : row
+          )
+        );
+        showAlert(1, response.message || "Invitation declined successfully");
+        handleClose();
+      }
+    } catch (error) {
+      showAlert(2, getErrorMessage(error) ?? "Error");
+    } finally {
+      setInviteActionId(null);
+    }
   };
 
   const handleMarkAll = async () => {
@@ -238,7 +289,20 @@ const Notifications = () => {
                     )}
                   </span>
                   <span className="notifyBody">
-                    <span className="notifyMessage">{item.message || item.title}</span>
+                    <span className="notifyMessage">
+                      {getHighlightedMessageParts(
+                        item.message || item.title,
+                        item
+                      ).map((part, index) =>
+                        part.highlight ? (
+                          <strong key={`${item.id}-${index}`} className="notifyHighlight">
+                            {part.text}
+                          </strong>
+                        ) : (
+                          <span key={`${item.id}-${index}`}>{part.text}</span>
+                        )
+                      )}
+                    </span>
                     <span className="notifyMeta">
                       {formatRelativeTime(item.createdDate)}
                       {typeof item.payload?.appName === "string"
@@ -252,19 +316,24 @@ const Notifications = () => {
                 </button>
                 {isCollaboratorInvite(item) ? (
                   <div className="notifyActions">
-                    <span title="Coming soon">
-                      <ButtonComp
-                        label="Decline"
-                        variant="outlined"
-                        disabled
-                        className="notifyDecline"
-                      />
-                    </span>
+                    <ButtonComp
+                      label="Decline"
+                      variant="outlined"
+                      className="notifyDecline"
+                      disabled={
+                        !canRespondToInvite(item) || inviteActionId === item.id
+                      }
+                      onClick={() => {
+                        void handleDecline(item);
+                      }}
+                    />
                     <ButtonComp
                       label="Accept"
                       variant="contained"
                       className="notifyAccept"
-                      disabled={!canAcceptInvite(item)}
+                      disabled={
+                        !canRespondToInvite(item) || inviteActionId === item.id
+                      }
                       onClick={() => {
                         void handleAccept(item);
                       }}

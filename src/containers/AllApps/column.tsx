@@ -7,6 +7,16 @@ import { OsBrandIcon } from "./osIcons";
 
 export const allAppsColumns: Column<ALL_APPS_RESPONSE_TYPE>[] = [
   {
+    field: "osType",
+    sorting: false,
+    headerName: "OS",
+    width: 56,
+    className: "osCol",
+    renderCell: (param: ALL_APPS_RESPONSE_TYPE) => (
+      <OsBrandIcon osType={param?.osType} />
+    ),
+  },
+  {
     field: "name",
     sorting: true,
     headerName: "Name",
@@ -19,14 +29,6 @@ export const allAppsColumns: Column<ALL_APPS_RESPONSE_TYPE>[] = [
         </div>
       );
     },
-  },
-  {
-    field: "osType",
-    sorting: false,
-    headerName: "OS",
-    renderCell: (param: ALL_APPS_RESPONSE_TYPE) => (
-      <OsBrandIcon osType={param?.osType} />
-    ),
   },
   {
     field: "ownerName",

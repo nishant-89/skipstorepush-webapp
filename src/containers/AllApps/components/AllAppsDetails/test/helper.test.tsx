@@ -19,6 +19,7 @@ jest.mock("react-router-dom", () => ({
 jest.mock("src/apis/api", () => ({
   getDataApi: jest.fn(),
   deleteDataApi: jest.fn(),
+  deleteApi: jest.fn(),
   postDataApi: jest.fn(),
 }));
 
@@ -435,19 +436,52 @@ describe("useAllAppsDetailHelper", () => {
     expect(mockDispatch).toHaveBeenCalled();
   });
 
+  const pendingCollaborator = {
+    id: "",
+    email: "test@example.com",
+    fullName: "",
+    role: "Collaborator",
+    profile_image: "",
+    status: "pending",
+  };
+
+  const acceptedCollaborator = {
+    id: "42",
+    email: "member@example.com",
+    fullName: "Member",
+    role: "Collaborator",
+    profile_image: "",
+    status: "accepted",
+  };
+
   it("should handle collaborator model state updates", () => {
     const { result } = renderHook(() => useAllAppsDetailHelper());
-    const testEmail = "test@example.com";
 
     act(() => {
-      result.current.handleCollabModel(testEmail);
+      result.current.handleCollabModel(pendingCollaborator);
     });
 
     expect(result.current.delCollab).toBe(true);
+    expect(result.current.collabTarget).toEqual({
+      type: "invite",
+      email: pendingCollaborator.email,
+    });
+  });
+
+  it("should not call delete collaborator API until the confirm popup is submitted", () => {
+    const { result } = renderHook(() => useAllAppsDetailHelper());
+
+    act(() => {
+      result.current.handleCollabModel(acceptedCollaborator);
+    });
+
+    expect(result.current.delCollab).toBe(true);
+    expect(api.deleteApi).not.toHaveBeenCalled();
+    expect(api.deleteDataApi).not.toHaveBeenCalled();
   });
 
   it("should handle delete collaborator successfully", async () => {
-    const testEmail = "test@example.com";
+    const testEmail = pendingCollaborator.email;
     (api.deleteDataApi as jest.Mock).mockResolvedValue({
       statusCode: 200,
       message: "Collaborator deleted successfully",
@@ -455,9 +489,8 @@ describe("useAllAppsDetailHelper", () => {
 
     const { result } = renderHook(() => useAllAppsDetailHelper());
 
-    // Set up the email first
     act(() => {
-      result.current.handleCollabModel(testEmail);
+      result.current.handleCollabModel(pendingCollaborator);
     });
 
     await act(async () => {
@@ -477,15 +510,47 @@ describe("useAllAppsDetailHelper", () => {
     expect(result.current.delCollab).toBe(false);
   });
 
+  it("should remove an accepted collaborator after confirm", async () => {
+    (api.deleteApi as jest.Mock).mockResolvedValue({
+      statusCode: 200,
+      message: "Collaborator removed successfully",
+    });
+
+    const { result } = renderHook(() => useAllAppsDetailHelper());
+
+    act(() => {
+      result.current.handleCollabModel(acceptedCollaborator);
+    });
+
+    expect(result.current.collabTarget).toEqual({
+      type: "member",
+      email: acceptedCollaborator.email,
+      userId: acceptedCollaborator.id,
+    });
+
+    await act(async () => {
+      await result.current.handleDeleteCollab();
+    });
+
+    expect(api.deleteApi).toHaveBeenCalledWith({
+      path: "api/collaborators",
+      data: { appId: Number("test-id"), userId: 42 },
+    });
+    expect(api.deleteDataApi).not.toHaveBeenCalled();
+    expect(alertUtils.showAlert).toHaveBeenCalledWith(
+      1,
+      "Collaborator removed successfully"
+    );
+    expect(result.current.delCollab).toBe(false);
+  });
+
   it("should handle delete collaborator failure", async () => {
-    const testEmail = "test@example.com";
     (api.deleteDataApi as jest.Mock).mockRejectedValue("API error");
 
     const { result } = renderHook(() => useAllAppsDetailHelper());
 
-    // Set up the email first
     act(() => {
-      result.current.handleCollabModel(testEmail);
+      result.current.handleCollabModel(pendingCollaborator);
     });
 
     await act(async () => {
@@ -508,5 +573,6 @@ describe("useAllAppsDetailHelper", () => {
     });
 
     expect(api.deleteDataApi).not.toHaveBeenCalled();
+    expect(api.deleteApi).not.toHaveBeenCalled();
   });
 });

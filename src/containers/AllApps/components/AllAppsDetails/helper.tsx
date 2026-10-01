@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { deleteDataApi, getDataApi, postDataApi } from "src/apis/api";
+import { deleteApi, deleteDataApi, getDataApi, postDataApi } from "src/apis/api";
 import {
   fetchReleaseRequest,
   handleRefresh,
@@ -22,9 +22,16 @@ import {
   EnvApiResponse,
   Environment,
   FilteredEnvironment,
+  COLLABRATOR_RESPONSE_TYPE,
   InviteFormValues,
 } from "../../types";
 import { getReleaseColumns } from "./column";
+
+type CollabRemovalTarget = {
+  type: "invite" | "member";
+  email: string;
+  userId?: string;
+};
 
 export const useAllAppsDetailHelper = () => {
   const dispatch = useDispatch();
@@ -63,7 +70,9 @@ export const useAllAppsDetailHelper = () => {
   const [rowsPerPageCollab, setRowsPerPageCollab] = useState(10);
 
   const [delCollab, setDelCollab] = useState(false);
-  const [email, setEmail] = useState("");
+  const [collabTarget, setCollabTarget] = useState<CollabRemovalTarget | null>(
+    null
+  );
 
   const {
     filteredData: filteredDataCollab,
@@ -275,36 +284,70 @@ export const useAllAppsDetailHelper = () => {
   };
 
   //handle collab model
-  const handleCollabModel = (value: string) => {
+  const handleCollabModel = (collaborator: COLLABRATOR_RESPONSE_TYPE) => {
+    const status = collaborator.status?.toLowerCase();
+    setCollabTarget(
+      status === "pending"
+        ? { type: "invite", email: collaborator.email }
+        : {
+            type: "member",
+            email: collaborator.email,
+            userId: collaborator.id,
+          }
+    );
     setDelCollab(true);
-    setEmail(value);
+  };
+
+  const clearCollabRemoval = () => {
+    setCollabTarget(null);
+    setDelCollab(false);
   };
 
   //delete collab
   const handleDeleteCollab = async () => {
     try {
-      if (email && id) {
-        const encodedEmail = encodeURIComponent(email);
-        dispatch(setLoading(true));
-        const res: ApiResponse = (await deleteDataApi({
+      if (!id || !collabTarget) {
+        return;
+      }
+
+      dispatch(setLoading(true));
+      let res: ApiResponse;
+
+      if (collabTarget.type === "invite") {
+        if (!collabTarget.email) {
+          dispatch(setLoading(false));
+          return;
+        }
+        const encodedEmail = encodeURIComponent(collabTarget.email);
+        res = (await deleteDataApi({
           path: `${apiRoutes.DeleteCollab}?appId=${id}&email=${encodedEmail}`,
         })) as ApiResponse;
-
-        if (res?.statusCode === 200) {
-          dispatch(handleCollabRefresh(!isRefreshCollab));
-          mainPageCollab === 0
-            ? dispatch(handleCollabRefresh(!isRefreshCollab))
-            : setMainPageCollab(0);
-          setEmail("");
-          setDelCollab(false);
-          showAlert(1, res?.message);
+      } else {
+        if (!collabTarget.userId) {
           dispatch(setLoading(false));
+          return;
         }
+        res = (await deleteApi({
+          path: apiRoutes.Collaborators,
+          data: {
+            appId: Number(id),
+            userId: Number(collabTarget.userId),
+          },
+        })) as ApiResponse;
+      }
+
+      if (res?.statusCode === 200) {
+        dispatch(handleCollabRefresh(!isRefreshCollab));
+        mainPageCollab === 0
+          ? dispatch(handleCollabRefresh(!isRefreshCollab))
+          : setMainPageCollab(0);
+        clearCollabRemoval();
+        showAlert(1, res?.message);
+        dispatch(setLoading(false));
       }
     } catch (error) {
       dispatch(setLoading(false));
-      setDelCollab(false);
-      setEmail("");
+      clearCollabRemoval();
       const errorMessage = getErrorMessage(error);
       showAlert(2, errorMessage ?? "Error");
     }
@@ -359,5 +402,7 @@ export const useAllAppsDetailHelper = () => {
     delCollab,
     setDelCollab,
     handleDeleteCollab,
+    collabTarget,
+    clearCollabRemoval,
   };
 };

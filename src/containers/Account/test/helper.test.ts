@@ -11,7 +11,8 @@ import { showAlert } from "src/utils/alert";
 
 const mockDispatch = jest.fn();
 const mockProfile = {
-  fullName: "octocat",
+  fullName: "The Octocat",
+  username: "octocat",
   email: "octocat@github.com",
   authType: "GITHUB",
   profileImage: "https://example.com/avatar.png",
@@ -49,6 +50,7 @@ describe("useAccountHelper", () => {
     const { result } = renderHook(() => useAccountHelper());
     expect(mockDispatch).toHaveBeenCalledWith(fetchProfileDataRequest());
     expect(result.current.isGithubAuth).toBe(true);
+    expect(result.current.githubUsername).toBe("octocat");
     expect(result.current.githubProfileUrl).toBe("https://github.com/octocat");
   });
 

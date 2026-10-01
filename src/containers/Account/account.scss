@@ -133,6 +133,14 @@
       font-weight: 700;
     }
 
+    .githubHandle {
+      margin: 4px 0 0;
+      color: var(--color-text-secondary);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
     .authBadge {
       margin: 4px 0 0;
       color: var(--color-accent);

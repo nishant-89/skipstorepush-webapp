@@ -60,6 +60,9 @@ describe("CollaboratorSection", () => {
       inviteDesc: "Enter email to invite",
       deleteCollabTitle: "Are you sure you want to delete this collaborator?",
       deleteCollabDesc: "This action will remove their access permanently.",
+      removeCollabTitle: "Remove collaborator?",
+      removeCollabDesc:
+        "This person will lose access to the app. Releases they already published will stay.",
     },
 
     isOwner: true,
@@ -115,5 +118,43 @@ describe("CollaboratorSection", () => {
     expect(defaultProps.handleInvite).toHaveBeenCalledWith({
       email: "test@example.com",
     });
+  });
+
+  it("should ask to remove or cancel before removing an accepted collaborator", () => {
+    const onCloseCollabModal = jest.fn();
+    render(
+      <CollaboratorSection
+        {...defaultProps}
+        delCollab={true}
+        collabTarget={{ type: "member" }}
+        onCloseCollabModal={onCloseCollabModal}
+      />
+    );
+
+    expect(screen.getByText("Remove collaborator?")).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "This person will lose access to the app. Releases they already published will stay."
+      )
+    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /cancel/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /remove/i })).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: /cancel/i }));
+    expect(onCloseCollabModal).toHaveBeenCalled();
+    expect(defaultProps.handleDeleteCollab).not.toHaveBeenCalled();
+  });
+
+  it("should call handleDeleteCollab only after remove is confirmed", () => {
+    render(
+      <CollaboratorSection
+        {...defaultProps}
+        delCollab={true}
+        collabTarget={{ type: "member" }}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: /remove/i }));
+    expect(defaultProps.handleDeleteCollab).toHaveBeenCalled();
   });
 });

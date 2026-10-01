@@ -15,6 +15,7 @@ export const apiRoutes = {
   SendInvite: "api/collaborators/send-invite",
   CheckInvite: "api/collaborators/check-invitation",
   AcceptInvite: "api/collaborators/accept-invitation",
+  DeclineInvite: "api/collaborators/decline-invitation",
   RollBack: "api/releases/rollback",
   Promote: "api/releases/promote",
   Rollout: "api/releases/rollout",

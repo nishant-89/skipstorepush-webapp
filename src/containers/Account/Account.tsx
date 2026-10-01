@@ -33,6 +33,7 @@ const Account = () => {
     data,
     accessKey,
     isGithubAuth,
+    githubUsername,
     githubProfileUrl,
     isPasswordModalOpen,
     isAccessKeyModalOpen,
@@ -131,6 +132,9 @@ const Account = () => {
                 <span className="profileImageOverlay">Change</span>
               </button>
               <h2>{data?.fullName || "—"}</h2>
+              {isGithubAuth && githubUsername ? (
+                <p className="githubHandle">@{githubUsername}</p>
+              ) : null}
               <p className="authBadge">{authLabel(data?.authType)}</p>
               <button
                 type="button"
@@ -145,6 +149,13 @@ const Account = () => {
               <h3>General information</h3>
               <div className="accountFieldGrid">
                 <AccountField label="Email" value={data?.email || "—"} />
+                {isGithubAuth && githubUsername ? (
+                  <AccountField
+                    label="GitHub username"
+                    value={githubUsername}
+                    mono
+                  />
+                ) : null}
                 <AccountField
                   label="Last login"
                   value={

@@ -150,6 +150,7 @@ const TableComponent = <
                     <TableCell
                       key={column.field.toString() + uuid()}
                       style={{ width: column.width }}
+                      className={column.className}
                     >
                       <div
                         className={

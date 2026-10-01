@@ -3,6 +3,7 @@ import {
   formatRelativeTime,
   getActorImage,
   getActorInitials,
+  getHighlightedMessageParts,
   getNotificationDestination,
   isCollaboratorInvite,
 } from "../helper";
@@ -77,5 +78,32 @@ describe("notification helpers", () => {
         accepted: true,
       })
     ).toBe(false);
+    expect(
+      canAcceptInvite({
+        ...base,
+        type: NOTIFICATION_TYPE.COLLABORATOR_INVITED,
+        declined: true,
+      })
+    ).toBe(false);
+    expect(
+      canAcceptInvite({
+        ...base,
+        type: NOTIFICATION_TYPE.COLLABORATOR_INVITED,
+      })
+    ).toBe(true);
+  });
+
+  it("bolds actor and app names inside the stored message", () => {
+    const item = {
+      ...base,
+      actorName: "nishant-89",
+      message: "nishant-89 accepted your invite to Owltext",
+      payload: { actorName: "nishant-89", appName: "Owltext" },
+    };
+    expect(getHighlightedMessageParts(item.message, item)).toEqual([
+      { text: "nishant-89", highlight: true },
+      { text: " accepted your invite to ", highlight: false },
+      { text: "Owltext", highlight: true },
+    ]);
   });
 });

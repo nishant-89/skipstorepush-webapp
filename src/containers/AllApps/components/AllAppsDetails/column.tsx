@@ -82,9 +82,22 @@ export const getReleaseColumns = (
   },
 ];
 
+const MEMBER_STATUSES = new Set(["accepted", "active", "activated"]);
+
+export const canOwnerRemoveCollaborator = (
+  collaborator: COLLABRATOR_RESPONSE_TYPE,
+  isOwner: boolean
+) => {
+  if (!isOwner || collaborator.role === "Owner") {
+    return false;
+  }
+  const status = collaborator.status?.toLowerCase();
+  return status === "pending" || (!!status && MEMBER_STATUSES.has(status));
+};
+
 // collaborator table columns
 export const getCollabratorColumns = (
-  handleCollabDel: (id: string) => void,
+  handleCollabDel: (collaborator: COLLABRATOR_RESPONSE_TYPE) => void,
   isOwner: boolean
 ) => {
   const columns = [
@@ -138,18 +151,17 @@ export const getCollabratorColumns = (
       field: "",
       sorting: false,
       headerName: "",
-      renderCell: (param: COLLABRATOR_RESPONSE_TYPE) => (
-        <span
-          style={{ cursor: "pointer" }}
-          onClick={() =>
-            param?.status === "pending" && handleCollabDel(param?.email)
-          }
-        >
-          {param.status === "pending" && isOwner && (
-            <img src={TableDeleteIcon} alt="Delete Icon" />
-          )}
-        </span>
-      ),
+      renderCell: (param: COLLABRATOR_RESPONSE_TYPE) => {
+        const canRemove = canOwnerRemoveCollaborator(param, isOwner);
+        return (
+          <span
+            style={{ cursor: canRemove ? "pointer" : "default" }}
+            onClick={() => canRemove && handleCollabDel(param)}
+          >
+            {canRemove && <img src={TableDeleteIcon} alt="Delete Icon" />}
+          </span>
+        );
+      },
     },
   ];
 

@@ -9,11 +9,14 @@ export const isAppGone = (item: NotificationItem) =>
   item.appExists === false ||
   item.payload?.appExists === false;
 
-export const canAcceptInvite = (item: NotificationItem) => {
+export const canRespondToInvite = (item: NotificationItem) => {
   if (!isCollaboratorInvite(item)) {
     return false;
   }
   if (item.accepted === true || item.payload?.accepted === true) {
+    return false;
+  }
+  if (item.declined === true || item.payload?.declined === true) {
     return false;
   }
   if (item.inviteOpen === false || item.payload?.inviteOpen === false) {
@@ -21,6 +24,8 @@ export const canAcceptInvite = (item: NotificationItem) => {
   }
   return true;
 };
+
+export const canAcceptInvite = canRespondToInvite;
 
 export const getActorImage = (item: NotificationItem) => {
   if (typeof item.actorProfileImage === "string" && item.actorProfileImage.trim()) {
@@ -90,6 +95,63 @@ export const formatRelativeTime = (dateStr: string): string => {
     month: "short",
     year: "numeric",
   });
+};
+
+export type MessageSegment = {
+  text: string;
+  highlight: boolean;
+};
+
+const payloadString = (value: unknown): string =>
+  typeof value === "string" ? value.trim() : "";
+
+const escapeRegExp = (value: string) =>
+  value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+export const getNotificationHighlights = (item: NotificationItem): string[] => {
+  const payload = item.payload ?? {};
+  const values = [
+    item.actorName,
+    payload.actorName,
+    payload.appName,
+    payload.releaseVersion,
+    payload.environmentName,
+    payload.destination,
+    payload.source,
+  ]
+    .map(payloadString)
+    .filter((value) => value.length > 1);
+
+  return [...new Set(values)].sort((a, b) => b.length - a.length);
+};
+
+export const getHighlightedMessageParts = (
+  message: string,
+  item: NotificationItem
+): MessageSegment[] => {
+  const text = message.trim();
+  if (!text) {
+    return [];
+  }
+
+  const highlights = getNotificationHighlights(item).filter((value) =>
+    text.includes(value)
+  );
+  if (highlights.length === 0) {
+    return [{ text, highlight: false }];
+  }
+
+  const splitter = new RegExp(`(${highlights.map(escapeRegExp).join("|")})`, "g");
+  return text.split(splitter).reduce<MessageSegment[]>((parts, chunk) => {
+    if (!chunk) {
+      return parts;
+    }
+    parts.push({
+      text: chunk,
+      highlight: highlights.includes(chunk),
+    });
+    return parts;
+  }, []);
 };
 
 export const getActorInitials = (item: NotificationItem): string => {

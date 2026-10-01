@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 import Notifications from "../Notifications";
 import { getDataApi, patchDataApi } from "src/apis/api";
+import { showAlert } from "src/utils/alert";
 import { NOTIFICATION_TYPE } from "../types";
 import { NOTIFICATIONS_UNREAD_REFRESH } from "src/utils/notifications";
 
@@ -17,6 +18,10 @@ jest.mock("react-router-dom", () => ({
 jest.mock("src/apis/api", () => ({
   getDataApi: jest.fn(),
   patchDataApi: jest.fn(),
+}));
+
+jest.mock("src/utils/alert", () => ({
+  showAlert: jest.fn(),
 }));
 
 jest.mock("src/components/common/Button/Button", () => ({
@@ -62,6 +67,9 @@ const release = {
   targetId: 44,
 };
 
+const messageText = (text: string) => (_content: string, node: Element | null) =>
+  node?.classList.contains("notifyMessage") === true && node.textContent === text;
+
 const renderNotifications = (notificationEnabled = true) =>
   render(
     <Provider
@@ -84,9 +92,17 @@ describe("Notifications", () => {
     mockNavigate.mockClear();
     (getDataApi as jest.Mock).mockReset();
     (patchDataApi as jest.Mock).mockReset();
+    (showAlert as jest.Mock).mockReset();
     (getDataApi as jest.Mock).mockImplementation(({ path }: { path: string }) => {
       if (path.includes("unread-count")) {
         return Promise.resolve({ success: true, data: { unreadCount: 2 } });
+      }
+      if (path.includes("decline-invitation")) {
+        return Promise.resolve({
+          success: true,
+          statusCode: 200,
+          message: "Invitation declined successfully",
+        });
       }
       return Promise.resolve({
         success: true,
@@ -121,10 +137,12 @@ describe("Notifications", () => {
   it("marks an invite as read without navigating, then Accept goes to the invite page", async () => {
     renderNotifications();
     fireEvent.click(screen.getByLabelText("Notifications"));
-    await screen.findByText("Ada invited you to collaborate on Store");
+    await screen.findByText(messageText("Ada invited you to collaborate on Store"));
+    expect(screen.getByText("Ada").tagName).toBe("STRONG");
+    expect(screen.getByText("Store").tagName).toBe("STRONG");
 
     fireEvent.click(
-      screen.getByText("Ada invited you to collaborate on Store")
+      screen.getByText(messageText("Ada invited you to collaborate on Store"))
     );
     await waitFor(() =>
       expect(patchDataApi).toHaveBeenCalledWith({
@@ -142,8 +160,8 @@ describe("Notifications", () => {
   it("navigates after marking a non-invite row as read", async () => {
     renderNotifications();
     fireEvent.click(screen.getByLabelText("Notifications"));
-    await screen.findByText("A release was created");
-    fireEvent.click(screen.getByText("A release was created"));
+    await screen.findByText(messageText("A release was created"));
+    fireEvent.click(screen.getByText(messageText("A release was created")));
     await waitFor(() =>
       expect(mockNavigate).toHaveBeenCalledWith(
         "/all-apps/details/9/release/44"
@@ -168,8 +186,8 @@ describe("Notifications", () => {
     });
     renderNotifications();
     fireEvent.click(screen.getByLabelText("Notifications"));
-    await screen.findByText("A release was created");
-    fireEvent.click(screen.getByText("A release was created"));
+    await screen.findByText(messageText("A release was created"));
+    fireEvent.click(screen.getByText(messageText("A release was created")));
     await waitFor(() =>
       expect(patchDataApi).toHaveBeenCalledWith({
         path: "api/notifications/13/read",
@@ -196,6 +214,44 @@ describe("Notifications", () => {
     renderNotifications();
     fireEvent.click(screen.getByLabelText("Notifications"));
     expect(await screen.findByRole("button", { name: "Accept" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Decline" })).toBeDisabled();
+  });
+
+  it("disables Accept and Decline after the invite is already declined", async () => {
+    (getDataApi as jest.Mock).mockImplementation(({ path }: { path: string }) => {
+      if (path.includes("unread-count")) {
+        return Promise.resolve({ success: true, data: { unreadCount: 0 } });
+      }
+      return Promise.resolve({
+        success: true,
+        data: {
+          list: [{ ...invite, declined: true, inviteOpen: false, isRead: true }],
+          total_items: 1,
+          page: 1,
+          unreadCount: 0,
+        },
+      });
+    });
+    renderNotifications();
+    fireEvent.click(screen.getByLabelText("Notifications"));
+    expect(await screen.findByRole("button", { name: "Decline" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Accept" })).toBeDisabled();
+  });
+
+  it("declines an invite from the list without navigating", async () => {
+    renderNotifications();
+    fireEvent.click(screen.getByLabelText("Notifications"));
+    await screen.findByRole("button", { name: "Decline" });
+    fireEvent.click(screen.getByRole("button", { name: "Decline" }));
+    await waitFor(() =>
+      expect(getDataApi).toHaveBeenCalledWith({
+        path: "api/collaborators/decline-invitation?invitationId=77",
+      })
+    );
+    await waitFor(() =>
+      expect(showAlert).toHaveBeenCalledWith(1, "Invitation declined successfully")
+    );
+    expect(mockNavigate).not.toHaveBeenCalled();
   });
 
   it("shows the actor profile image when the API provides one", async () => {
@@ -215,7 +271,7 @@ describe("Notifications", () => {
     });
     renderNotifications();
     fireEvent.click(screen.getByLabelText("Notifications"));
-    await screen.findByText("A release was created");
+    await screen.findByText(messageText("A release was created"));
     expect(document.querySelector(".notifyAvatar img")).toHaveAttribute(
       "src",
       "https://cdn/ada.png"
