@@ -82,8 +82,16 @@ const Dashboard = () => {
             <h2>Get a device on SkipStore</h2>
             <p>
               Point the CodePush SDK at this API, paste a deployment key, then
-              ship JS and assets. The platform is free while we finish the
-              product — storage is not capped.
+              ship JS and assets. Setup is in the{" "}
+              <a
+                href="https://skipstorepush.tech/docs"
+                target="_blank"
+                rel="noreferrer"
+              >
+                public docs
+              </a>
+              . The platform is free while we finish the product — storage is
+              not capped.
             </p>
           </div>
           {selectedApp ? (

@@ -101,8 +101,8 @@ describe("Dashboard", () => {
     expect(screen.getByLabelText("Usage charts")).toBeInTheDocument();
     expect(screen.getByText("Get a device on SkipStore")).toBeInTheDocument();
     expect(
-      screen.getByText(/The platform is free while we finish the product/i)
-    ).toBeInTheDocument();
+      screen.getByRole("link", { name: "public docs" })
+    ).toHaveAttribute("href", "https://skipstorepush.tech/docs");
     expect(screen.getByText("https://api.skipstorepush.com")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Open app" })).toBeInTheDocument();
   });

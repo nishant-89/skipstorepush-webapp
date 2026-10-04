@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" role="img" aria-label="SkipStore Push mark">
+  <rect width="64" height="64" rx="14" fill="#0F172A"/>
+  <path
+    d="M18 18 L34 32 L18 46"
+    stroke="#10B981"
+    stroke-width="6"
+    stroke-linecap="square"
+    stroke-linejoin="miter"
+  />
+  <path
+    d="M32 18 L48 32 L32 46"
+    stroke="#06B6D4"
+    stroke-width="6"
+    stroke-linecap="square"
+    stroke-linejoin="miter"
+  />
+</svg>

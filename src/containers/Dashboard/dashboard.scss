@@ -74,6 +74,14 @@
     max-width: 62ch;
     color: var(--color-text-secondary);
     font-size: 14px;
+
+    a {
+      color: var(--color-accent-secondary);
+    }
+
+    a:hover {
+      color: var(--color-accent);
+    }
   }
 }
 
