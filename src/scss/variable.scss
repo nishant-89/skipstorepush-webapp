@@ -145,6 +145,10 @@ $font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consol
   --btn-press-inset: inset 0 2px 0 var(--color-overlay);
   --btn-focus-ring: 2px;
   --btn-focus-offset: 3px;
+  --color-popover-bg: var(--color-bg-surface);
+  --shadow-popover:
+    0 1px 2px rgba($color-bg-primary, 0.24),
+    0 16px 40px rgba($color-bg-primary, 0.55);
   --btn-disabled-opacity: 0.38;
   --shell-header-height: 64px;
   --shell-nav-width: 248px;
@@ -172,4 +176,8 @@ html[data-theme="light"] {
   --tabBorderColor: #{$light-border};
   --lightBorder: #{$light-border};
   --borderGrayBg: #{$light-border};
+  --color-popover-bg: #{$light-bg-surface};
+  --shadow-popover:
+    0 1px 2px rgba($light-text-primary, 0.08),
+    0 18px 44px rgba($light-text-primary, 0.2);
 }

@@ -75,6 +75,11 @@ export const sideNavItems: NavItem[] = [
     path: ROUTES.MY_ACCOUNT,
     isHidden: true,
   },
+  {
+    name: "Profile",
+    path: ROUTES.USER_PROFILE,
+    isHidden: true,
+  },
 ];
 
 const RAIL_ICONS: Record<string, LucideIcon> = {

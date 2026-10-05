@@ -1,15 +1,8 @@
+import { useState } from "react";
 import { Drawer } from "@mui/material";
-import { Formik, Form } from "formik";
 import { showAlert } from "src/utils/alert";
-import InputField from "src/components/common/InputField/InputField";
 import ButtonComp from "src/components/common/Button/Button";
-import {
-  CopyIcon,
-  DrawerCloseIcon,
-  // RemoveIcon,
-} from "src/utils/common/constants/constants";
-
-import { initialValues, validationSchema } from "./constant";
+import { CopyIcon, DrawerCloseIcon } from "src/utils/common/constants/constants";
 import { useReleaseDrawerHelper } from "./helper";
 import { FilteredEnvironment } from "../../types";
 
@@ -21,13 +14,31 @@ interface ReleaseDrawerProps {
   envList: FilteredEnvironment[];
 }
 
+const maskValue = (value: string, revealed: boolean) => {
+  if (!value) {
+    return "—";
+  }
+  if (revealed) {
+    return value;
+  }
+  if (value.length <= 4) {
+    return "••••";
+  }
+  return `${"•".repeat(Math.min(value.length - 4, 24))}${value.slice(-4)}`;
+};
+
 const ReleaseDrawer = ({ open, onClose, envList }: ReleaseDrawerProps) => {
-  const {
-    // newDeployment,
-    // handleAddNewDeployment,
-    handleDrawerClose,
-    handleSubmit,
-  } = useReleaseDrawerHelper({ onClose });
+  const { handleDrawerClose } = useReleaseDrawerHelper({ onClose });
+  const [revealedKeys, setRevealedKeys] = useState<Record<string, boolean>>({});
+
+  const copyKey = (value: string) => {
+    if (!value) {
+      return;
+    }
+    navigator.clipboard.writeText(value);
+    showAlert(1, "Key has been copied successfully.");
+  };
+
   return (
     <Drawer
       anchor="right"
@@ -40,130 +51,69 @@ const ReleaseDrawer = ({ open, onClose, envList }: ReleaseDrawerProps) => {
         },
       }}
     >
-      <div className="ReleaseDrawerWrapper">
-        <div className="DrawerHeader">
-          <h2 className="drawerTitle">Manage Deployments</h2>
+      <div className="appSheet">
+        <header className="appSheetHead">
+          <div>
+            <p className="appSheetKicker">Environments</p>
+            <h2 className="appSheetTitle">Deployment keys</h2>
+          </div>
           <button
-            className="closeDrawerButton"
+            className="appSheetClose"
             type="button"
             onClick={handleDrawerClose}
             aria-label="Close Drawer"
           >
-            <img src={DrawerCloseIcon} alt="Close Drawer" />
+            <img src={DrawerCloseIcon} alt="" />
           </button>
-        </div>
-        {/* handle form */}
-        <div className="DrawerBodyWrapper">
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={(values) => handleSubmit(values)}
-          >
-            {(
-              {
-                // values,
-                // errors,
-                // touched,
-                // isValid,
-                // dirty,
-                // setFieldValue,
-                // handleBlur,
-              }
-            ) => (
-              <Form>
-                <div className="formWrapper">
-                  {envList?.length > 0 &&
-                    envList?.map((env) => (
-                      <div className="contentBodySection" key={env?.value}>
-                        <h3 className="labelTxt">{env?.label}</h3>
-                        <div className="formFieldWrapper">
-                          <div className="leftSection">
-                            <div className="customInputWrapper">
-                              <InputField
-                                type="text"
-                                value={env?.key}
-                                disabled
-                              />
-                            </div>
-                          </div>
-                          <div className="rightSection">
-                            <ButtonComp
-                              className="copyButton"
-                              label=""
-                              variant="outlined"
-                              isIcon
-                              icon={CopyIcon}
-                              onClick={() => {
-                                navigator?.clipboard?.writeText(env?.key);
-                                showAlert(
-                                  1,
-                                  "Key has been copied successfully."
-                                );
-                              }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  {/* this section is hidden for now */}
+        </header>
 
-                  {/* {!newDeployment ? (
-                    <div className="addMoreSection">
-                      <div className="leftContent">
-                        <div className="customInputWrapper">
-                          <InputField
-                            type="text"
-                            value={values.name}
-                            onChange={(e) => {
-                              const noSpaces = e?.target?.value?.replace(
-                                /^\s+/,
-                                ""
-                              );
-                              setFieldValue("name", noSpaces);
-                            }}
-                            placeholder="Name"
-                            label=""
-                            name="name"
-                            onBlur={handleBlur}
-                          />
-                          {errors?.name && touched?.name && (
-                            <p className="errorMsg">{errors.name}</p>
-                          )}
-                        </div>
-                      </div>
+        <div className="appSheetBody">
+          <p className="appSheetLead">
+            Each environment has its own CodePush deployment key. Copy Staging
+            for internal builds and Production for store binaries.
+          </p>
 
-                      <div className="rightContent">
-                        <ButtonComp
-                          className="removeButton"
-                          label=""
-                          variant="outlined"
-                          isIcon
-                          icon={RemoveIcon}
-                          onClick={() => setFieldValue("name", "")}
-                        />
-                        <ButtonComp
-                          className="createButton"
-                          label="Create"
-                          variant="contained"
-                          type="submit"
-                          disabled={!(isValid && dirty)}
-                        />
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="buttonWrapper">
-                      <ButtonComp
+          {envList?.length > 0 ? (
+            <ul className="keyList">
+              {envList.map((env) => {
+                const id = String(env?.value);
+                const revealed = Boolean(revealedKeys[id]);
+                return (
+                  <li className="keyCard" key={id}>
+                    <span className="keyLabel">{env?.label}</span>
+                    <div className="keyRow">
+                      <code>{maskValue(env?.key || "", revealed)}</code>
+                      <button
                         type="button"
-                        label="Add New Deployment"
-                        variant="contained"
-                        onClick={handleAddNewDeployment}
+                        className="textLinkBtn"
+                        onClick={() =>
+                          setRevealedKeys((prev) => ({
+                            ...prev,
+                            [id]: !prev[id],
+                          }))
+                        }
+                      >
+                        {revealed ? "Hide" : "Show"}
+                      </button>
+                      <ButtonComp
+                        className="copyButton"
+                        label=""
+                        variant="outlined"
+                        isIcon
+                        icon={CopyIcon}
+                        onClick={() => copyKey(env?.key)}
                       />
                     </div>
-                  )} */}
-                </div>
-              </Form>
-            )}
-          </Formik>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : (
+            <p className="appSheetEmpty">
+              No environments on this app yet. Staging and Production keys
+              appear after the app is created.
+            </p>
+          )}
         </div>
       </div>
     </Drawer>

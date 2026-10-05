@@ -14,6 +14,73 @@
   min-width: size(352);
   width: size(352);
   padding: size(24);
+  background: var(--color-popover-bg);
+
+  .MuiCheckbox-root {
+    color: transparent;
+
+    svg {
+      display: none;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 16px;
+      height: 16px;
+      margin: -8px 0 0 -8px;
+      box-sizing: border-box;
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      background: var(--color-bg-primary);
+      background-image: none !important;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      opacity: 0;
+    }
+
+    &.Mui-checked::after,
+    &.MuiCheckbox-indeterminate::after {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+      background-image: none !important;
+    }
+
+    &.Mui-checked::before {
+      opacity: 1;
+      left: 50%;
+      top: 50%;
+      width: 5px;
+      height: 9px;
+      margin: -6px 0 0 -2px;
+      border: solid var(--on-accent);
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    &.MuiCheckbox-indeterminate::before {
+      opacity: 1;
+      left: 50%;
+      top: 50%;
+      width: 8px;
+      height: 2px;
+      margin: -1px 0 0 -4px;
+      background: var(--on-accent);
+      border: 0;
+      transform: none;
+    }
+
+    .MuiTouchRipple-root {
+      display: none !important;
+    }
+  }
+
   .customSelect .MuiSelect-select {
     font-size: 14px !important;
   }
@@ -26,8 +93,10 @@
       padding: 0;
       font-size: size(12);
       font-weight: 700;
-      font-family: var(--font);
-      color: var(--infoText);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+      color: var(--color-text-secondary);
     }
   }
   .innerWrapper {
@@ -59,37 +128,6 @@
           margin-right: 0 !important;
         }
       }
-      .MuiCheckbox-root {
-        svg {
-          display: none;
-        }
-        &::after {
-          width: size(18);
-          height: size(18);
-          position: absolute;
-          top: 0;
-          content: "";
-          background-image: url("src/assets/images/checkbox.svg") !important;
-          background-repeat: no-repeat !important;
-          background-size: size(16) !important;
-        }
-        &.Mui-checked {
-          position: relative;
-          &::after {
-            width: size(18);
-            height: size(18);
-            position: absolute;
-            top: 0;
-            content: "";
-            background-image: url("src/assets/images/checkbox-checked.svg") !important;
-            background-repeat: no-repeat !important;
-            background-size: size(16) !important;
-          }
-        }
-        .MuiTouchRipple-root {
-          display: none !important;
-        }
-      }
     }
     .filterCheckboxWrapper {
       .title {
@@ -115,37 +153,6 @@
         }
         .MuiFormControlLabel-root {
           width: fit-content;
-        }
-      }
-      .MuiCheckbox-root {
-        svg {
-          display: none;
-        }
-        &::after {
-          width: size(18);
-          height: size(18);
-          position: absolute;
-          top: 1px;
-          content: "";
-          background-image: url("src/assets/images/checkbox.svg") !important;
-          background-repeat: no-repeat !important;
-          background-size: size(16) !important;
-        }
-        &.Mui-checked {
-          position: relative;
-          &::after {
-            width: size(18);
-            height: size(18);
-            position: absolute;
-            top: 1px;
-            content: "";
-            background-image: url("src/assets/images/checkbox-checked.svg") !important;
-            background-repeat: no-repeat !important;
-            background-size: size(16) !important;
-          }
-        }
-        .MuiTouchRipple-root {
-          display: none !important;
         }
       }
     }

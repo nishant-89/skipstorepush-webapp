@@ -22,6 +22,7 @@ jest.mock("src/routes/routesPaths", () => ({
   RELEASE_DETAILS: "/release-details",
   MY_ACTIVITIES: "/my-activities",
   MY_ACCOUNT: "/my-account",
+  USER_PROFILE: "/users/:id",
   HELP: "/help",
   SETTINGS: "/settings",
 }));

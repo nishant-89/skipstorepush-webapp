@@ -73,7 +73,7 @@ describe("Account", () => {
       </MemoryRouter>
     );
     expect(
-      screen.getByRole("heading", { name: "User profile" })
+      screen.getByRole("heading", { name: "My Profile" })
     ).toBeInTheDocument();
     expect(screen.getByText("ada@example.com")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Profile" })).toHaveAttribute(

@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import ButtonComp from "src/components/common/Button/Button";
 import TableDataLoader from "src/components/common/Loader/tableDataLoader";
 
@@ -6,6 +7,7 @@ import InviteCollaborateModal from "src/components/common/Modal/inviteCollaborat
 import TableComponent from "src/components/common/Table/Table";
 import { InviteShareIcon } from "src/utils/common/constants/constants";
 import { COLLABRATOR_RESPONSE_TYPE, InviteFormValues } from "../../types";
+import { RootState } from "src/redux/rootReducers";
 
 import CollabDeleteModal from "src/components/common/Modal/deleteModal";
 import { getCollabratorColumns } from "./column";
@@ -58,7 +60,16 @@ const CollaboratorSection: React.FC<CollaboratorSectionProps> = ({
   collabTarget,
   onCloseCollabModal,
 }) => {
-  const columns = getCollabratorColumns(handleCollabModel, isOwner);
+  const currentUserId = useSelector((state: RootState) => {
+    const profileId = state.profile?.data?.id;
+    const authUser = state.auth?.user;
+    return profileId ?? authUser?.userId ?? authUser?.id ?? null;
+  });
+  const columns = getCollabratorColumns(
+    handleCollabModel,
+    isOwner,
+    currentUserId
+  );
   const isMemberRemoval = collabTarget?.type === "member";
   return (
     <div className="collaboratorWrapper">

@@ -37,6 +37,7 @@ module.exports = {
   testMatch: [
     "<rootDir>/src/containers/**/*.test.{ts,tsx,js,jsx}",
     "<rootDir>/src/components/**/*.test.{ts,tsx,js,jsx}",
+    "<rootDir>/src/apis/**/*.test.{ts,tsx,js,jsx}",
   ],
   testPathIgnorePatterns: [
     "/node_modules/",

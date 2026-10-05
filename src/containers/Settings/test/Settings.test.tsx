@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import Settings from "../Settings";
 import { useSettingsHelper } from "../helper";
 
@@ -46,5 +46,39 @@ describe("Settings", () => {
     expect(screen.getByLabelText("Release alerts")).toBeInTheDocument();
     expect(screen.getByLabelText("Language")).toBeInTheDocument();
     expect(screen.getByLabelText("Time zone")).toBeInTheDocument();
+  });
+
+  it("opens the language menu with themed options", () => {
+    const setLanguage = jest.fn();
+    (useSettingsHelper as jest.Mock).mockReturnValue({
+      settings: {
+        menuPinned: false,
+        notificationEnabled: true,
+        defaultTheme: "DARK",
+        emailNotificationEnabled: true,
+        releaseAlertEnabled: true,
+        compactMode: false,
+        preservePinnedState: false,
+        language: "en",
+        timezone: "",
+      },
+      loading: false,
+      savingKey: null,
+      languageOptions: [
+        { value: "en", label: "English" },
+        { value: "es", label: "Spanish" },
+      ],
+      timeZones: ["UTC"],
+      toggle: jest.fn(),
+      setTheme: jest.fn(),
+      setLanguage,
+      setTimezone: jest.fn(),
+    });
+
+    render(<Settings />);
+    fireEvent.mouseDown(screen.getByLabelText("Language"));
+    expect(screen.getByRole("option", { name: "Spanish" })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("option", { name: "Spanish" }));
+    expect(setLanguage).toHaveBeenCalledWith("es");
   });
 });

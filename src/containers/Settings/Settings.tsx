@@ -1,6 +1,79 @@
+import { FormControl, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { useState } from "react";
 import Breadcrumbs from "src/components/common/BreadCrumbs/BreadCrumbs";
 import { useSettingsHelper } from "./helper";
 import "./settings.scss";
+
+type SettingsSelectOption = {
+  value: string;
+  label: string;
+};
+
+const SettingsSelect = ({
+  id,
+  labelId,
+  value,
+  disabled,
+  placeholder,
+  options,
+  onChange,
+}: {
+  id: string;
+  labelId: string;
+  value: string;
+  disabled?: boolean;
+  placeholder: string;
+  options: SettingsSelectOption[];
+  onChange: (value: string) => void;
+}) => {
+  const [open, setOpen] = useState(false);
+  const selectedLabel = options.find((option) => option.value === value)?.label;
+
+  return (
+    <div className={`settingsSelect${open ? " isOpen" : ""}`}>
+      <FormControl
+        variant="outlined"
+        disabled={disabled}
+        className={`custom-select-wrapper${open ? " select-open" : ""}`}
+      >
+        <Select
+          id={id}
+          labelId={labelId}
+          value={value}
+          disabled={disabled}
+          displayEmpty
+          className="custom-select"
+          onChange={(event: SelectChangeEvent<string>) =>
+            onChange(event.target.value)
+          }
+          onOpen={() => setOpen(true)}
+          onClose={() => setOpen(false)}
+          MenuProps={{
+            classes: { paper: "select-custom-backdrop settingsSelectMenu" },
+            PaperProps: {
+              className: "settingsSelectMenu",
+              sx: { maxHeight: 280 },
+            },
+          }}
+          renderValue={(selected) => {
+            if (!selected) {
+              return (
+                <span className="settingsSelectPlaceholder">{placeholder}</span>
+              );
+            }
+            return selectedLabel || placeholder;
+          }}
+        >
+          {options.map((option) => (
+            <MenuItem key={option.value || "browser-default"} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </div>
+  );
+};
 
 const SettingsToggle = ({
   label,
@@ -130,39 +203,38 @@ const Settings = () => {
         <section>
           <h2>Regional</h2>
           <div className="settingsRow settingsRowStack">
-            <label className="settingsLabel" htmlFor="settings-language">
+            <label className="settingsLabel" id="settings-language-label" htmlFor="settings-language">
               Language
             </label>
-            <select
+            <SettingsSelect
               id="settings-language"
+              labelId="settings-language-label"
               value={settings.language}
               disabled={busy}
-              onChange={(event) => setLanguage(event.target.value)}
-            >
-              {languageOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
+              placeholder="Select language"
+              options={languageOptions}
+              onChange={setLanguage}
+            />
           </div>
           <div className="settingsRow settingsRowStack">
-            <label className="settingsLabel" htmlFor="settings-timezone">
+            <label className="settingsLabel" id="settings-timezone-label" htmlFor="settings-timezone">
               Time zone
             </label>
-            <select
+            <SettingsSelect
               id="settings-timezone"
+              labelId="settings-timezone-label"
               value={settings.timezone || ""}
               disabled={busy}
-              onChange={(event) => setTimezone(event.target.value)}
-            >
-              <option value="">Use browser default</option>
-              {timeZones.map((zone) => (
-                <option key={zone} value={zone}>
-                  {zone.replace(/_/g, " ")}
-                </option>
-              ))}
-            </select>
+              placeholder="Use browser default"
+              options={[
+                { value: "", label: "Use browser default" },
+                ...timeZones.map((zone) => ({
+                  value: zone,
+                  label: zone.replace(/_/g, " "),
+                })),
+              ]}
+              onChange={setTimezone}
+            />
           </div>
         </section>
       </div>

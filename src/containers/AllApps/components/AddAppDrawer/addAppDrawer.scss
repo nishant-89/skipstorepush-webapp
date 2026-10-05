@@ -1,273 +1,236 @@
 @use "../../../../scss/variable.scss" as *;
 @use "../../../../scss/mixin.scss" as *;
 
-.AddAppDrawerWrapper {
-  .DrawerHeader {
-    padding: 28px 20px 8px 20px;
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    display: flex;
-    justify-content: space-between;
+.AddAppDrawerWrapper.appSheet {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--color-bg-surface);
+}
+
+.appSheetHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px 24px 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.appSheetKicker {
+  margin: 0 0 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.appSheetTitle {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+  word-break: break-word;
+}
+
+.appSheetClose {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-primary);
+  cursor: pointer;
+
+  img {
+    width: 12px;
+  }
+}
+
+.appSheetForm {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+}
+
+.appSheetBody {
+  padding: 20px 24px 12px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.appSheetLead {
+  margin: 0 0 22px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+
+.sheetField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.sheetLabel,
+.sheetField label {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.osLocked {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-size: 14px;
+}
+
+.osCardGroup {
+  .MuiRadioGroup-root {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .osCard {
+    margin: 0 !important;
+    padding: 12px 14px !important;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg-primary);
     align-items: center;
-    .drawerTitle {
-      padding-right: 10px;
-      font-weight: 600;
-      font-size: 20px;
-      color: var(--color-text-primary);
-      word-break: break-word;
-    }
-    .closeDrawerButton {
-      padding-right: 0!important;
-      background-color: transparent;
-      border: 0;
-      outline: 0;
-      display: flex;
-      align-items: center;
-      img {
-        width: 12px;
-      }
-    }
-  }
-  .DrawerBodyWrapper {
-    padding: 0 20px 20px;
-    height: calc(100vh - 60px);
-    overflow-y: auto;
-    .drawerDescription {
-      margin-bottom: 28px;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 20px;
+
+    .MuiRadio-root {
+      padding: 0;
+      margin-right: 8px;
       color: var(--color-text-secondary);
-      word-break: break-word;
-      @media screen and (max-width: 1024px) {
-        margin-bottom: 20px;
+
+      &.Mui-checked {
+        color: var(--color-accent);
+      }
+
+      .MuiTouchRipple-root {
+        display: none;
       }
     }
-    .tabSelectSection {
-      .tabTitle {
-        margin-bottom: size(6);
-        display: block;
-        font-size: size(14) !important;
-        font-weight: 600 !important;
-        line-height: size(20);
-        color: var(--labelColor);
-      }
-      .radioGroupWrapper {
-        .MuiRadioGroup-root {
-          min-height: 45px;
-          padding: 7px 16px;
-          border: 0.5px solid var(--color-border);
-          border-radius: 12px;
-          display: flex !important;
-          align-items: center !important;
-          flex-direction: row !important;
-        }
-        .MuiFormControlLabel-root {
-          padding: 0 !important;
-          margin-left: 0 !important;
-          margin-right: 0 !important;
 
-          &:not(:last-child) {
-            margin: 0 20px 0 0 !important;
-            .MuiTypography-root {
-              margin-right: 20px !important;
-            }
-            border-right: 1px solid var(--color-border);
-          }
-        }
-        .radioWrapper {
-          padding-right: 8px;
-          display: flex;
-          align-items: center;
-          position: relative;
-          justify-content: center;
-
-          .MuiRadio-root {
-            &.Mui-disabled {
-              opacity: 0.8;
-              cursor: not-allowed;
-              border: none !important;
-              background-color: transparent !important;
-              box-shadow: none !important;
-            }
-            svg {
-              display: none;
-            }
-            &::after {
-              width: size(16);
-              height: size(16);
-              position: absolute;
-              top: 1px;
-              content: "";
-              background-image: url("src/assets/images/radio-empty.svg") !important;
-              background-repeat: no-repeat !important;
-              background-size: size(16) !important;
-            }
-            &.Mui-checked {
-              position: relative;
-              &::after {
-                width: size(16);
-                height: size(16);
-                position: absolute;
-                top: 1px;
-                content: "";
-                background-image: url("src/assets/images/radio-filled.svg") !important;
-                background-repeat: no-repeat !important;
-                background-size: size(16) !important;
-              }
-            }
-            .MuiTouchRipple-root {
-              display: none !important;
-            }
-          }
-          .MuiTypography-root {
-            margin-left: 12px !important;
-            padding-left: 0;
-            font-family: var(--font) !important;
-            font-size: size(16) !important;
-            font-weight: 500;
-            line-height: size(28);
-            color: var(--color-text-primary);
-            display: inline-block;
-            vertical-align: middle;
-            word-break: break-word;
-          }
-        }
-      }
+    .MuiTypography-root {
+      font-family: var(--font-ui);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-primary);
     }
-    .tabContentWrapper {
-      padding: 20px 0 28px;
-      @media screen and (max-width: 1024px) {
-        padding: 20px 0 20px;
-      }
-      .customInputWrapper {
-        flex: 1;
-        label {
-          margin-bottom: size(-9);
-          display: block;
-          font-size: size(14) !important;
-          font-weight: 600 !important;
-        }
-        .MuiInputBase-input {
-          padding: 15px 15px;
-          font-family: var(--font);
-          font-size: size(16) !important;
-          font-weight: 400 !important;
-          line-height: size(24);
-          color: var(--tabActiveColor);
-        }
-        .errorMsg {
-          margin: 0;
-          font-size: size(12);
-          color: var(--colorError);
-        }
-      }
 
-      .iconUploadMainWrapper {
-        margin-top: 12px;
-        .label {
-          margin-bottom: size(6);
-          display: block;
-          font-size: size(14) !important;
-          font-weight: 600 !important;
-          line-height: size(20);
-          color: var(--labelColor);
-        }
-        .fileUpload {
-          width: 100%;
-          height: size(128);
-          border-radius: 12px;
-          margin-top: 0;
-          padding: size(16);
-          border: 1px dashed var(--color-accent);
-          position: relative;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background-color: var(--color-bg-surface);
-          cursor: pointer;
-
-          .imgBox {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-
-            img {
-              width: size(40);
-              height: auto;
-              display: block;
-              margin-bottom: size(12);
-            }
-            p {
-              font-weight: 400;
-              font-size: 14px;
-              line-height: 150%;
-              text-align: center;
-              color: var(--color-text-secondary);
-              .boldtxt {
-                font-weight: 600;
-                color: var(--color-accent);
-              }
-            }
-            .listBox {
-              list-style: none;
-
-              li {
-                margin-top: 4px;
-                text-align: left;
-                color: var(--color-text-secondary);
-                font-weight: 400;
-                font-size: 12px;
-                line-height: 18px;
-                position: relative;
-                &:before {
-                  width: 3px;
-                  height: 3px;
-                  background-color: var(--color-text-secondary);
-                  border-radius: 50%;
-                  content: "";
-                  position: absolute;
-                  left: -10px;
-                  top: 50%;
-                  transform: translateY(-50%);
-                }
-              }
-            }
-          }
-        }
-        .fileUploaded {
-          width: 128px;
-          height: 128px;
-          border-radius: 8px;
-          position: relative;
-          .CloseIcon {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background-color: var(--color-accent-muted);
-            border: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: absolute;
-            top: 8px;
-            right: 8px;
-          }
-          .profileImage {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            object-position: center center;
-            border-radius: 8px;
-            border: 0.5px solid var(--color-border);
-          }
-        }
-      }
-    }
-    .buttonWrapper {
-      display: flex;
-      justify-content: flex-end;
+    &.isActive {
+      border-color: var(--color-accent);
+      background: var(--color-accent-muted);
     }
   }
+}
+
+.errorMsg {
+  margin: 0;
+  font-size: 12px;
+  color: var(--color-error);
+}
+
+.fileUpload {
+  width: 100%;
+  min-height: 128px;
+  padding: 20px 16px;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    border-color: var(--color-accent);
+  }
+
+  .imgBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+
+    img {
+      width: 32px;
+      height: auto;
+    }
+
+    p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.4;
+      text-align: center;
+      color: var(--color-text-secondary);
+    }
+
+    .boldtxt {
+      font-weight: 600;
+      color: var(--color-accent);
+    }
+
+    .uploadHint {
+      font-size: 12px;
+    }
+  }
+}
+
+.fileUploaded {
+  width: 128px;
+  height: 128px;
+  margin: 0;
+  position: relative;
+
+  .CloseIcon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: var(--color-accent-muted);
+    border: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    cursor: pointer;
+  }
+
+  .profileImage {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-primary);
+  }
+}
+
+.appSheetFoot {
+  padding: 16px 24px 24px;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  justify-content: flex-end;
 }

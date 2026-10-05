@@ -50,7 +50,7 @@ const Account = () => {
 
   return (
     <div className="accountPage">
-      <Breadcrumbs currentLabel="User profile" />
+      <Breadcrumbs currentLabel="My Profile" />
       <div className="accountLayout">
         <aside className="cardBgWrapper accountNav">
           <nav className="accountNavList" aria-label="Profile actions">
@@ -105,7 +105,7 @@ const Account = () => {
 
         <div className="cardBgWrapper accountMain">
           <header className="accountMainHead">
-            <h1>User profile</h1>
+            <h1>My Profile</h1>
             <p>Manage your details and account security.</p>
           </header>
 

@@ -151,6 +151,17 @@
     .textLinkBtn {
       margin-top: 8px;
     }
+
+    .publicProfileEmail {
+      margin: 8px 0 0;
+      color: var(--color-text-secondary);
+      font-size: 14px;
+      word-break: break-word;
+    }
+  }
+
+  .publicProfileCard {
+    max-width: 480px;
   }
 
   .profileImageInput {
@@ -184,8 +195,8 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: var(--color-overlay);
-    color: var(--on-accent);
+    background: $color-overlay;
+    color: $color-text-primary;
     font-size: 12px;
     font-weight: 600;
     opacity: 0;

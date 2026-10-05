@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { capitalizeFirstLetter, DateFormatter } from "src/utils/common/helpers";
 import { COLLABRATOR_RESPONSE_TYPE, RELEASE_RESPONSE_TYPE } from "../../types";
 import { TableDeleteIcon } from "src/utils/common/constants/constants";
+import ROUTES from "src/routes/routesPaths";
 
 // release table columns
 export const getReleaseColumns = (
@@ -95,23 +96,63 @@ export const canOwnerRemoveCollaborator = (
   return status === "pending" || (!!status && MEMBER_STATUSES.has(status));
 };
 
+export const collaboratorProfilePath = (
+  collaborator: COLLABRATOR_RESPONSE_TYPE,
+  currentUserId?: string | number | null
+) => {
+  const status = collaborator.status?.toLowerCase();
+  if (!collaborator.id || status === "pending") {
+    return null;
+  }
+  if (!status || !MEMBER_STATUSES.has(status)) {
+    return null;
+  }
+  if (
+    currentUserId != null &&
+    String(collaborator.id) === String(currentUserId)
+  ) {
+    return ROUTES.MY_ACCOUNT;
+  }
+  return `/users/${collaborator.id}`;
+};
+
 // collaborator table columns
 export const getCollabratorColumns = (
   handleCollabDel: (collaborator: COLLABRATOR_RESPONSE_TYPE) => void,
-  isOwner: boolean
+  isOwner: boolean,
+  currentUserId?: string | number | null
 ) => {
   const columns = [
     {
       field: "fullName",
       sorting: false,
       headerName: "Name",
-      renderCell: (param: COLLABRATOR_RESPONSE_TYPE) => (
-        <span className={param.role === "Owner" ? "owner-role tableTitle" : "tableTitle"}>
-          {param.status === "pending"
-            ? "Invited Collaborator"
-            : (param.fullName ?? "N/A")}
-        </span>
-      ),
+      renderCell: (param: COLLABRATOR_RESPONSE_TYPE) => {
+        const isPending = param.status?.toLowerCase() === "pending";
+        const label = isPending
+          ? "Invited Collaborator"
+          : (param.fullName ?? "N/A");
+        const className =
+          param.role === "Owner" ? "owner-role tableTitle" : "tableTitle";
+        const href = collaboratorProfilePath(param, currentUserId);
+        if (href) {
+          return (
+            <Link
+              to={href}
+              state={{
+                id: param.id,
+                fullName: param.fullName,
+                email: param.email,
+                profileImage: param.profileImage || param.profile_image,
+              }}
+              className={`${className} codeLink`}
+            >
+              {label}
+            </Link>
+          );
+        }
+        return <span className={className}>{label}</span>;
+      },
     },
     {
       field: "email",

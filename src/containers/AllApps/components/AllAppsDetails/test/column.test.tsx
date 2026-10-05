@@ -282,10 +282,11 @@ describe("getCollabratorColumns", () => {
       true
     );
     const NameCell = columns[0].renderCell!;
-    const { getByText } = render(
-      <>{NameCell({ ...base, status: "pending" })}</>
+    const { getByText, queryByRole } = render(
+      <Router>{NameCell({ ...base, status: "pending" })}</Router>
     );
     expect(getByText("Invited Collaborator")).toBeInTheDocument();
+    expect(queryByRole("link")).not.toBeInTheDocument();
   });
 
   it("renders fullName if not pending", () => {
@@ -294,8 +295,36 @@ describe("getCollabratorColumns", () => {
       true
     );
     const NameCell = columns[0].renderCell!;
-    const { getByText } = render(<>{NameCell(base)}</>);
+    const { getByText } = render(<Router>{NameCell(base)}</Router>);
     expect(getByText("John Doe")).toBeInTheDocument();
+  });
+
+  it("links an accepted collaborator to their public profile", () => {
+    const columns = require("../column").getCollabratorColumns(
+      handleCollabDel,
+      true,
+      "99"
+    );
+    const NameCell = columns[0].renderCell!;
+    const { getByRole } = render(<Router>{NameCell(base)}</Router>);
+    expect(getByRole("link", { name: "John Doe" })).toHaveAttribute(
+      "href",
+      "/users/1"
+    );
+  });
+
+  it("links the current user to My Profile", () => {
+    const columns = require("../column").getCollabratorColumns(
+      handleCollabDel,
+      true,
+      "1"
+    );
+    const NameCell = columns[0].renderCell!;
+    const { getByRole } = render(<Router>{NameCell(base)}</Router>);
+    expect(getByRole("link", { name: "John Doe" })).toHaveAttribute(
+      "href",
+      "/my-account"
+    );
   });
 
   it("renders N/A if fullName is missing and not pending", () => {
@@ -305,7 +334,7 @@ describe("getCollabratorColumns", () => {
     );
     const NameCell = columns[0].renderCell!;
     const { getByText } = render(
-      <>{NameCell({ ...base, fullName: undefined })}</>
+      <Router>{NameCell({ ...base, fullName: undefined })}</Router>
     );
     expect(getByText("N/A")).toBeInTheDocument();
   });
@@ -316,7 +345,9 @@ describe("getCollabratorColumns", () => {
       true
     );
     const NameCell = columns[0].renderCell!;
-    const { container } = render(<>{NameCell({ ...base, role: "Owner" })}</>);
+    const { container } = render(
+      <Router>{NameCell({ ...base, role: "Owner" })}</Router>
+    );
     expect(container.querySelector(".owner-role")).toBeInTheDocument();
   });
 

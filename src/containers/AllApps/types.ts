@@ -17,7 +17,8 @@ export type COLLABRATOR_RESPONSE_TYPE = {
   fullName: string;
   email: string;
   role: string;
-  profile_image: string;
+  profile_image?: string;
+  profileImage?: string;
   status: string;
 };
 

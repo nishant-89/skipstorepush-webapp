@@ -91,6 +91,22 @@ $axios.interceptors.request.use(
   }
 );
 
+export const isWebSessionUnauthorized = (
+  error: AxiosError<ResponseData | string>
+): boolean => {
+  if (error.response?.status !== 401) {
+    return false;
+  }
+  const payload = error.response.data;
+  const message =
+    typeof payload === "string" ? payload : payload?.message || "";
+  // CodePush CLI bearer auth (unmatched /api/* fallthrough) must not clear the web session.
+  if (message.includes("skip-store-push login")) {
+    return false;
+  }
+  return true;
+};
+
 $axios.interceptors.response.use(
   (response: AxiosResponse) => {
     return response;
@@ -98,7 +114,7 @@ $axios.interceptors.response.use(
   (error: AxiosError<ResponseData>) => {
     const { response } = error;
     console.log("error", response);
-    if (response?.status === 401) {
+    if (isWebSessionUnauthorized(error)) {
       localStorage.removeItem("persist:root");
       const onPublicAuthPage =
         window.location.pathname === ROUTES.LOGIN ||

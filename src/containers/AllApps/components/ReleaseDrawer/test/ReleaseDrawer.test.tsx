@@ -78,7 +78,7 @@ beforeEach(() => {
 describe("ReleaseDrawer", () => {
   it("renders title correctly", () => {
     renderWithProviders(<ReleaseDrawer {...defaultProps} />);
-    expect(screen.getByText("Manage Deployments")).toBeInTheDocument();
+    expect(screen.getByText("Deployment keys")).toBeInTheDocument();
   });
 
   it("renders environment keys with copy buttons", () => {
@@ -108,8 +108,8 @@ describe("ReleaseDrawer", () => {
       <ReleaseDrawer {...defaultProps} envList={mockEnvList} />
     );
 
-    const copyButton = screen.getAllByRole("button")[0]; // assuming it's the first copy button
-    fireEvent.click(copyButton);
+    const copyButton = document.querySelector(".copyButton");
+    fireEvent.click(copyButton!);
   });
 
   it("renders nothing for empty envList", () => {
