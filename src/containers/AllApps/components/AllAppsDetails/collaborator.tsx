@@ -1,11 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import ButtonComp from "src/components/common/Button/Button";
+import { UserPlus } from "lucide-react";
 import TableDataLoader from "src/components/common/Loader/tableDataLoader";
 
 import InviteCollaborateModal from "src/components/common/Modal/inviteCollaborateModal";
 import TableComponent from "src/components/common/Table/Table";
-import { InviteShareIcon } from "src/utils/common/constants/constants";
 import { COLLABRATOR_RESPONSE_TYPE, InviteFormValues } from "../../types";
 import { RootState } from "src/redux/rootReducers";
 
@@ -72,18 +71,23 @@ const CollaboratorSection: React.FC<CollaboratorSectionProps> = ({
   );
   const isMemberRemoval = collabTarget?.type === "member";
   return (
-    <div className="collaboratorWrapper">
-      <div className="collaboratorHeader">
-        <h2 className="headerTitle">Collaborators</h2>
+    <div className="collaboratorWrapper appDetailPanel">
+      <div className="collaboratorHeader appDetailPanelHead">
+        <div>
+          <h2 className="headerTitle">Collaborators</h2>
+          <p className="appDetailPanelHint">
+            People who can publish and manage releases for this app.
+          </p>
+        </div>
         {isOwner && (
-          <ButtonComp
-            className="InviteBtn"
-            variant="contained"
-            label="Invite"
-            isIcon
-            icon={InviteShareIcon}
+          <button
+            type="button"
+            className="appBtn appBtn--primary appBtn--sm InviteBtn"
             onClick={() => setInvite(true)}
-          />
+          >
+            <UserPlus size={15} aria-hidden />
+            Invite
+          </button>
         )}
       </div>
       {/* collaborator table and loder skelton */}

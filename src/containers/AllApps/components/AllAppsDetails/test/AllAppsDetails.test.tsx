@@ -122,6 +122,10 @@ describe("AllAppsDetails Component", () => {
     expect(screen.getByText("Breadcrumb")).toBeInTheDocument();
     expect(screen.getByRole("tab", { name: "Releases" })).toBeInTheDocument();
     expect(screen.getByRole("tab", { name: "Settings" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Edit" })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Delete App" })
+    ).not.toBeInTheDocument();
   });
 
   it("should render Release tab content with search and filter", () => {
@@ -130,6 +134,21 @@ describe("AllAppsDetails Component", () => {
     expect(screen.getByTestId("env-select")).toBeInTheDocument();
     expect(screen.getByText("ReleaseDrawer")).toBeInTheDocument();
     expect(screen.getByText("TableComponent")).toBeInTheDocument();
+  });
+
+  it("shows the selected environment beside the OS icon", () => {
+    (useAllAppsDetailHelper as jest.Mock).mockReturnValueOnce({
+      ...useAllAppsDetailHelper(),
+      selectedFilters: "stg",
+      envList: [
+        { label: "Staging", value: "stg" },
+        { label: "Production", value: "prd" },
+      ],
+    });
+    render(<AllAppsDetails />);
+    expect(screen.getByLabelText("Android")).toBeInTheDocument();
+    expect(screen.getByText("Staging")).toBeInTheDocument();
+    expect(screen.queryByText("Android")).not.toBeInTheDocument();
   });
 
   it("should show 'No Release Found' if filteredData is empty and no search/filter", () => {
@@ -166,7 +185,8 @@ describe("AllAppsDetails Component", () => {
     });
 
     render(<AllAppsDetails />);
-    expect(screen.getByText("Actions")).toBeInTheDocument();
+    expect(screen.getByText("Edit")).toBeInTheDocument();
+    expect(screen.getByText("Delete App")).toBeInTheDocument();
     expect(screen.getByText("Operating System")).toBeInTheDocument();
     expect(screen.getByText("Platform")).toBeInTheDocument();
 
@@ -224,6 +244,10 @@ describe("AllAppsDetails Component", () => {
     });
     render(<AllAppsDetails />);
     expect(screen.queryByText("Actions")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Edit" })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Delete App" })
+    ).not.toBeInTheDocument();
   });
 
   it("should render Menu when open is true and anchorEl is set", () => {
@@ -269,7 +293,7 @@ describe("AllAppsDetails Component", () => {
       handleOpenDrawer: mockHandleOpenDrawer,
     });
     render(<AllAppsDetails />);
-    const button = screen.getByRole("button", { hidden: true });
+    const button = screen.getByRole("button", { name: "Deployment keys" });
     expect(button).toBeInTheDocument();
     button.click();
     expect(mockHandleOpenDrawer).toHaveBeenCalled();

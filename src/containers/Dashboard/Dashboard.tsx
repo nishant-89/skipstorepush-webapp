@@ -1,3 +1,5 @@
+import { FormControl, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Breadcrumbs from "src/components/common/BreadCrumbs/BreadCrumbs";
 import ButtonComp from "src/components/common/Button/Button";
@@ -9,6 +11,65 @@ import AddAppDrawer from "src/containers/AllApps/components/AddAppDrawer/addAppD
 import { useDashboardHelper } from "./helper";
 import UsageCharts from "./UsageCharts";
 import "./dashboard.scss";
+
+type DashboardAppOption = {
+  id: number;
+  name: string;
+  osType: string;
+};
+
+const DashboardAppSelect = ({
+  value,
+  apps,
+  onChange,
+}: {
+  value: number | "";
+  apps: DashboardAppOption[];
+  onChange: (appId: number) => void;
+}) => {
+  const [open, setOpen] = useState(false);
+  const selected = String(value ?? "");
+  const selectedLabel = apps.find((app) => String(app.id) === selected);
+
+  return (
+    <div className={`dashboardSelect${open ? " isOpen" : ""}`}>
+      <FormControl variant="outlined" className="custom-select-wrapper">
+        <Select
+          id="dashboard-app"
+          labelId="dashboard-app-label"
+          value={selected}
+          displayEmpty
+          className="custom-select"
+          onChange={(event: SelectChangeEvent<string>) => {
+            const next = Number(event.target.value);
+            if (!Number.isNaN(next)) {
+              onChange(next);
+            }
+          }}
+          onOpen={() => setOpen(true)}
+          onClose={() => setOpen(false)}
+          MenuProps={{
+            classes: { paper: "select-custom-backdrop" },
+            PaperProps: {
+              sx: { maxHeight: 280 },
+            },
+          }}
+          renderValue={() =>
+            selectedLabel
+              ? `${selectedLabel.name} (${osFilterLabel(selectedLabel.osType)})`
+              : "Select an app"
+          }
+        >
+          {apps.map((app) => (
+            <MenuItem key={app.id} value={String(app.id)}>
+              {app.name} ({osFilterLabel(app.osType)})
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </div>
+  );
+};
 
 const maskValue = (value: string, revealed: boolean) => {
   if (!value) {
@@ -152,21 +213,14 @@ const Dashboard = () => {
 
         {summary.apps.length > 0 ? (
           <div className="onboardField">
-            <label className="fieldLabel" htmlFor="dashboard-app">
+            <label className="fieldLabel" htmlFor="dashboard-app" id="dashboard-app-label">
               App
             </label>
-            <select
-              id="dashboard-app"
-              className="appSelect"
+            <DashboardAppSelect
               value={selectedAppId}
-              onChange={(event) => handleSelectApp(Number(event.target.value))}
-            >
-              {summary.apps.map((app) => (
-                <option key={app.id} value={app.id}>
-                  {app.name} ({osFilterLabel(app.osType)})
-                </option>
-              ))}
-            </select>
+              apps={summary.apps}
+              onChange={handleSelectApp}
+            />
           </div>
         ) : null}
 

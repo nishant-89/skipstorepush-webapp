@@ -8,6 +8,8 @@ import {
   themeFromApi,
   themeToApi,
   TIMEZONE_STORAGE_KEY,
+  canonicalizeTimeZone,
+  timezoneSelectOptions,
   withDefaultSettings,
 } from "src/utils/userSettings";
 import { THEME_STORAGE_KEY } from "src/utils/theme";
@@ -59,5 +61,21 @@ describe("user settings helpers", () => {
       email: true,
       release: false,
     });
+  });
+
+  it("maps standard timezone names to IANA identifiers", () => {
+    expect(canonicalizeTimeZone("Asia/Calcutta")).toBe("Asia/Kolkata");
+    expect(canonicalizeTimeZone("EST")).toBe("America/New_York");
+    expect(
+      timezoneSelectOptions().find((option) => option.value === "Asia/Kolkata")
+        ?.label
+    ).toBe("Indian Standard Time (IST)");
+    expect(
+      timezoneSelectOptions().find((option) => option.value === "America/New_York")
+        ?.label
+    ).toBe("Eastern Standard Time (EST)");
+    expect(timezoneSelectOptions().some((option) => option.value === "UTC")).toBe(
+      true
+    );
   });
 });

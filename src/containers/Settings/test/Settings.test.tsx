@@ -28,7 +28,8 @@ describe("Settings", () => {
       loading: false,
       savingKey: null,
       languageOptions: [{ value: "en", label: "English" }],
-      timeZones: ["UTC"],
+      timeZoneOptions: [{ value: "UTC", label: "Coordinated Universal Time (UTC)" }],
+      selectedTimeZone: "",
       toggle: jest.fn(),
       setTheme: jest.fn(),
       setLanguage: jest.fn(),
@@ -68,7 +69,11 @@ describe("Settings", () => {
         { value: "en", label: "English" },
         { value: "es", label: "Spanish" },
       ],
-      timeZones: ["UTC"],
+      timeZoneOptions: [
+        { value: "UTC", label: "Coordinated Universal Time (UTC)" },
+        { value: "Asia/Kolkata", label: "Indian Standard Time (IST)" },
+      ],
+      selectedTimeZone: "",
       toggle: jest.fn(),
       setTheme: jest.fn(),
       setLanguage,
@@ -80,5 +85,47 @@ describe("Settings", () => {
     expect(screen.getByRole("option", { name: "Spanish" })).toBeInTheDocument();
     fireEvent.click(screen.getByRole("option", { name: "Spanish" }));
     expect(setLanguage).toHaveBeenCalledWith("es");
+  });
+
+  it("opens the timezone menu with standard names and saves IANA values", () => {
+    const setTimezone = jest.fn();
+    (useSettingsHelper as jest.Mock).mockReturnValue({
+      settings: {
+        menuPinned: false,
+        notificationEnabled: true,
+        defaultTheme: "DARK",
+        emailNotificationEnabled: true,
+        releaseAlertEnabled: true,
+        compactMode: false,
+        preservePinnedState: false,
+        language: "en",
+        timezone: "Asia/Calcutta",
+      },
+      loading: false,
+      savingKey: null,
+      languageOptions: [{ value: "en", label: "English" }],
+      timeZoneOptions: [
+        { value: "Asia/Kolkata", label: "Indian Standard Time (IST)" },
+        { value: "America/New_York", label: "Eastern Standard Time (EST)" },
+      ],
+      selectedTimeZone: "Asia/Kolkata",
+      toggle: jest.fn(),
+      setTheme: jest.fn(),
+      setLanguage: jest.fn(),
+      setTimezone,
+    });
+
+    render(<Settings />);
+    fireEvent.mouseDown(screen.getByLabelText("Time zone"));
+    expect(
+      screen.getByRole("option", { name: "Indian Standard Time (IST)" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("option", { name: "Eastern Standard Time (EST)" })
+    ).toBeInTheDocument();
+    fireEvent.click(
+      screen.getByRole("option", { name: "Eastern Standard Time (EST)" })
+    );
+    expect(setTimezone).toHaveBeenCalledWith("America/New_York");
   });
 });

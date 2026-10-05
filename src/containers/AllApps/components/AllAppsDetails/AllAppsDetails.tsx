@@ -1,10 +1,7 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
-import {
-  ActionArrowIcon,
-  ProfileImageIcon,
-  ReleaseSettingIcon,
-} from "src/utils/common/constants/constants";
+import { KeyRound, Pencil, Trash2 } from "lucide-react";
+import { ProfileImageIcon } from "src/utils/common/constants/constants";
 import TableComponent from "src/components/common/Table/Table";
 import TableDataLoader from "src/components/common/Loader/tableDataLoader";
 import NoData from "src/components/common/NoData/NoData";
@@ -12,10 +9,7 @@ import Breadcrumbs from "src/components/common/BreadCrumbs/BreadCrumbs";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import SettingDeleteModal from "src/components/common/Modal/deleteModal";
-import ButtonComp from "src/components/common/Button/Button";
 import DebounceSearch from "src/components/common/Search/Search";
 import SelectComponent from "src/components/common/Select/Select";
 
@@ -25,6 +19,7 @@ import ReleaseDrawer from "../ReleaseDrawer/ReleaseDrawer";
 import { Modal } from "./constant";
 import { handleEnvironment } from "src/containers/redux/slices/release";
 import CollaboratorSection from "./collaborator";
+import { OsBrandIcon } from "../../osIcons";
 
 import "./AllAppsDetails.scss";
 import "../../../../scss/table.scss";
@@ -58,6 +53,11 @@ function a11yProps(index: number) {
   };
 }
 
+const osLabel = (osType?: string) => {
+  if (!osType) return "N/A";
+  return osType === "IOS" ? "iOS" : "Android";
+};
+
 const AllAppsDetails = () => {
   const dispatch = useDispatch();
   const {
@@ -65,8 +65,6 @@ const AllAppsDetails = () => {
     isDeleteModalOpen,
     isSettingsDrawerOpen,
     value,
-    open,
-    anchorEl,
     filteredData,
     loading,
     count,
@@ -89,13 +87,11 @@ const AllAppsDetails = () => {
     setInvite,
     setTerm,
     setSearchTerm,
-    handleEditButtonClick,
     handleDeleteClick,
     handleSettingsClick,
     handleOpenDrawer,
     handleCloseDrawer,
     handleChange,
-    handleCloseMenu,
     setIsDeleteModalOpen,
     setIsSettingsDrawerOpen,
     handleChangePage,
@@ -150,6 +146,11 @@ const AllAppsDetails = () => {
 
     return null;
   };
+
+  const selectedEnvLabel =
+    envList?.find((env) => String(env.value) === String(selectedFilters))
+      ?.label ?? "";
+
   return (
     <div className="AllAppsDetailWrapper">
       <Breadcrumbs
@@ -158,12 +159,81 @@ const AllAppsDetails = () => {
       />
 
       <div className="cardBgWrapper AllAppsDetailMainWrapper">
+        {realeaseLoader ? (
+          <div className="appDetailHero skeltonWrapper">
+            <div className="appDetailHeroCopy">
+              <h1 className="skeleton-loader w220"></h1>
+              <p className="skeleton-loader w140"></p>
+            </div>
+          </div>
+        ) : (
+          <header className="appDetailHero">
+            <div className="appDetailHeroMain">
+              {appDetail?.appIcon ? (
+                <>
+                  <img
+                    className="appDetailIcon"
+                    src={appDetail.appIcon}
+                    alt="Icon"
+                  />
+                  <span className="appDetailHeroDivider" aria-hidden="true" />
+                </>
+              ) : null}
+              <div className="appDetailHeroCopy">
+                <div className="appDetailEyebrow">
+                  <OsBrandIcon osType={appDetail?.osType} />
+                  {selectedEnvLabel ? (
+                    <span className="appDetailOs">{selectedEnvLabel}</span>
+                  ) : null}
+                </div>
+                <h1>{appDetail?.name || "App"}</h1>
+                {appDetail?.ownerName ? (
+                  <p>Owner · {appDetail.ownerName}</p>
+                ) : null}
+              </div>
+            </div>
+            <div className="appDetailCtas">
+              {value === 0 && envList && envList.length > 0 ? (
+                <button
+                  type="button"
+                  className="appBtn appBtn--secondary appBtn--sm SettingBtn"
+                  aria-label="Deployment keys"
+                  onClick={handleOpenDrawer}
+                >
+                  <KeyRound size={15} aria-hidden />
+                  Keys
+                </button>
+              ) : null}
+              {value === 1 && appDetail?.isOwner ? (
+                <>
+                  <button
+                    type="button"
+                    className="appBtn appBtn--secondary appBtn--sm"
+                    onClick={handleSettingsClick}
+                  >
+                    <Pencil size={15} aria-hidden />
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    className="appBtn appBtn--secondary appBtn--sm appDetailCta--danger"
+                    onClick={handleDeleteClick}
+                  >
+                    <Trash2 size={15} aria-hidden />
+                    Delete App
+                  </button>
+                </>
+              ) : null}
+            </div>
+          </header>
+        )}
+
         <div className="AllAppsDetailInnerWrapper">
           <div className="DetailsTabSection">
             <Tabs
               value={value}
               onChange={handleChange}
-              aria-label="basic tabs example"
+              aria-label="App details"
               scrollButtons="auto"
               variant="scrollable"
             >
@@ -171,11 +241,10 @@ const AllAppsDetails = () => {
               <Tab label="Settings" {...a11yProps(1)} />
             </Tabs>
           </div>
-          {/* releases section */}
           <div className="tabContentWrapper">
             <CustomTabPanel value={value} index={0}>
-              <div className="ReleaseMainWrapper">
-                <div className="TopSection">
+              <section className="appDetailPanel ReleaseMainWrapper">
+                <div className="appDetailPanelHead TopSection">
                   {showFilter && (
                     <div className="searchWrapper">
                       <DebounceSearch
@@ -201,22 +270,6 @@ const AllAppsDetails = () => {
                       />
                     </div>
                   )}
-
-                  {envList && envList?.length > 0 && (
-                    <ButtonComp
-                      className="SettingBtn"
-                      variant="outlined"
-                      label=""
-                      isIcon
-                      icon={ReleaseSettingIcon}
-                      onClick={handleOpenDrawer}
-                    />
-                  )}
-                  <ReleaseDrawer
-                    open={isDrawerOpen}
-                    onClose={handleCloseDrawer}
-                    envList={envList}
-                  />
                 </div>
 
                 <div className="tableSection releaseTable">
@@ -224,96 +277,40 @@ const AllAppsDetails = () => {
                     {renderTableContent()}
                   </div>
                 </div>
-              </div>
+              </section>
             </CustomTabPanel>
           </div>
-          {/* setting section */}
           <div className="tabContentWrapper">
             <CustomTabPanel value={value} index={1}>
               <div className="SettingsMainWrapper">
                 {!realeaseLoader ? (
-                  <div className="settingCardWrapper">
-                    <div className="cardHead">
-                      {appDetail?.appIcon && (
-                        <figure className="cardImage">
-                          <img
-                            src={appDetail?.appIcon || ProfileImageIcon}
-                            alt="Icon"
-                          />
-                        </figure>
-                      )}
-                      <div
-                        className={`cardMiddleContent ${appDetail?.appIcon ? "" : "noImage"}`}
-                      >
-                        <h2 className="cardTitle">{appDetail?.name}</h2>
+                  <section className="appDetailPanel settingCardWrapper">
+                    <h2>App details</h2>
+                    <div className="appDetailMetaGrid detailRow">
+                      <div className="appDetailField detailCol">
+                        <span className="appDetailFieldLabel key">
+                          Operating System
+                        </span>
+                        <div className="appDetailFieldValue value">
+                          {osLabel(appDetail?.osType)}
+                        </div>
                       </div>
-                      {appDetail?.isOwner && (
-                        <ButtonComp
-                          className={`actionButton ${open ? "rotateIcon" : ""}`}
-                          type="button"
-                          label="Actions"
-                          variant="contained"
-                          icon={ActionArrowIcon}
-                          isIcon
-                          onClick={handleEditButtonClick}
-                        />
-                      )}
-
-                      <Menu
-                        className="menuWrapperss"
-                        id="basic-menu"
-                        anchorEl={anchorEl}
-                        open={open}
-                        onClose={handleCloseMenu}
-                        anchorOrigin={{
-                          vertical: "bottom",
-                          horizontal: "left",
-                        }}
-                        transformOrigin={{
-                          vertical: 0,
-                          horizontal: 50,
-                        }}
-                      >
-                        <MenuItem onClick={handleSettingsClick}>Edit</MenuItem>
-                        <MenuItem onClick={handleDeleteClick}>
-                          Delete App
-                        </MenuItem>
-                      </Menu>
-
-                      <SettingDeleteModal
-                        open={isDeleteModalOpen}
-                        title={Modal.deleteTitle}
-                        description={Modal.deleteDesc}
-                        onClose={() => setIsDeleteModalOpen(false)}
-                        onSubmit={handleDelete}
-                      />
-
-                      <AddAppDrawer
-                        open={isSettingsDrawerOpen}
-                        onClose={() => setIsSettingsDrawerOpen(false)}
-                        editMode={true}
-                        appDetail={appDetail}
-                      />
-                    </div>
-                    <div className="detailRow">
-                      <div className="detailCol">
-                        <h4 className="key">Operating System</h4>
-                        <p className="value">
-                          {appDetail?.osType === "IOS" ? "iOS" : "Android"}
-                        </p>
+                      <div className="appDetailField detailCol">
+                        <span className="appDetailFieldLabel key">Platform</span>
+                        <div className="appDetailFieldValue value">
+                          React Native
+                        </div>
                       </div>
-                      <div className="detailCol">
-                        <h4 className="key">Platform</h4>
-                        <p className="value">React Native</p>
-                      </div>
-                      <div className="detailCol">
-                        <h4 className="key">Owner</h4>
-                        <p className="value">{appDetail?.ownerName}</p>
+                      <div className="appDetailField detailCol">
+                        <span className="appDetailFieldLabel key">Owner</span>
+                        <div className="appDetailFieldValue value">
+                          {appDetail?.ownerName || "N/A"}
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </section>
                 ) : (
-                  <div className="settingCardWrapper skeltonWrapper">
+                  <div className="appDetailPanel settingCardWrapper skeltonWrapper">
                     <div className="cardHead skelton-loader">
                       {appDetail?.appIcon && (
                         <figure className="cardImage skeleton-loader">
@@ -328,12 +325,7 @@ const AllAppsDetails = () => {
                       >
                         <h2 className="cardTitle skeleton-loader "> </h2>
                       </div>
-                      <ButtonComp
-                        className="actionButton skeleton-loader"
-                        type="button"
-                        label=""
-                        variant="contained"
-                      />
+                      <div className="actionButton skeleton-loader" />
                     </div>
                     <div className="detailRow">
                       <div className="detailCol">
@@ -351,7 +343,6 @@ const AllAppsDetails = () => {
                     </div>
                   </div>
                 )}
-                {/* collaborator section */}
                 <CollaboratorSection
                   invite={invite}
                   setInvite={setInvite}
@@ -377,6 +368,27 @@ const AllAppsDetails = () => {
           </div>
         </div>
       </div>
+
+      <ReleaseDrawer
+        open={isDrawerOpen}
+        onClose={handleCloseDrawer}
+        envList={envList}
+      />
+
+      <SettingDeleteModal
+        open={isDeleteModalOpen}
+        title={Modal.deleteTitle}
+        description={Modal.deleteDesc}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onSubmit={handleDelete}
+      />
+
+      <AddAppDrawer
+        open={isSettingsDrawerOpen}
+        onClose={() => setIsSettingsDrawerOpen(false)}
+        editMode={true}
+        appDetail={appDetail}
+      />
     </div>
   );
 };

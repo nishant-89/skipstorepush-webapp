@@ -105,6 +105,21 @@ describe("Dashboard", () => {
     ).toHaveAttribute("href", "https://skipstorepush.tech/docs");
     expect(screen.getByText("https://api.skipstorepush.com")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Open app" })).toBeInTheDocument();
+    expect(screen.getByLabelText("App")).toBeInTheDocument();
+    expect(screen.getByText("Food (iOS)")).toBeInTheDocument();
+  });
+
+  it("lets the user pick another app from the styled dropdown", async () => {
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter>
+        <Dashboard />
+      </MemoryRouter>
+    );
+
+    await user.click(screen.getByLabelText("App"));
+    await user.click(await screen.findByRole("option", { name: "Retail (Android)" }));
+    expect(helperBase.handleSelectApp).toHaveBeenCalledWith(22);
   });
 
   it("opens the selected app and copies the CLI snippet", async () => {

@@ -133,15 +133,70 @@
   }
 }
 
-.appSelect {
+.dashboardSelect {
+  width: 100%;
   max-width: 360px;
-  height: 36px;
-  padding: 0 10px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  background: var(--color-bg-primary);
-  color: var(--color-text-primary);
-  font-family: var(--font-ui);
+  position: relative;
+
+  .MuiFormControl-root {
+    width: 100%;
+  }
+
+  .MuiOutlinedInput-root {
+    min-height: 40px;
+    background: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: var(--radius-btn);
+
+    .MuiOutlinedInput-notchedOutline {
+      border-color: var(--color-border);
+    }
+
+    &:hover .MuiOutlinedInput-notchedOutline {
+      border-color: var(--color-accent-secondary);
+    }
+
+    &.Mui-focused .MuiOutlinedInput-notchedOutline {
+      border-color: var(--color-accent);
+      border-width: 1px;
+    }
+  }
+
+  .MuiSelect-select {
+    padding: 10px 40px 10px 12px !important;
+    background: transparent !important;
+    color: var(--color-text-primary) !important;
+    font-family: var(--font-ui) !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+  }
+
+  .MuiSvgIcon-root {
+    display: none !important;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    width: 7px;
+    height: 7px;
+    margin-top: -5px;
+    border-right: 1.5px solid var(--color-text-secondary);
+    border-bottom: 1.5px solid var(--color-text-secondary);
+    transform: rotate(45deg);
+    pointer-events: none;
+    transition: transform 0.15s ease;
+  }
+
+  &.isOpen::after {
+    margin-top: -1px;
+    transform: rotate(225deg);
+  }
 }
 
 .cliBlock {

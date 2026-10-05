@@ -28,6 +28,8 @@ export const Play = Icon;
 export const Rocket = Icon;
 export const Undo2 = Icon;
 export const Pencil = Icon;
+export const Trash2 = Icon;
+export const UserPlus = Icon;
 export default {
   LayoutDashboard,
   LayoutGrid,
@@ -53,4 +55,6 @@ export default {
   Rocket,
   Undo2,
   Pencil,
+  Trash2,
+  UserPlus,
 };

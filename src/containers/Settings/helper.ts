@@ -8,7 +8,8 @@ import { showAlert } from "src/utils/alert";
 import { getErrorMessage } from "src/utils/common/constants/constants";
 import {
   LANGUAGE_OPTIONS,
-  listTimeZones,
+  canonicalizeTimeZone,
+  timezoneSelectOptions,
   withDefaultSettings,
 } from "src/utils/userSettings";
 import { mergeProfileSettings } from "src/containers/redux/slices/profile";
@@ -70,7 +71,8 @@ export const useSettingsHelper = () => {
     loading,
     savingKey,
     languageOptions: LANGUAGE_OPTIONS,
-    timeZones: listTimeZones(),
+    timeZoneOptions: timezoneSelectOptions(settings.timezone),
+    selectedTimeZone: canonicalizeTimeZone(settings.timezone),
     toggle,
     setTheme,
     setLanguage,

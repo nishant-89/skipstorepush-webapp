@@ -112,7 +112,8 @@ const Settings = () => {
     settings,
     savingKey,
     languageOptions,
-    timeZones,
+    timeZoneOptions,
+    selectedTimeZone,
     toggle,
     setTheme,
     setLanguage,
@@ -223,15 +224,12 @@ const Settings = () => {
             <SettingsSelect
               id="settings-timezone"
               labelId="settings-timezone-label"
-              value={settings.timezone || ""}
+              value={selectedTimeZone}
               disabled={busy}
               placeholder="Use browser default"
               options={[
                 { value: "", label: "Use browser default" },
-                ...timeZones.map((zone) => ({
-                  value: zone,
-                  label: zone.replace(/_/g, " "),
-                })),
+                ...timeZoneOptions,
               ]}
               onChange={setTimezone}
             />

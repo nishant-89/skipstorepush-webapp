@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import Breadcrumbs from "src/components/common/BreadCrumbs/BreadCrumbs";
 import ButtonComp from "src/components/common/Button/Button";
 import EditReleaseModal from "src/components/common/Modal/editReleaseModal";
-import { capitalizeFirstLetter, formatDateTime } from "src/utils/common/helpers";
+import { formatDateTime } from "src/utils/common/helpers";
 import PauseModal from "src/components/common/Modal/pauseModal";
 import RoolbackModal from "src/components/common/Modal/roolbackModal";
 import ResumeModal from "src/components/common/Modal/resumeModal";
@@ -39,18 +39,6 @@ const ValueLabelComponent = ({
       {children}
     </Tooltip>
   );
-};
-
-const statusTone = (status?: string) => {
-  if (status === "LIVE") return "success";
-  if (status === "ROLLED_BACK") return "failed";
-  return "pending";
-};
-
-const statusLabel = (status?: string) => {
-  if (!status) return "Unknown";
-  if (status === "ROLLED_BACK") return "Rollback";
-  return capitalizeFirstLetter(status);
 };
 
 const osLabel = (osType?: string) => {
@@ -142,7 +130,11 @@ const ReleaseDetails = () => {
     releaseLoader,
     handleSwitchToggle,
     currentUserId,
+    selectedEnvName,
   } = useReleaseDetailsHelper();
+
+  const envTag =
+    selectedEnvName || release?.environmentName || "";
 
   const canAct = release?.status !== "ROLLED_BACK";
   const canPromote =
@@ -192,11 +184,8 @@ const ReleaseDetails = () => {
               <div className="releaseHeroCopy">
                 <div className="releaseEyebrow">
                   <OsBrandIcon osType={release?.osType} />
-                  <span className={`releaseStatus ${statusTone(release?.status)}`}>
-                    {statusLabel(release?.status)}
-                  </span>
-                  {release?.environmentName ? (
-                    <span className="releaseEnv">{release.environmentName}</span>
+                  {envTag ? (
+                    <span className="releaseEnv">{envTag}</span>
                   ) : null}
                 </div>
                 <h1>{release?.releaseVersion ?? "Release"}</h1>

@@ -38,6 +38,7 @@ export const useReleaseDetailsHelper = () => {
   const dispatch = useDispatch();
 
   const { loading } = useSelector((state: RootState) => state?.globalState);
+  const envId = useSelector((state: RootState) => state?.release?.envId);
   const currentUserId = useSelector((state: RootState) => {
     const profileId = state.profile?.data?.id;
     const authUser = state.auth?.user;
@@ -50,6 +51,9 @@ export const useReleaseDetailsHelper = () => {
   const [promote, setPromoteModal] = useState(false);
   const [rollbackModal, setRollbackModal] = useState(false);
   const [prodId, setProdId] = useState("");
+  const [environments, setEnvironments] = useState<
+    { id: string; name: string }[]
+  >([]);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [rolloutModal, setRolloutModal] = useState(false);
@@ -228,6 +232,9 @@ export const useReleaseDetailsHelper = () => {
       })) as EnvApiResponse;
 
       if (res?.statusCode === 200 && res?.data?.length > 0) {
+        setEnvironments(
+          res.data.map((env) => ({ id: env.id, name: env.name }))
+        );
         const prodEnv = res?.data.find((env) => env?.name === "Production");
         prodEnv?.id && setProdId(prodEnv?.id);
       }
@@ -278,6 +285,13 @@ export const useReleaseDetailsHelper = () => {
     return "N/A";
   };
 
+  const selectedEnvId =
+    typeof envId === "string" || typeof envId === "number" ? String(envId) : "";
+  const selectedEnvName =
+    environments.find((env) => String(env.id) === selectedEnvId)?.name ||
+    release?.environmentName ||
+    "";
+
   return {
     open,
     anchorEl,
@@ -313,5 +327,6 @@ export const useReleaseDetailsHelper = () => {
     handleRollback,
     getReleasedByLabel,
     currentUserId,
+    selectedEnvName,
   };
 };

@@ -158,6 +158,22 @@ describe("ReleaseDetails", () => {
     );
   });
 
+  it("shows the filtered environment next to the OS icon instead of an OS tag", () => {
+    (helper.useReleaseDetailsHelper as jest.Mock).mockReturnValue({
+      ...mockHelper,
+      selectedEnvName: "Production",
+      release: { ...mockHelper.release, environmentName: "Staging" },
+    });
+    render(
+      <MemoryRouter>
+        <ReleaseDetails />
+      </MemoryRouter>
+    );
+    expect(screen.getByLabelText("Android")).toBeInTheDocument();
+    expect(screen.getByText("Production")).toBeInTheDocument();
+    expect(document.querySelector(".releaseStatus")).not.toBeInTheDocument();
+  });
+
   it("calls handleEditOpen when Edit button is clicked", () => {
     render(
       <MemoryRouter>

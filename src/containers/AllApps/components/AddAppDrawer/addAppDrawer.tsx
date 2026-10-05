@@ -1,9 +1,9 @@
 import { Drawer, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { Formik, Form } from "formik";
+import { X } from "lucide-react";
 import InputField from "src/components/common/InputField/InputField";
 import ButtonComp from "src/components/common/Button/Button";
 import {
-  CloseImageIcon,
   DrawerCloseIcon,
   ImageUploadIcon,
   ProfileImageIcon,
@@ -199,7 +199,7 @@ const AddAppDrawer = ({
                         onClick={handleRemoveImage}
                         aria-label="Remove Image"
                       >
-                        <img src={CloseImageIcon} alt="" />
+                        <X size={14} aria-hidden />
                       </button>
                       <img
                         className="profileImage"
