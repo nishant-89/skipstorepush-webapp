@@ -15,13 +15,13 @@ import { showAlert } from "src/utils/alert";
 import {
   formatRelativeTime,
   getActorImage,
-  getActorInitials,
   getHighlightedMessageParts,
   getNotificationDestination,
   isCollaboratorInvite,
   canRespondToInvite,
 } from "./helper";
 import { NotificationItem, NotificationsListData } from "./types";
+import UserAvatar from "src/components/common/UserAvatar/UserAvatar";
 import "./notifications.scss";
 
 type ApiEnvelope<T> = {
@@ -282,11 +282,10 @@ const Notifications = () => {
                   }}
                 >
                   <span className="notifyAvatar" aria-hidden="true">
-                    {getActorImage(item) ? (
-                      <img src={getActorImage(item)} alt="" />
-                    ) : (
-                      getActorInitials(item)
-                    )}
+                    <UserAvatar
+                      src={getActorImage(item) || null}
+                      iconSize={16}
+                    />
                   </span>
                   <span className="notifyBody">
                     <span className="notifyMessage">

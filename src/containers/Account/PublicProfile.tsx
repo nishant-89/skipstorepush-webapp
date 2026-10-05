@@ -1,6 +1,6 @@
 import Breadcrumbs from "src/components/common/BreadCrumbs/BreadCrumbs";
 import NoData from "src/components/common/NoData/NoData";
-import { UserPlaceholderIcon } from "src/utils/common/constants/constants";
+import UserAvatar from "src/components/common/UserAvatar/UserAvatar";
 import { usePublicProfileHelper } from "./publicProfileHelper";
 import "./account.scss";
 
@@ -28,10 +28,11 @@ const PublicProfile = () => {
           <p>Public details for this user.</p>
         </header>
         <section className="accountPanel accountIdentity">
-          <img
+          <UserAvatar
             className="profileImage"
-            src={profile?.profileImage || UserPlaceholderIcon}
+            src={profile?.profileImage}
             alt={profile?.fullName || "Profile photo"}
+            iconSize={36}
           />
           <h2>{profile?.fullName || "—"}</h2>
           <p className="publicProfileEmail">{profile?.email || "—"}</p>

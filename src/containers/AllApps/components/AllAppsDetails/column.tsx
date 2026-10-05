@@ -27,7 +27,7 @@ export const getReleaseColumns = (
     },
   },
   {
-    field: "target_version",
+    field: "targetVersion",
     sorting: false,
     headerName: "Target Version",
   },

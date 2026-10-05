@@ -19,10 +19,6 @@ jest.mock("src/components/common/NoData/NoData", () => ({
   default: ({ title }: { title?: string }) => <div>{title}</div>,
 }));
 
-jest.mock("src/utils/common/constants/constants", () => ({
-  UserPlaceholderIcon: "placeholder.png",
-}));
-
 describe("PublicProfile", () => {
   it("renders image, name, and email", () => {
     (usePublicProfileHelper as jest.Mock).mockReturnValue({
@@ -50,6 +46,27 @@ describe("PublicProfile", () => {
       "src",
       "https://example.com/sam.png"
     );
+  });
+
+  it("shows the default user icon when profileImage is null", () => {
+    (usePublicProfileHelper as jest.Mock).mockReturnValue({
+      profile: {
+        id: 2,
+        fullName: "Sam Collaborator",
+        email: "sam@example.com",
+        profileImage: null,
+      },
+      missing: false,
+    });
+
+    const { container } = render(
+      <MemoryRouter>
+        <PublicProfile />
+      </MemoryRouter>
+    );
+
+    expect(container.querySelector(".profileImage.isPlaceholder")).toBeInTheDocument();
+    expect(container.querySelector(".profileImage svg")).toHaveAttribute("width", "36");
   });
 
   it("shows not found when the profile is unavailable", () => {

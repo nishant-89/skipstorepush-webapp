@@ -227,6 +227,18 @@
     height: 80%;
     object-fit: cover;
     border-radius: 50%;
+    color: inherit;
+
+    &.isPlaceholder {
+      width: auto;
+      height: auto;
+      object-fit: unset;
+      border-radius: 0;
+      background: transparent;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 }
 

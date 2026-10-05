@@ -1,521 +1,454 @@
+@use "../../../../scss/variable.scss" as *;
 @use "../../../../scss/mixin.scss" as *;
-@use "../../../../scss/common.scss" as *;
 
-.cardBgWrapper {
+.ReleaseDetailWrapper {
+  .cardBgWrapper {
+    padding: 24px;
+    background-color: var(--color-bg-surface);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+  }
+}
+
+.releasePage {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 1080px;
+}
+
+.releaseHero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.releaseHeroMain {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.releaseHeroCopy {
+  min-width: 0;
+
+  h1 {
+    margin: 6px 0 0;
+    color: var(--color-text-primary);
+    font-size: 22px;
+    font-weight: 700;
+    word-break: break-word;
+    line-height: 1.2;
+  }
+
+  p {
+    margin: 4px 0 0;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+  }
+}
+
+.releaseAppIcon {
+  display: block;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  object-fit: cover;
+  background: var(--color-bg-surface);
+}
+
+.releaseHeroDivider {
+  flex-shrink: 0;
+  align-self: stretch;
+  width: 1px;
+  margin: 2px 2px;
+  background: var(--color-border);
+}
+
+.releaseEyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.releaseByName {
+  color: var(--color-accent);
+  font-weight: 600;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.releaseByEmail {
+  color: var(--color-text-secondary);
+  font-weight: 400;
+}
+
+.releaseStatus,
+.releaseEnv {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.releaseStatus.success {
+  color: var(--color-accent);
+  background: var(--color-accent-muted);
+}
+
+.releaseStatus.failed {
+  color: var(--color-error);
+  background: rgba($color-error, 0.16);
+}
+
+.releaseStatus.pending {
+  color: var(--color-warn);
+  background: rgba($color-warn, 0.16);
+}
+
+.releaseEnv {
+  color: var(--color-text-secondary);
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+}
+
+.releaseCtas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+
+  .appBtn {
+    min-width: 0 !important;
+  }
+
+  svg {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+.releaseCta--danger {
+  border-color: var(--color-error) !important;
+  color: var(--color-error) !important;
+
+  &::before {
+    background: var(--color-error);
+  }
+
+  &:hover:not(:disabled) {
+    background-color: rgba($color-error, 0.1) !important;
+    border-color: var(--color-error) !important;
+    color: var(--color-error) !important;
+  }
+}
+
+.releasePanel {
   padding: 20px;
-  background-color: var(--color-bg-surface);
-  border-radius: 20px;
-  border: 0.5px solid var(--color-border);
-}
-.ReleasesDetailMainWrapper {
-  .topSection {
-    padding: 20px 20px 0;
-    background-color: var(--color-bg-surface);
-    border-radius: 12px;
-    border: 0.5px solid var(--color-border);
-    .headingSection {
-      padding-bottom: 20px;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      .headingTitle {
-        padding-right: 10px;
-        font-weight: 700;
-        font-size: 16px;
-        line-height: 24px;
-        color: var(--color-text-primary);
-        word-break: break-word;
-      }
-    }
-    .actionButton {
-      width: 120px !important;
-      min-width: 120px !important;
-      flex-direction: row-reverse;
-      img {
-        transform: rotate(180deg);
-      }
-      &.rotateIcon {
-        img {
-          transform: rotate(0deg);
-        }
-      }
-    }
-    &.skeltonWrapper {
-      .headingSection {
-        .headingTitle {
-          padding-right: 10px;
-          font-weight: 700;
-          font-size: 16px;
-          line-height: 24px;
-          color: var(--color-text-primary);
-          word-break: break-word;
-        }
-      }
-      .actionButton {
-        width: 120px !important;
-        min-width: 120px !important;
-        height: 40px !important;
-        border: 0 !important;
-        background-color: var(--color-bg-surface) !important;
-        box-shadow: none !important;
-        border-radius: 10px !important;
-      }
-      .detailRow{
-        .skeleton-loader {
-          width: 50%!important;
-        }
-      }
-    }
-  }
-  .rooloutSection {
-    margin-top: 20px;
-    padding: 20px;
-    background-color: var(--color-bg-surface);
-    border-radius: 12px;
-    border: 0.5px solid var(--color-border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    @media screen and (max-width: 1100px) {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-    .progressSection {
-      max-width: 786px;
-      width: 100%;
-      @media screen and (max-width: 1366px) {
-        max-width: 650px;
-      }
-      @media screen and (max-width: 1200px) {
-        max-width: 570px;
-      }
-      @media screen and (max-width: 1100px) {
-        max-width: 100%;
-      }
-      .progressHeader {
-        padding-bottom: 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        .progressTitle {
-          padding-right: 10px;
-          font-weight: 700;
-          font-size: 16px;
-          line-height: 24px;
-          color: var(--color-text-primary);
-          word-break: break-word;
-        }
-        .progressValue {
-          font-weight: 700;
-          font-size: 16px;
-          line-height: 24px;
-          color: var(--color-accent);
-          word-break: break-word;
-        }
-      }
-      .progressbarOuterSection {
-        height: 8px;
-        border-radius: 4px;
-        background-color: var(--color-accent-muted);
-        display: flex;
-        .progressBarStepper {
-          background-color: var(--color-accent);
-          width: 200px;
-          width: 10%;
-          height: 8px;
-          border-radius: 4px 0 0 4px;
-        }
-        .stepperdot {
-          width: 24px;
-          height: 24px;
-          margin-left: -1px;
-          margin-top: -8px;
-          background-color: var(--color-accent);
-          border-radius: 50%;
-        }
-      }
-      .sliderOuterSection {
-        .MuiSlider-root {
-          .MuiSlider-rail {
-            height: 8px;
-            border-radius: 4px;
-            background-color: var(--color-accent);
-            opacity: 0.2;
-          }
-          .MuiSlider-track {
-            border: 4px solid var(--color-accent);
-            height: 8px;
-            border-radius: 4px;
-          }
-          .MuiSlider-thumb {
-            width: 24px !important;
-            height: 24px !important;
-            &::before {
-              box-shadow: none !important;
-              width: 24px !important;
-              height: 24px !important;
-              background-color: var(--color-accent);
-            }
-            &::after {
-              width: 24px !important;
-              height: 24px !important;
-            }
-            &.Mui-focusVisible,
-            &:hover,
-            &.Mui-active {
-              box-shadow: none !important;
-            }
-          }
-        }
-      }
-    }
-    .updateButton {
-      margin-left: auto;
-      width: 120px !important;
-      min-width: 120px !important;
-    }
-    &.skeltonWrapper {
-      .skeleton-loader {
-        &.w140 {
-          width: 140px !important;
-        }
-      }
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-primary);
 
-      .updateButton {
-        width: 120px !important;
-        min-width: 120px !important;
-        height: 40px !important;
-        border: 0 !important;
-        background-color: var(--color-bg-surface) !important;
-        box-shadow: none !important;
-        border-radius: 10px !important;
-      }
-    }
-  }
-  .detailRow {
-    margin: 0 -10px;
-    display: flex;
-    flex-wrap: wrap;
-    .detailCol {
-      max-width: 33.33%;
-      margin-bottom: 20px;
-      padding: 0 10px;
-      flex: 0 0 33.33%;
-      .toggleSwitch {
-        display: flex;
-        align-items: center;
-
-        .switchTxt {
-          padding-left: 8px;
-          margin: 0;
-          font-family: var(--font-ui);
-          font-weight: 500;
-          font-size: 11px;
-          line-height: normal;
-          text-align: center;
-          color: var(--color-text-secondary);
-        }
-
-        .MuiSwitch-root {
-          width: 44px;
-          height: 24px;
-          padding: 0;
-
-          .MuiButtonBase-root {
-            + .MuiSwitch-track {
-              background: var(--color-border);
-              opacity: 1;
-            }
-          }
-
-          .MuiButtonBase-root.Mui-checked {
-            .MuiSwitch-thumb {
-              color: var(--color-text-primary);
-              padding: 0;
-              margin: 0;
-              box-shadow: none;
-            }
-
-            + .MuiSwitch-track {
-              background: var(--color-accent);
-              opacity: 1;
-            }
-          }
-
-          .MuiSwitch-thumb {
-            box-shadow:
-              0px 1px 2px 0px var(--color-overlay),
-              0px 1px 3px 0px var(--color-overlay);
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-          }
-
-          .MuiSwitch-track {
-            width: 44px;
-            height: 24px;
-            border-radius: 12px;
-
-            .MuiSwitch-switchBase {
-              padding: 0;
-            }
-
-            .MuiSwitch-thumb {
-              width: 20px;
-              height: 20px;
-              border-radius: 50%;
-              background: var(--color-bg-surface);
-            }
-          }
-
-          .MuiTouchRipple-root {
-            display: none;
-          }
-        }
-
-        .MuiSwitch-switchBase {
-          padding: 2px 2px;
-
-          &.Mui-disabled + .MuiSwitch-track {
-            opacity: 0.4 !important;
-            cursor: not-allowed !important;
-            box-shadow:
-              0px 1px 2px 0px var(--color-overlay),
-              0px 1px 3px 0px var(--color-overlay);
-          }
-
-          &:hover {
-            background-color: transparent;
-          }
-        }
-      }
-      @media screen and (max-width: 1100px) {
-        max-width: 50%;
-        flex: 0 0 50%;
-      }
-    }
-    .key {
-      margin-bottom: 6px;
-      font-weight: 600;
-      font-size: 14px;
-      line-height: 20px;
-      color: var(--color-text-primary);
-      word-break: break-word;
-    }
-    .value {
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 24px;
-      color: var(--color-text-primary);
-      word-break: break-word;
-    }
-  }
-  .releaseNotesSection {
-    margin-top: 20px;
-    padding: 20px;
-    border: 0.5px solid var(--color-border);
-    border-radius: 12px;
-
-    .releaseHeadingWrapper {
-      padding-bottom: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      .releaseHeading {
-        padding-right: 10px;
-        font-weight: 700;
-        font-size: 16px;
-        line-height: 24px;
-        color: var(--color-text-primary);
-        word-break: break-word;
-      }
-
-      .editButton {
-        width: 120px !important;
-        min-width: 120px !important;
-        height: size(40) !important;
-
-        border-radius: 10px !important;
-        border: 1px solid var(--color-accent) !important;
-        background-color: var(--color-bg-surface) !important;
-        gap: size(10);
-        color: var(--color-accent) !important;
-        font-family: var(--font) !important;
-        font-size: size(14) !important;
-        font-weight: 600 !important;
-        text-transform: capitalize !important;
-        box-shadow: -1px 0px 0px 0px var(--color-accent-muted) inset !important;
-        white-space: nowrap;
-      }
-    }
-    .releaseNotesContentWrapper {
-      font-size: 16px;
-      line-height: 24px;
-      color: var(--color-text-primary);
-      white-space: pre-wrap;
-      max-height: 300px;
-      overflow-y: auto;
-      padding-right: 8px;
-    }
-    .topContentSection {
-      margin-bottom: 20px;
-    }
-    .infoText {
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 24px;
-      color: var(--color-text-primary);
-    }
-    .contentTitle {
-      margin-bottom: 8px;
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 24px;
-      color: var(--color-text-primary);
-    }
-
-    .releaseBodySection {
-      .listSection {
-        padding-left: 25px;
-        li {
-          font-weight: 400;
-          font-size: 16px;
-          line-height: 24px;
-          color: var(--color-text-primary);
-          list-style: none;
-
-          position: relative;
-
-          &::before {
-            content: "";
-            width: 3px;
-            height: 3px;
-            border-radius: 50%;
-            background-color: var(--color-text-primary);
-            position: absolute;
-            left: -15px;
-            top: 50%;
-            transform: translateY(-50%);
-          }
-        }
-      }
-      &:not(:last-of-type) {
-        margin-bottom: 20px;
-      }
-    }
-    &.skeltonWrapper {
-      .skeleton-loader {
-        &.w220 {
-          width: 220px !important;
-        }
-      }
-      .releaseHeadingWrapper {
-        .editButton {
-          width: 120px !important;
-          min-width: 120px !important;
-          height: 40px !important;
-          border: 0 !important;
-          background-color: var(--color-bg-surface) !important;
-          box-shadow: none !important;
-          border-radius: 10px !important;
-        }
-      }
-      .updateButton {
-        width: 120px !important;
-        min-width: 120px !important;
-        height: 40px !important;
-        border: 0 !important;
-        background-color: var(--color-bg-surface) !important;
-        box-shadow: none !important;
-        border-radius: 10px !important;
-      }
-    }
-  }
-  .skeleton-loader {
-    width: 100%;
-    height: 28px;
-    background-color: var(--color-bg-surface);
-    border-radius: 4px;
-    animation: pulse 1.5s infinite ease-in-out;
-
-    &:not(:last-child) {
-      margin-bottom: 8px;
-    }
-  }
-
-  @keyframes pulse {
-    0% {
-      background-color: var(--color-bg-surface);
-    }
-    50% {
-      background-color: var(--color-bg-primary);
-    }
-    100% {
-      background-color: var(--color-bg-surface);
-    }
+  h2 {
+    margin: 0;
+    color: var(--color-text-primary);
+    font-size: 15px;
+    font-weight: 600;
   }
 }
-.MuiMenu-root {
-  &.menuWrapperss {
-    .MuiMenu-paper {
-      min-width: 170px;
-      margin-top: size(10);
-      margin-left: 0 !important;
-      padding: size(10);
-      border-radius: size(12);
-      background-color: var(--color-bg-surface);
+
+.releasePanelHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+
+  .appBtn {
+    min-width: 0 !important;
+  }
+
+  svg {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+.releasePanelHint {
+  margin: 4px 0 0;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.releaseRolloutMeta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.progressValue {
+  font-weight: 700;
+  font-size: 14px;
+  font-family: var(--font-mono);
+  color: var(--color-accent);
+  white-space: nowrap;
+}
+
+.releaseMetaGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.releaseField {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 72px;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+}
+
+.releaseFieldLabel,
+.releasePage .key {
+  color: var(--color-text-secondary);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.releaseFieldValue,
+.releasePage .value {
+  color: var(--color-text-primary);
+  font-size: 14px;
+  font-weight: 500;
+  word-break: break-word;
+}
+
+.toggleSwitch {
+  display: flex;
+  align-items: center;
+  min-height: 24px;
+
+  .MuiSwitch-root {
+    width: 44px;
+    height: 24px;
+    padding: 0;
+
+    .MuiButtonBase-root + .MuiSwitch-track {
+      background: var(--color-border);
+      opacity: 1;
+    }
+
+    .MuiButtonBase-root.Mui-checked {
+      color: var(--on-accent) !important;
+
+      .MuiSwitch-thumb {
+        color: var(--on-accent) !important;
+        background-color: var(--on-accent) !important;
+        box-shadow: none;
+      }
+
+      + .MuiSwitch-track {
+        background: var(--color-accent);
+        opacity: 1;
+      }
+    }
+
+    .MuiSwitch-thumb {
+      width: 20px;
+      height: 20px;
+      color: var(--on-accent);
+      background-color: var(--on-accent) !important;
       box-shadow:
-        0px 15px 15px -1px var(--color-overlay),
-        0px 5.7px 12px -1px var(--color-overlay),
-        0px 2.6px 8px -1px var(--color-overlay),
-        0px 0.9px 4px -1px var(--color-overlay) !important;
+        0 1px 2px var(--color-overlay),
+        0 1px 3px var(--color-overlay);
+    }
 
-      .MuiList-root {
-        .MuiMenuItem-root {
-          border-radius: 8px;
-          padding: 10px 12px !important;
-          background: var(--color-bg-surface);
-          box-shadow: none;
-          font-family: var(--font) !important;
-          font-size: size(12) !important;
-          font-weight: 500;
-          line-height: size(15) !important;
-          color: var(--menuText) !important;
-          transition: all 0.3s ease-in;
-          justify-content: flex-start;
-          align-items: center;
-          @media screen and (max-width: 1440px) {
-            font-size: size(12) !important;
-          }
-          &.active,
-          &:hover {
-            color: var(--color-text-primary) !important;
-            font-weight: 600 !important;
-            background-color: var(--color-accent-muted) !important;
-          }
-          &:not(:last-child) {
-            margin-bottom: size(4);
-          }
-        }
+    .MuiSwitch-track {
+      width: 44px;
+      height: 24px;
+      border-radius: 12px;
+    }
+
+    .MuiTouchRipple-root {
+      display: none;
+    }
+  }
+
+  .MuiSwitch-switchBase {
+    color: var(--on-accent) !important;
+    padding: 2px;
+
+    &.Mui-checked {
+      color: var(--on-accent) !important;
+    }
+
+    &.Mui-disabled + .MuiSwitch-track {
+      opacity: 0.4 !important;
+    }
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+}
+
+.sliderOuterSection {
+  .MuiSlider-root {
+    .MuiSlider-rail {
+      height: 8px;
+      border-radius: 4px;
+      background-color: var(--color-accent);
+      opacity: 0.2;
+    }
+
+    .MuiSlider-track {
+      border: 4px solid var(--color-accent);
+      height: 8px;
+      border-radius: 4px;
+    }
+
+    .MuiSlider-thumb {
+      width: 20px !important;
+      height: 20px !important;
+
+      &::before {
+        box-shadow: none !important;
+        background-color: var(--color-accent);
+      }
+
+      &.Mui-focusVisible,
+      &:hover,
+      &.Mui-active {
+        box-shadow: 0 0 0 6px var(--color-accent-muted) !important;
       }
     }
   }
 }
 
-// roolback-tooltip-slider-popper-styling
+.updateButton {
+  min-width: 0 !important;
+}
+
+.releaseNotesContentWrapper {
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.osChip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+
+  svg,
+  img {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.skeltonWrapper {
+  .updateButton,
+  .editButton {
+    width: 88px !important;
+    min-width: 88px !important;
+    height: 30px !important;
+    border: 0 !important;
+    background-color: var(--color-bg-surface) !important;
+    box-shadow: none !important;
+  }
+}
+
+.skeleton-loader {
+  display: block;
+  width: 100%;
+  height: 28px;
+  background-color: var(--color-bg-surface);
+  border-radius: 4px;
+  animation: releasePulse 1.5s infinite ease-in-out;
+
+  &.w140 {
+    width: 140px;
+  }
+
+  &.w220 {
+    width: 220px;
+  }
+}
+
+@keyframes releasePulse {
+  0%,
+  100% {
+    background-color: var(--color-bg-surface);
+  }
+  50% {
+    background-color: var(--color-bg-primary);
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .releaseMetaGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .releaseHero,
+  .releasePanelHead,
+  .releaseRolloutMeta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .releaseMetaGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .rollbackTooltipSliderPopper {
   .MuiTooltip-tooltip {
     background-color: var(--color-accent) !important;
     border-radius: 8px !important;
-    color: var(--color-text-primary) !important;
+    color: var(--on-accent) !important;
     padding: 8px 11px !important;
     font-family: var(--font-ui) !important;
     font-weight: 600 !important;
     font-size: 12px !important;
     line-height: 18px !important;
     text-align: center !important;
+
     .MuiTooltip-arrow {
       color: var(--color-accent) !important;
     }

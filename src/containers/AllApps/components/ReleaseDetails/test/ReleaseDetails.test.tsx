@@ -4,6 +4,7 @@ import ReleaseDetails from "../ReleaseDetails";
 import * as helper from "../helper";
 
 jest.mock("../helper", () => ({
+  ...jest.requireActual("../helper"),
   useReleaseDetailsHelper: jest.fn(),
 }));
 
@@ -66,12 +67,12 @@ const mockHelper = {
   handleEditClose: jest.fn(),
   release: {
     osType: "ANDROID",
-    target_version: "1.2.3",
+    targetVersion: "1.2.3",
     releaseVersion: "v1.2.3",
     createdDate: "2024-06-01T10:00:00Z",
     status: "LIVE",
     releaseNote: "Initial release",
-    released_by: {
+    releasedBy: {
       id: "411e0c67-4183-478f-8f50-94a7df59d8d0",
       email: "nishantiec2013@yopmail.com",
       fullName: "Nishant Baranwal",
@@ -89,6 +90,7 @@ const mockHelper = {
   setResumeModal: jest.fn(),
   handleClose: jest.fn(),
   getReleasedByLabel: jest.fn(),
+  currentUserId: "99",
 };
 
 describe("ReleaseDetails", () => {
@@ -104,13 +106,56 @@ describe("ReleaseDetails", () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText("v1.2.3")).toBeInTheDocument();
+    expect(screen.getAllByText("v1.2.3").length).toBeGreaterThan(0);
     expect(screen.getByText("Operating System")).toBeInTheDocument();
-    expect(screen.getByText("Android")).toBeInTheDocument();
+    expect(screen.getAllByText("Android").length).toBeGreaterThan(0);
     expect(screen.getByText("Build Number")).toBeInTheDocument();
     expect(screen.getByText("1.2.3")).toBeInTheDocument();
     expect(screen.getByText("Release Notes (Optional)")).toBeInTheDocument();
     expect(screen.getByText("Initial release")).toBeInTheDocument();
+  });
+
+  it("links the released-by name to the public profile", () => {
+    render(
+      <MemoryRouter>
+        <ReleaseDetails />
+      </MemoryRouter>
+    );
+    const nameLink = screen.getByRole("link", { name: "Nishant Baranwal" });
+    expect(nameLink).toHaveAttribute("href", "/users/411e0c67-4183-478f-8f50-94a7df59d8d0");
+    expect(screen.getByText("(nishantiec2013@yopmail.com)")).toBeInTheDocument();
+  });
+
+  it("links the released-by name to My Profile when it is the current user", () => {
+    (helper.useReleaseDetailsHelper as jest.Mock).mockReturnValue({
+      ...mockHelper,
+      currentUserId: mockHelper.release.releasedBy.id,
+    });
+    render(
+      <MemoryRouter>
+        <ReleaseDetails />
+      </MemoryRouter>
+    );
+    expect(screen.getByRole("link", { name: "Nishant Baranwal" })).toHaveAttribute(
+      "href",
+      "/my-account"
+    );
+  });
+
+  it("shows the app icon in the hero eyebrow", () => {
+    (helper.useReleaseDetailsHelper as jest.Mock).mockReturnValue({
+      ...mockHelper,
+      release: { ...mockHelper.release, appIcon: "https://cdn/app.png" },
+    });
+    render(
+      <MemoryRouter>
+        <ReleaseDetails />
+      </MemoryRouter>
+    );
+    expect(document.querySelector(".releaseAppIcon")).toHaveAttribute(
+      "src",
+      "https://cdn/app.png"
+    );
   });
 
   it("calls handleEditOpen when Edit button is clicked", () => {
@@ -236,7 +281,7 @@ describe("ReleaseDetails", () => {
     expect(handlePromote).toHaveBeenCalled();
   });
 
-  it("does not show Actions button if release status is ROLLED_BACK", () => {
+  it("does not show release actions if status is ROLLED_BACK", () => {
     (helper.useReleaseDetailsHelper as jest.Mock).mockReturnValue({
       ...mockHelper,
       release: {
@@ -252,7 +297,13 @@ describe("ReleaseDetails", () => {
     );
 
     expect(
-      screen.queryByRole("button", { name: "Actions" })
+      screen.queryByRole("button", { name: "Pause" })
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Rollback" })
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Promote" })
     ).not.toBeInTheDocument();
   });
 

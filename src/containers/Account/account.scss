@@ -183,9 +183,17 @@
     height: 96px;
     border-radius: 50%;
     object-fit: cover;
-    display: block;
-    background: var(--color-bg-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-bg-primary);
     border: 2px solid var(--color-border);
+    color: var(--color-text-secondary);
+    flex-shrink: 0;
+
+    &.isPlaceholder {
+      object-fit: unset;
+    }
   }
 
   .profileImageOverlay {

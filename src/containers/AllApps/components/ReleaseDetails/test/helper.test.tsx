@@ -1,5 +1,5 @@
 import { render, screen, waitFor, fireEvent } from "@testing-library/react";
-import { useReleaseDetailsHelper } from "../helper";
+import { releasedByProfilePath, useReleaseDetailsHelper } from "../helper";
 import * as reactRedux from "react-redux";
 import * as reactRouter from "react-router-dom";
 import * as api from "src/apis/api";
@@ -400,6 +400,16 @@ describe("Extra coverage for useReleaseDetailsHelper", () => {
     expect(screen.getByTestId("label3").textContent).toBe("John");
     expect(screen.getByTestId("label4").textContent).toBe("john@x.com");
     expect(screen.getByTestId("label5").textContent).toBe("N/A");
+  });
+
+  it("routes released-by names to My Profile or the public profile", () => {
+    expect(releasedByProfilePath({ id: "1", fullName: "A", email: "a@x.com" }, "1")).toBe(
+      "/my-account"
+    );
+    expect(releasedByProfilePath({ id: "2", fullName: "B", email: "b@x.com" }, "1")).toBe(
+      "/users/2"
+    );
+    expect(releasedByProfilePath(null, "1")).toBeNull();
   });
 });
 

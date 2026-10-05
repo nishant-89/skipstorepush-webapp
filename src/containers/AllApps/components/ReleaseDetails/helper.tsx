@@ -6,6 +6,7 @@ import { showAlert } from "src/utils/alert";
 import { setLoading } from "src/redux/slices/globalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "src/redux/rootReducers";
+import ROUTES from "src/routes/routesPaths";
 
 import {
   ApiResponse,
@@ -16,11 +17,32 @@ import {
   UpdateType,
 } from "../../types";
 
+export const releasedByProfilePath = (
+  releasedBy?: RELEASE_RESPONSE_TYPE["releasedBy"] | null,
+  currentUserId?: string | number | null
+) => {
+  if (!releasedBy?.id) {
+    return null;
+  }
+  if (
+    currentUserId != null &&
+    String(releasedBy.id) === String(currentUserId)
+  ) {
+    return ROUTES.MY_ACCOUNT;
+  }
+  return `/users/${releasedBy.id}`;
+};
+
 export const useReleaseDetailsHelper = () => {
   const { releaseId } = useParams();
   const dispatch = useDispatch();
 
   const { loading } = useSelector((state: RootState) => state?.globalState);
+  const currentUserId = useSelector((state: RootState) => {
+    const profileId = state.profile?.data?.id;
+    const authUser = state.auth?.user;
+    return profileId ?? authUser?.userId ?? authUser?.id ?? null;
+  });
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [notes, setNotes] = useState("");
   const [pauseModal, setPauseModal] = useState(false);
@@ -243,12 +265,12 @@ export const useReleaseDetailsHelper = () => {
   };
 
   const getReleasedByLabel = (
-    released_by?: RELEASE_RESPONSE_TYPE["released_by"] | null
+    releasedBy?: RELEASE_RESPONSE_TYPE["releasedBy"] | null
   ) => {
-    if (!released_by) return "N/A";
+    if (!releasedBy) return "N/A";
 
-    const name = released_by?.fullName?.trim();
-    const email = released_by?.email?.trim();
+    const name = releasedBy?.fullName?.trim();
+    const email = releasedBy?.email?.trim();
 
     if (name && email) return `${name} (${email})`;
     if (name) return name;
@@ -290,5 +312,6 @@ export const useReleaseDetailsHelper = () => {
     handleSwitchToggle,
     handleRollback,
     getReleasedByLabel,
+    currentUserId,
   };
 };

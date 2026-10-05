@@ -27,10 +27,6 @@ jest.mock("src/routes/routesPaths", () => ({
   SETTINGS: "/settings",
 }));
 
-jest.mock("src/utils/common/constants/constants", () => ({
-  UserPlaceholderIcon: "mocked-user-placeholder.svg",
-}));
-
 jest.mock("src/utils/persistUserSettings", () => ({
   persistUserSettings: jest.fn().mockResolvedValue({
     menuPinned: true,

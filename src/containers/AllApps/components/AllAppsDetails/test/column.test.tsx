@@ -16,7 +16,7 @@ describe("getReleaseColumns", () => {
   const mockReleaseData: RELEASE_RESPONSE_TYPE = {
     id: "release1",
     releaseVersion: "1.0.0",
-    target_version: "2.0.0",
+    targetVersion: "2.0.0",
     status: "LIVE",
     isMandatory: true,
     rollbackCount: 2,
@@ -31,7 +31,7 @@ describe("getReleaseColumns", () => {
     releaseCount: 0,
     isPromoted: false,
     rollout: 10,
-    released_by: {
+    releasedBy: {
       id: "string",
       email: "string",
       fullName: "string",

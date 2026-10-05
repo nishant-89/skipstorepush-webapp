@@ -14,7 +14,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import ROUTES from "src/routes/routesPaths";
-import { UserPlaceholderIcon } from "src/utils/common/constants/constants";
+import UserAvatar from "src/components/common/UserAvatar/UserAvatar";
 import { RootState } from "src/redux/rootReducers";
 
 import { NAV_PIN_STORAGE_KEY } from "src/utils/userSettings";
@@ -113,7 +113,6 @@ const SideNav = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const profile = useSelector((state: RootState) => state.profile.data);
-  const avatarSrc = profile?.profileImage || UserPlaceholderIcon;
 
   const visibleItems = sideNavItems.filter((item) => !item.isHidden);
   const [hovered, setHovered] = useState(false);
@@ -234,7 +233,11 @@ const SideNav = () => {
             aria-label="My Account"
             onClick={() => navigate(ROUTES.MY_ACCOUNT)}
           >
-            <img className="sideNavAvatar" src={avatarSrc} alt="" />
+            <UserAvatar
+              className="sideNavAvatar"
+              src={profile?.profileImage}
+              iconSize={ICON_SIZE}
+            />
             {isProfileActive ? (
               <span className="sideNavActiveDot" aria-hidden="true" />
             ) : null}

@@ -278,6 +278,14 @@ describe("Notifications", () => {
     );
   });
 
+  it("shows the default user icon when the actor has no photo", async () => {
+    renderNotifications();
+    fireEvent.click(screen.getByLabelText("Notifications"));
+    await screen.findByText(messageText("A release was created"));
+    expect(document.querySelector(".notifyAvatar .isPlaceholder")).toBeInTheDocument();
+    expect(document.querySelector(".notifyAvatar img")).not.toBeInTheDocument();
+  });
+
   it("shows a disabled-state banner and faded bell when in-app notifications are off", async () => {
     renderNotifications(false);
     expect(screen.getByLabelText("Notifications")).toHaveClass("isDisabled");

@@ -2,7 +2,8 @@ import { useState } from "react";
 import { KeyRound, Lock, LogOut, User } from "lucide-react";
 import Breadcrumbs from "src/components/common/BreadCrumbs/BreadCrumbs";
 import Button from "src/components/common/Button/Button";
-import { GithubIcon, UserPlaceholderIcon } from "src/utils/common/constants/constants";
+import { GithubIcon } from "src/utils/common/constants/constants";
+import UserAvatar from "src/components/common/UserAvatar/UserAvatar";
 import { formatDateTime } from "src/utils/common/helpers";
 import { useAccountHelper, PROFILE_IMAGE_ACCEPT } from "./helper";
 import ChangePasswordModal from "./changePasswordModal";
@@ -124,10 +125,10 @@ const Account = () => {
                 onClick={openProfileImagePicker}
                 aria-label="Change profile photo"
               >
-                <img
+                <UserAvatar
                   className="profileImage"
-                  src={data?.profileImage || UserPlaceholderIcon}
-                  alt=""
+                  src={data?.profileImage}
+                  iconSize={36}
                 />
                 <span className="profileImageOverlay">Change</span>
               </button>

@@ -23,6 +23,11 @@ export const ListClock = Icon;
 export const KeyRound = Icon;
 export const Lock = Icon;
 export const LogOut = Icon;
+export const Pause = Icon;
+export const Play = Icon;
+export const Rocket = Icon;
+export const Undo2 = Icon;
+export const Pencil = Icon;
 export default {
   LayoutDashboard,
   LayoutGrid,
@@ -43,4 +48,9 @@ export default {
   KeyRound,
   Lock,
   LogOut,
+  Pause,
+  Play,
+  Rocket,
+  Undo2,
+  Pencil,
 };

@@ -235,7 +235,7 @@ export interface ReleaseItem {
   releaseVersion: string;
   rollbackCount: number;
   status: string;
-  target_version: string;
+  targetVersion: string;
   environmentName: string;
   appName: string;
   createdDate: string;

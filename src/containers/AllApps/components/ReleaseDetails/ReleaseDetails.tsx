@@ -1,29 +1,29 @@
-import { ActionArrowIcon } from "src/utils/common/constants/constants";
+import { Link } from "react-router-dom";
+import type { ReactNode } from "react";
 import Breadcrumbs from "src/components/common/BreadCrumbs/BreadCrumbs";
 import ButtonComp from "src/components/common/Button/Button";
 import EditReleaseModal from "src/components/common/Modal/editReleaseModal";
-import { formatDateTime } from "src/utils/common/helpers";
+import { capitalizeFirstLetter, formatDateTime } from "src/utils/common/helpers";
 import PauseModal from "src/components/common/Modal/pauseModal";
 import RoolbackModal from "src/components/common/Modal/roolbackModal";
 import ResumeModal from "src/components/common/Modal/resumeModal";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import PromoteModal from "src/components/common/Modal/promoteModal";
 import { Slider, Switch, Tooltip } from "@mui/material";
 import RolloutUpdateModal from "src/components/common/Modal/rolloutUpdateModal";
 import { showAlert } from "src/utils/alert";
+import { Pause, Pencil, Play, Rocket, Undo2 } from "lucide-react";
 
-import { ValueLabelComponentProps } from "../../types";
-import { useReleaseDetailsHelper } from "./helper";
+import { ValueLabelComponentProps, RELEASE_RESPONSE_TYPE } from "../../types";
+import { OsBrandIcon } from "../../osIcons";
+import { releasedByProfilePath, useReleaseDetailsHelper } from "./helper";
 import { Modal } from "./constant";
 
 import "./ReleaseDetails.scss";
 
-// customise the slider tooltip
-const ValueLabelComponent: React.FC<ValueLabelComponentProps> = ({
+const ValueLabelComponent = ({
   children,
   value,
-}) => {
+}: ValueLabelComponentProps) => {
   return (
     <Tooltip
       slotProps={{
@@ -41,12 +41,80 @@ const ValueLabelComponent: React.FC<ValueLabelComponentProps> = ({
   );
 };
 
+const statusTone = (status?: string) => {
+  if (status === "LIVE") return "success";
+  if (status === "ROLLED_BACK") return "failed";
+  return "pending";
+};
+
+const statusLabel = (status?: string) => {
+  if (!status) return "Unknown";
+  if (status === "ROLLED_BACK") return "Rollback";
+  return capitalizeFirstLetter(status);
+};
+
+const osLabel = (osType?: string) => {
+  if (!osType) return "N/A";
+  return osType === "IOS" ? "iOS" : "Android";
+};
+
+const ReleasedByValue = ({
+  releasedBy,
+  currentUserId,
+}: {
+  releasedBy?: RELEASE_RESPONSE_TYPE["releasedBy"] | null;
+  currentUserId?: string | number | null;
+}) => {
+  if (!releasedBy) {
+    return "N/A";
+  }
+  const name = releasedBy.fullName?.trim();
+  const email = releasedBy.email?.trim();
+  const href = name ? releasedByProfilePath(releasedBy, currentUserId) : null;
+
+  if (!name && !email) {
+    return "N/A";
+  }
+
+  return (
+    <>
+      {href ? (
+        <Link
+          to={href}
+          state={{
+            id: releasedBy.id,
+            fullName: releasedBy.fullName,
+            email: releasedBy.email,
+            profileImage: releasedBy.profileImage,
+          }}
+          className="releaseByName"
+        >
+          {name}
+        </Link>
+      ) : (
+        name || null
+      )}
+      {name && email ? " " : null}
+      {email ? <span className="releaseByEmail">({email})</span> : null}
+    </>
+  );
+};
+
+const ReleaseField = ({
+  label,
+  children,
+}: {
+  label: string;
+  children: ReactNode;
+}) => (
+  <div className="releaseField">
+    <span className="releaseFieldLabel">{label}</span>
+    <div className="releaseFieldValue">{children}</div>
+  </div>
+);
+
 const ReleaseDetails = () => {
   const {
-    open,
-    anchorEl,
-    handleClick,
-    handleClose,
     isEditModalOpen,
     handleEditOpen,
     handleEditClose,
@@ -73,8 +141,26 @@ const ReleaseDetails = () => {
     isSwitchOn,
     releaseLoader,
     handleSwitchToggle,
-    getReleasedByLabel,
+    currentUserId,
   } = useReleaseDetailsHelper();
+
+  const canAct = release?.status !== "ROLLED_BACK";
+  const canPromote =
+    release?.environmentName === "Staging" && !release?.isPromoted;
+  const rolloutComplete =
+    release?.rollout === null || release?.rollout === 100 || value === 100;
+  const rolloutLocked =
+    release?.rollout === null ||
+    release?.rollout === 100 ||
+    release?.status === "ROLLED_BACK";
+
+  const openPromote = () => {
+    if (release?.rollout === null || release?.rollout === 100) {
+      setPromoteModal(true);
+    } else {
+      showAlert(2, Modal.promoteMsg);
+    }
+  };
 
   return (
     <div className="ReleaseDetailWrapper">
@@ -82,278 +168,232 @@ const ReleaseDetails = () => {
         loading={!release?.appName}
         contextName={release?.appName}
       />
-      <div className="cardBgWrapper ReleasesDetailMainWrapper">
-        {/* detail section */}
+      <div className="cardBgWrapper releasePage">
         {releaseLoader ? (
-          <div className="topSection skeltonWrapper">
-            <div className="headingSection skelton-loader">
-              {release?.status !== "ROLLED_BACK" && (
-                <>
-                  <ButtonComp
-                    className="actionButton skelton-loader"
-                    type="button"
-                    label=""
-                  />
-                </>
-              )}
-            </div>
-            <div className="detailRow">
-              <div className="detailCol">
-                <h4 className="key skeleton-loader"></h4>
-                <p className="value skeleton-loader"></p>
-              </div>
-              <div className="detailCol">
-                <h4 className="key skeleton-loader"></h4>
-                <p className="value skeleton-loader"></p>
-              </div>
-              <div className="detailCol">
-                <h4 className="key skeleton-loader"></h4>
-                <p className="value skeleton-loader"></p>
-              </div>
-              <div className="detailCol">
-                <h4 className="key skeleton-loader"></h4>
-                <p className="value skeleton-loader"></p>
-              </div>
-              <div className="detailCol">
-                <h4 className="key skeleton-loader"></h4>
-                <p className="value skeleton-loader"></p>
-              </div>
-
-              <div className="detailCol">
-                <h4 className="key skeleton-loader"></h4>
-                <p className="value skeleton-loader"></p>
-              </div>
+          <div className="releaseHero skeltonWrapper">
+            <div className="releaseHeroCopy">
+              <h1 className="skeleton-loader w220"></h1>
+              <p className="skeleton-loader w140"></p>
             </div>
           </div>
         ) : (
-          <div className="topSection">
-            <div className="headingSection">
-              {release?.status !== "ROLLED_BACK" && (
+          <header className="releaseHero">
+            <div className="releaseHeroMain">
+              {release?.appIcon ? (
                 <>
-                  <ButtonComp
-                    className={`actionButton ${open ? "rotateIcon" : ""}`}
-                    type="button"
-                    label="Actions"
-                    variant="contained"
-                    icon={ActionArrowIcon}
-                    isIcon
-                    onClick={handleClick}
+                  <img
+                    className="releaseAppIcon"
+                    src={release.appIcon}
+                    alt=""
                   />
-
-                  <Menu
-                    className="menuWrapperss"
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    anchorOrigin={{
-                      vertical: "bottom",
-                      horizontal: "left",
-                    }}
-                    transformOrigin={{
-                      vertical: 0,
-                      horizontal: 50,
-                    }}
-                  >
-                    {release?.status === "LIVE" ? (
-                      <MenuItem
-                        onClick={() => {
-                          setPauseModal(true);
-                          handleClose();
-                        }}
-                      >
-                        Pause
-                      </MenuItem>
-                    ) : (
-                      <MenuItem
-                        onClick={() => {
-                          setResumeModal(true);
-                          handleClose();
-                        }}
-                      >
-                        Resume
-                      </MenuItem>
-                    )}
-
-                    {release?.status !== "ROLLED_BACK" && (
-                      <MenuItem
-                        onClick={() => {
-                          setRollbackModal(true);
-                          handleClose();
-                        }}
-                      >
-                        Rollback
-                      </MenuItem>
-                    )}
-                    {release?.environmentName === "Staging" &&
-                      !release?.isPromoted && (
-                        <MenuItem
-                          onClick={() => {
-                            if (
-                              release?.rollout === null ||
-                              release?.rollout === 100
-                            ) {
-                              setPromoteModal(true);
-                            } else {
-                              showAlert(2, Modal.promoteMsg);
-                            }
-                            handleClose();
-                          }}
-                        >
-                          Promote
-                        </MenuItem>
-                      )}
-                  </Menu>
+                  <span className="releaseHeroDivider" aria-hidden="true" />
                 </>
-              )}
+              ) : null}
+              <div className="releaseHeroCopy">
+                <div className="releaseEyebrow">
+                  <OsBrandIcon osType={release?.osType} />
+                  <span className={`releaseStatus ${statusTone(release?.status)}`}>
+                    {statusLabel(release?.status)}
+                  </span>
+                  {release?.environmentName ? (
+                    <span className="releaseEnv">{release.environmentName}</span>
+                  ) : null}
+                </div>
+                <h1>{release?.releaseVersion ?? "Release"}</h1>
+                <p>
+                  {release?.appName || "App"}
+                  {release?.targetVersion
+                    ? ` · Build ${release.targetVersion}`
+                    : ""}
+                </p>
+              </div>
             </div>
-            <div className="detailRow">
-              <div className="detailCol">
-                <h4 className="key">Operating System</h4>
-                <p className="value">
-                  {" "}
-                  {release?.osType
-                    ? release?.osType === "IOS"
-                      ? "iOS"
-                      : "Android"
-                    : "N/A"}
-                </p>
+            {canAct ? (
+              <div className="releaseCtas">
+                {release?.status === "LIVE" ? (
+                  <button
+                    type="button"
+                    className="appBtn appBtn--secondary appBtn--sm"
+                    onClick={() => setPauseModal(true)}
+                  >
+                    <Pause size={15} aria-hidden />
+                    Pause
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="appBtn appBtn--secondary appBtn--sm"
+                    onClick={() => setResumeModal(true)}
+                  >
+                    <Play size={15} aria-hidden />
+                    Resume
+                  </button>
+                )}
+                {canPromote ? (
+                  <button
+                    type="button"
+                    className="appBtn appBtn--primary appBtn--sm"
+                    onClick={openPromote}
+                  >
+                    <Rocket size={15} aria-hidden />
+                    Promote
+                  </button>
+                ) : null}
+                <button
+                  type="button"
+                  className="appBtn appBtn--secondary appBtn--sm releaseCta--danger"
+                  onClick={() => setRollbackModal(true)}
+                >
+                  <Undo2 size={15} aria-hidden />
+                  Rollback
+                </button>
               </div>
-              <div className="detailCol">
-                <h4 className="key">Build Number</h4>
-                <p className="value">{release?.target_version ?? "N/A"}</p>
-              </div>
-              <div className="detailCol">
-                <h4 className="key">Version</h4>
-                <p className="value">{release?.releaseVersion ?? "N/A"}</p>
-              </div>
-              <div className="detailCol">
-                <h4 className="key">Date & Time</h4>
-                <p className="value">
-                  {release?.createdDate
-                    ? formatDateTime(release?.createdDate)
-                    : "N/A"}
-                </p>
-              </div>
-              <div className="detailCol">
-                <h4 className="key">Mandatory Update?</h4>
+            ) : null}
+          </header>
+        )}
+
+        {releaseLoader ? (
+          <section className="releasePanel skeltonWrapper">
+            <div className="releaseMetaGrid">
+              {Array.from({ length: 6 }).map((_, index) => (
+                <div className="releaseField" key={`sk-${index}`}>
+                  <span className="key skeleton-loader"></span>
+                  <p className="value skeleton-loader"></p>
+                </div>
+              ))}
+            </div>
+          </section>
+        ) : (
+          <section className="releasePanel">
+            <h2>Release details</h2>
+            <div className="releaseMetaGrid">
+              <ReleaseField label="Operating System">
+                {osLabel(release?.osType)}
+              </ReleaseField>
+              <ReleaseField label="Build Number">
+                {release?.targetVersion ?? "N/A"}
+              </ReleaseField>
+              <ReleaseField label="Version">
+                {release?.releaseVersion ?? "N/A"}
+              </ReleaseField>
+              <ReleaseField label="Date & Time">
+                {release?.createdDate
+                  ? formatDateTime(release?.createdDate)
+                  : "N/A"}
+              </ReleaseField>
+              <ReleaseField label="Mandatory Update?">
                 <div className="toggleSwitch">
                   <Switch
                     checked={isSwitchOn}
                     onChange={handleSwitchToggle}
                     color="primary"
                     disabled={release?.status === "ROLLED_BACK"}
+                    inputProps={{ "aria-label": "Mandatory update" }}
                   />
                 </div>
-              </div>
-
-              <div className="detailCol">
-                <h4 className="key">Released By</h4>
-                <p className="value">
-                  {getReleasedByLabel(release?.released_by)}
-                </p>
-              </div>
+              </ReleaseField>
+              <ReleaseField label="Released By">
+                <ReleasedByValue
+                  releasedBy={release?.releasedBy}
+                  currentUserId={currentUserId}
+                />
+              </ReleaseField>
             </div>
-          </div>
+          </section>
         )}
-        {/* rollout section */}
-        {releaseLoader ? (
-          <div className="rooloutSection skeltonWrapper">
-            <div className="progressSection">
-              <div className="progressHeader skelton-loader">
-                <h2 className="progressTitle skeleton-loader w140"></h2>
-                <p className="progressValue skeleton-loader w140"></p>
-              </div>
 
-              <div className="sliderOuterSection skeleton-loader"></div>
+        {releaseLoader ? (
+          <section className="releasePanel skeltonWrapper">
+            <div className="releasePanelHead">
+              <h2 className="skeleton-loader w140"></h2>
+              <ButtonComp
+                className="updateButton skelton-loader"
+                type="button"
+                label=""
+              />
             </div>
-            <ButtonComp
-              className="updateButton skeleton-loader"
-              type="button"
-              label=""
-            />
-          </div>
+            <div className="sliderOuterSection skeleton-loader"></div>
+          </section>
         ) : (
-          <div className="rooloutSection">
-            <div className="progressSection">
-              <div className="progressHeader">
-                <h2 className="progressTitle">Release Rollout</h2>
-                <p className="progressValue">
-                  {value}%{" "}
-                  {release?.rollout === null ||
-                  release?.rollout === 100 ||
-                  value === 100
-                    ? "Rollout"
-                    : "Done"}
+          <section className="releasePanel">
+            <div className="releasePanelHead">
+              <div>
+                <h2>Release rollout</h2>
+                <p className="releasePanelHint">
+                  Increase the share of devices that receive this update. This
+                  cannot be reduced later.
                 </p>
               </div>
-
-              <div className="sliderOuterSection">
-                <Slider
-                  value={value}
+              <div className="releaseRolloutMeta">
+                <span className="progressValue">
+                  {value}% {rolloutComplete ? "rolled out" : "selected"}
+                </span>
+                <ButtonComp
+                  className="updateButton appBtn--sm"
+                  type="button"
+                  label="Update"
+                  variant="contained"
                   disabled={
-                    release?.rollout === null ||
-                    release?.rollout === 100 ||
-                    release?.status === "ROLLED_BACK"
+                    release?.rollout === null || release?.rollout === value
                   }
-                  onChange={handleSliderChange}
-                  valueLabelDisplay="auto"
-                  components={{
-                    ValueLabel: ValueLabelComponent,
+                  onClick={() => {
+                    setRolloutModal(true);
                   }}
                 />
               </div>
             </div>
-            <ButtonComp
-              className="updateButton"
-              type="button"
-              label="Update"
-              variant="contained"
-              disabled={release?.rollout === null || release?.rollout === value}
-              onClick={() => {
-                setRolloutModal(true);
-              }}
-            />
-          </div>
+            <div className="sliderOuterSection">
+              <Slider
+                value={value}
+                disabled={rolloutLocked}
+                onChange={handleSliderChange}
+                valueLabelDisplay="auto"
+                components={{
+                  ValueLabel: ValueLabelComponent,
+                }}
+              />
+            </div>
+          </section>
         )}
 
-        {/* notes section */}
         {releaseLoader ? (
-          <div className="releaseNotesSection skeltonWrapper">
-            <div className="releaseHeadingWrapper">
-              <h3 className="releaseHeading skeleton-loader w220"></h3>
+          <section className="releasePanel skeltonWrapper">
+            <div className="releasePanelHead">
+              <h2 className="skeleton-loader w220"></h2>
               <ButtonComp
                 className="editButton skelton-loader"
                 type="button"
                 label=""
               />
             </div>
-
             <div className="releaseNotesContentWrapper skeleton-loader">
               <p className="skeleton-loader"></p>
             </div>
-          </div>
+          </section>
         ) : (
-          <div className="releaseNotesSection">
-            <div className="releaseHeadingWrapper">
-              <h3 className="releaseHeading">Release Notes (Optional)</h3>
-              <ButtonComp
-                className="editButton"
+          <section className="releasePanel">
+            <div className="releasePanelHead">
+              <div>
+                <h2>Release Notes (Optional)</h2>
+                <p className="releasePanelHint">
+                  Shown with this update on devices that download it.
+                </p>
+              </div>
+              <button
                 type="button"
-                label="Edit"
-                variant="contained"
+                className="appBtn appBtn--secondary appBtn--sm"
                 onClick={handleEditOpen}
-              />
+              >
+                <Pencil size={15} aria-hidden />
+                Edit
+              </button>
             </div>
-
             <div className="releaseNotesContentWrapper">
-              {release?.releaseNote}
+              {release?.releaseNote || "No release notes yet."}
             </div>
-          </div>
+          </section>
         )}
       </div>
-
-      {/* models section */}
 
       <EditReleaseModal
         open={isEditModalOpen}
@@ -382,7 +422,6 @@ const ReleaseDetails = () => {
         description={Modal.pasuseDesc}
         onSubmit={() => handleAppStatus("pause")}
       />
-
       <ResumeModal
         open={resumeModal}
         onClose={() => {

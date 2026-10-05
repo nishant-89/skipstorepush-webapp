@@ -41,7 +41,6 @@ jest.mock("src/components/common/Modal/accessKeyModal", () => ({
 }));
 
 jest.mock("src/utils/common/constants/constants", () => ({
-  UserPlaceholderIcon: "placeholder.png",
   GithubIcon: "github.png",
 }));
 
