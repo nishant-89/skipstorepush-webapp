@@ -1,56 +1,15 @@
 import React from "react";
 import { toast, Id } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { toasterWarning, toasterSuccess } from "./common/constants";
+import ToastAlert, { ToastKind } from "src/components/common/ToastAlert/ToastAlert";
 import { eventListenerManager } from "./eventListenerFlag";
 
 const commonErr = "OOPS! something went wrong!";
-
-const toastList = new Set();
-
+const toastList = new Set<Id>();
 const MAXIMUM_TOAST = 5;
 
-/**
- * Defines the props for the `ToastComponent` component.
- *
- * @param message - The main message to display in the toast.
- * @param subMessage - The optional sub-message to display in the toast.
- */
-interface ToastComponentProps {
-  message: string;
-  subMessage?: string;
-}
-
-/**
- * Renders a toast component with a message and an optional sub-message.
- *
- * @param message - The main message to display in the toast.
- * @param subMessage - The optional sub-message to display in the toast.
- * @returns A React component that renders the toast.
- */
-const ToastComponent: React.FC<ToastComponentProps> = ({
-  message,
-  // subMessage,
-}) => (
-  <div className="alert-container">
-    <h2
-      className="alert-message"
-      style={{ paddingLeft: 9, paddingRight: 18, textAlign: "left" }}
-    >
-      {message}
-    </h2>
-    {/* <p className="alert-sub-message">{subMessage}</p> */}
-  </div>
-);
-
-/**
- * Displays a toast notification with a message and an optional sub-message.
- *
- * @param type - The type of toast to display (1 for success, 2 for error, 3 for info).
- * @param message - The main message to display in the toast. If not provided, a default error message will be used.
- * @param subMessage - The optional sub-message to display in the toast.
- */
 let isToastActive = false;
+
 export const showAlert = (
   type: number,
   message: string = commonErr,
@@ -67,60 +26,41 @@ export const showAlert = (
 
   if (toast.error === undefined) {
     toast(message, {
-      position: "top-left",
-      autoClose: 300000,
+      position: "bottom-right",
+      autoClose: 4000,
       draggable: false,
-      closeOnClick: true,
+      closeOnClick: false,
+      closeButton: false,
     });
+    return;
   }
 
-  const handleClose = (id: Id) => {
-    toastList.delete(id);
-    isToastActive = false;
-  };
+  const kind: ToastKind =
+    type === 1 ? "success" : type === 3 ? "info" : "error";
+  const notify =
+    kind === "success"
+      ? toast.success
+      : kind === "info"
+        ? toast.info
+        : toast.error;
 
-  switch (type) {
-    case 1: {
-      if (toastList.size < MAXIMUM_TOAST) {
-        const id: Id = toast.success(
-          <ToastComponent message={message} subMessage={subMessage} />,
-          {
-            icon: <img src={toasterSuccess} alt="alert" />,
-            // onClose: () => toastList.delete(id),
-            onClose: () => handleClose(id),
-          }
-        );
-        toastList.add(id);
-      }
-      break;
-    }
-    case 2: {
-      if (toastList.size < MAXIMUM_TOAST) {
-        const id: Id = toast.error(
-          <ToastComponent message={message} subMessage={subMessage} />,
-          {
-            icon: <img src={toasterWarning} alt="alert" />,
-            // onClose: () => toastList.delete(id),
-            onClose: () => handleClose(id),
-          }
-        );
-        toastList.add(id);
-      }
-      break;
-    }
-    case 3: {
-      if (toastList.size < MAXIMUM_TOAST) {
-        const id: Id = toast.info(
-          <ToastComponent message={message} subMessage={subMessage} />,
-          {
-            // onClose: () => toastList.delete(id),
-            onClose: () => handleClose(id),
-          }
-        );
-        toastList.add(id);
-      }
-      break;
-    }
-    default:
+  if (toastList.size >= MAXIMUM_TOAST) {
+    return;
   }
+
+  const id: Id = notify(
+    <ToastAlert message={message} subMessage={subMessage} kind={kind} />,
+    {
+      icon: false,
+      closeButton: false,
+      closeOnClick: false,
+      draggable: false,
+      className: `skipToast skipToast--${kind}`,
+      onClose: () => {
+        toastList.delete(id);
+        isToastActive = false;
+      },
+    }
+  );
+  toastList.add(id);
 };

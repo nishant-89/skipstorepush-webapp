@@ -1,5 +1,5 @@
 import React from "react";
-import { SortUpIcon, SortDownIcon } from "src/utils/common/constants";
+import { SortUpIcon, SortDownIcon } from "src/utils/common/constants/constants";
 import "src/scss/table.scss";
 interface SortIconProps {
   sortOrder: string;

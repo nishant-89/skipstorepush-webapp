@@ -2,9 +2,107 @@
 
 #root {
   height: 100%;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+}
+
+.MuiPaper-root {
+  background-color: var(--color-bg-surface) !important;
+  color: var(--color-text-primary) !important;
+  background-image: none !important;
+}
+
+.MuiInputBase-input,
+.MuiSelect-select {
+  color: var(--color-text-primary) !important;
+}
+
+.MuiLinearProgress-root {
+  background-color: var(--color-accent-muted) !important;
+}
+
+.MuiLinearProgress-bar {
+  background-color: var(--color-accent) !important;
+}
+
+.Toastify__toast {
+  background: transparent !important;
+  color: var(--color-text-primary) !important;
 }
 
 .moreActionBtn {
   background: transparent;
-  border: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-btn);
+}
+
+.MuiTableCell-root {
+  border-bottom: 1px solid var(--tableBorder) !important;
+}
+
+.themeSwitch {
+  width: 58px;
+  height: 28px;
+  padding: 2px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-bg-primary);
+  cursor: pointer;
+  position: relative;
+
+  .themeSwitchThumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    border: 1px solid var(--color-accent);
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    z-index: 2;
+    transition: left 0.22s ease;
+  }
+
+  .themeSwitchIcon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 14px;
+    color: var(--color-text-secondary);
+    pointer-events: none;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  .themeSwitchMoon {
+    left: 7px;
+    opacity: 0;
+  }
+
+  .themeSwitchSun {
+    right: 7px;
+    opacity: 1;
+  }
+
+  &.isLight {
+    .themeSwitchThumb {
+      left: calc(100% - 24px);
+    }
+
+    .themeSwitchMoon {
+      opacity: 1;
+    }
+
+    .themeSwitchSun {
+      opacity: 0;
+    }
+  }
 }

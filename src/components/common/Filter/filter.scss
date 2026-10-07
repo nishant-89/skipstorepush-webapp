@@ -5,8 +5,8 @@
     height: 11px;
     border-radius: 50%;
     width: 11px;
-    border: 1px solid #f9f9fc;
-    background-color: #f26258;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-error);
   }
 }
 
@@ -14,6 +14,73 @@
   min-width: size(352);
   width: size(352);
   padding: size(24);
+  background: var(--color-popover-bg);
+
+  .MuiCheckbox-root {
+    color: transparent;
+
+    svg {
+      display: none;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 16px;
+      height: 16px;
+      margin: -8px 0 0 -8px;
+      box-sizing: border-box;
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      background: var(--color-bg-primary);
+      background-image: none !important;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      opacity: 0;
+    }
+
+    &.Mui-checked::after,
+    &.MuiCheckbox-indeterminate::after {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+      background-image: none !important;
+    }
+
+    &.Mui-checked::before {
+      opacity: 1;
+      left: 50%;
+      top: 50%;
+      width: 5px;
+      height: 9px;
+      margin: -6px 0 0 -2px;
+      border: solid var(--on-accent);
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    &.MuiCheckbox-indeterminate::before {
+      opacity: 1;
+      left: 50%;
+      top: 50%;
+      width: 8px;
+      height: 2px;
+      margin: -1px 0 0 -4px;
+      background: var(--on-accent);
+      border: 0;
+      transform: none;
+    }
+
+    .MuiTouchRipple-root {
+      display: none !important;
+    }
+  }
+
   .customSelect .MuiSelect-select {
     font-size: 14px !important;
   }
@@ -26,8 +93,10 @@
       padding: 0;
       font-size: size(12);
       font-weight: 700;
-      font-family: var(--font);
-      color: var(--infoText);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+      color: var(--color-text-secondary);
     }
   }
   .innerWrapper {
@@ -36,7 +105,7 @@
       font-weight: 600;
       font-size: 14px;
       line-height: 24px;
-      color: #3a4f5f;
+      color: var(--color-text-primary);
     }
     .checkboxSection {
       max-height: 150px;
@@ -51,43 +120,12 @@
           margin-left: size(8) !important;
           font-family: var(--font) !important;
           font-weight: 500 !important;
-          color: #3a4f5f !important;
+          color: var(--color-text-primary) !important;
           word-break: break-word;
         }
         .MuiFormControlLabel-root {
           width: fit-content !important;
           margin-right: 0 !important;
-        }
-      }
-      .MuiCheckbox-root {
-        svg {
-          display: none;
-        }
-        &::after {
-          width: size(18);
-          height: size(18);
-          position: absolute;
-          top: 0;
-          content: "";
-          background-image: url("src/assets/images/checkbox.svg") !important;
-          background-repeat: no-repeat !important;
-          background-size: size(16) !important;
-        }
-        &.Mui-checked {
-          position: relative;
-          &::after {
-            width: size(18);
-            height: size(18);
-            position: absolute;
-            top: 0;
-            content: "";
-            background-image: url("src/assets/images/checkbox-checked.svg") !important;
-            background-repeat: no-repeat !important;
-            background-size: size(16) !important;
-          }
-        }
-        .MuiTouchRipple-root {
-          display: none !important;
         }
       }
     }
@@ -115,37 +153,6 @@
         }
         .MuiFormControlLabel-root {
           width: fit-content;
-        }
-      }
-      .MuiCheckbox-root {
-        svg {
-          display: none;
-        }
-        &::after {
-          width: size(18);
-          height: size(18);
-          position: absolute;
-          top: 1px;
-          content: "";
-          background-image: url("src/assets/images/checkbox.svg") !important;
-          background-repeat: no-repeat !important;
-          background-size: size(16) !important;
-        }
-        &.Mui-checked {
-          position: relative;
-          &::after {
-            width: size(18);
-            height: size(18);
-            position: absolute;
-            top: 1px;
-            content: "";
-            background-image: url("src/assets/images/checkbox-checked.svg") !important;
-            background-repeat: no-repeat !important;
-            background-size: size(16) !important;
-          }
-        }
-        .MuiTouchRipple-root {
-          display: none !important;
         }
       }
     }
@@ -179,7 +186,7 @@
           color: var(--colorSecondary);
           padding-left: 30px;
           &.placeholder {
-            color: #abb3ba;
+            color: var(--color-text-secondary);
           }
         }
         &::before {
@@ -214,7 +221,7 @@
   input::placeholder {
     font-size: 14px !important;
     font-weight: 400;
-    color: #abb3ba;
+    color: var(--color-text-secondary);
   }
   .bottomWrapper {
     margin-top: 12px;
@@ -279,8 +286,8 @@
 // =========Date Range Picker==========//
 .datePicker_customer {
   right: 0px;
-  background: var(--white);
-  border: 1px solid #eaecf0;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
   padding: 9px 0 0 0;
   border-radius: 12px;
   width: size(656);
@@ -301,7 +308,7 @@
     .rdrCalendarWrapper {
       width: 100%;
       .rdrNextPrevButton {
-        border: 1.5px solid #3a4f5f;
+        border: 1.5px solid var(--color-text-primary);
         background: transparent;
       }
       .rdrMonthAndYearWrapper {
@@ -327,7 +334,7 @@
           position: relative;
           border: 1px solid var(--borderGrayBg);
           background: transparent;
-          box-shadow: 0px 1px 2px 0px #1018280d;
+          box-shadow: 0px 1px 2px 0px var(--color-overlay);
           border-radius: 8px;
           input {
             color: var(--colorSecondary);
@@ -360,7 +367,7 @@
       }
       .rdrMonths {
         padding: 0 0px 10px;
-        border-bottom: 1px solid #eaecf0;
+        border-bottom: 1px solid var(--color-border);
         .rdrMonthName {
           color: var(--colorSecondary);
         }
@@ -368,7 +375,7 @@
           .rdrWeekDay {
             color: var(--colorSecondary);
             font-size: size(14);
-            font-family: "Inter", sans-serif;
+            font-family: var(--font-ui);
             font-weight: 500;
           }
         }
@@ -376,7 +383,7 @@
           button {
             height: 40px;
             .rdrInRange {
-              background: #c3daec66;
+              background: var(--color-accent-muted);
               & ~ .rdrDayNumber {
                 span {
                   color: var(--inputColor);
@@ -397,7 +404,7 @@
               width: 100%;
               height: 100%;
               span {
-                font-family: "Inter", sans-serif;
+                font-family: var(--font-ui);
                 font-size: size(14);
                 font-weight: 400;
                 &::after {
@@ -416,7 +423,7 @@
               top: 0;
               right: 0;
               height: 100%;
-              border: 1px solid #eaecf0;
+              border: 1px solid var(--color-border);
             }
           }
         }

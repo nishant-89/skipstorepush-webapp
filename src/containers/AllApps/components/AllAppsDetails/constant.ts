@@ -9,6 +9,9 @@ export const Modal = {
     "Enter the email address of the collaborator you’d like to invite to this app. They will receive access to manage releases, view logs, and update settings.",
   deleteCollabTitle: "Are you sure you want to delete this collaborator?",
   deleteCollabDesc: "This action will remove their access permanently.",
+  removeCollabTitle: "Remove collaborator?",
+  removeCollabDesc:
+    "This person will lose access to the app. Releases they already published will stay.",
 };
 
 export const validationSchema = Yup.object({

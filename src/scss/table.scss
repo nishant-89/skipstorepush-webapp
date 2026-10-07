@@ -1,11 +1,12 @@
 @use "../scss/variable.scss" as *;
 @use "../scss/mixin.scss" as *;
+@use "devConsoleTable.scss" as *;
 
 .tableWrapper {
   margin-top: size(20);
   padding: size(15);
   border-radius: size(12);
-  border: 0.5px solid #bdc4ca;
+  border: 1px solid var(--tableBorder);
   background: var(--cardBackground);
   &.p0 {
     padding: 0;
@@ -75,12 +76,12 @@
     padding: 10px 16px;
     background-color: transparent;
     font-weight: 600;
-    font-family: "Inter", sans-serif !important;
+    font-family: var(--font-ui) !important;
     border-bottom: 1px solid var(--tableBorder) !important;
     font-size: 14px;
 
     .MuiTableSortLabel-root {
-      font-family: "Inter", sans-serif !important;
+      font-family: var(--font-ui) !important;
       &:hover,&.Mui-active {
         color: var(--breadcrumbActiveText)!important;
       }
@@ -90,11 +91,11 @@
   .MuiTableCell-root {
     width: 20%;
     border: 0 !important;
+    border-bottom: 1px solid var(--tableBorder) !important;
     color: var(--breadcrumbActiveText);
     font-weight: 500;
     white-space: nowrap;
     line-height: 1.33;
-    border-bottom: 1px solid var(--tableBorder) !important;
 
     &.table_description_text {
       min-width: 310px;
@@ -123,17 +124,17 @@
     }
   }
   .MuiTableRow-head {
-    background-color: var(--white) !important;
+    background-color: var(--color-bg-surface) !important;
   }
   .MuiTableRow-root {
     border-bottom: 1px solid var(--tableBorder);
-    background-color: #f8f9f9 !important;
+    background-color: var(--color-bg-surface) !important;
     &:nth-of-type(odd) {
-      background-color: #f4f4f8 !important;
+      background-color: var(--color-bg-surface) !important;
     }
 
     &:first-of-type {
-      background-color: var(--white);
+      background-color: var(--color-bg-surface);
     }
   }
 
@@ -152,8 +153,8 @@
     padding: size(15.21) size(16);
     font-size: size(14);
     font-weight: 500;
-    color: #3a4f5f;
-    font-family: "Inter", sans-serif !important;
+    color: var(--color-text-primary);
+    font-family: var(--font-ui) !important;
   }
 
   .MuiToolbar-root {
@@ -195,7 +196,7 @@
     font-family: var(--font) !important;
     font-size: size(14);
     font-weight: 500;
-    color: var(--btnBlackBg);
+    color: var(--color-text-primary);
 
     .MuiSvgIcon-root {
       color: var(--colorPrimary) !important;
@@ -210,7 +211,7 @@
     font-family: var(--font) !important;
     font-size: size(14);
     font-weight: 500;
-    color: var(--btnBlackBg);
+    color: var(--color-text-primary);
   }
 
   .MuiTablePagination-actions {
@@ -229,7 +230,7 @@
 
 .adminAccessTableWrapper {
   background-color: var(--cardBackground);
-  border: 0.5px solid #bdc4ca;
+  border: 0.5px solid var(--color-border);
   border-radius: 12px;
   padding: 20px;
   &.activityTable {
@@ -257,7 +258,7 @@
 
     .totalCount {
       margin: 0;
-      color: #85929c;
+      color: var(--color-text-secondary);
     }
   }
 

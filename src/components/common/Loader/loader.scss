@@ -1,6 +1,6 @@
 
 .loaderContainer {
-    background: rgba(0, 0, 0, 0.5) !important;
+    background: var(--color-overlay) !important;
     z-index: 99999;
     width: 100%;
     height: 100vh;
@@ -13,7 +13,7 @@
             width: 16px;
             height: 16px;
             position: absolute;
-            background: var(--white);
+            background: var(--color-bg-surface);
             border-radius: 50%;
             animation: circular-loader-animation 1.2s linear infinite;
 
@@ -93,13 +93,13 @@
     @keyframes circular-loader-animation {
         0% {
             transform: scale(1);
-            background: #f4f2f3;
+            background: var(--color-bg-primary);
         }
 
         50%,
         100% {
             transform: scale(0.4);
-            background: #f4f2f3;
+            background: var(--color-bg-primary);
         }
     }
 }

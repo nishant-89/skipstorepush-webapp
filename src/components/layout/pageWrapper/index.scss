@@ -6,36 +6,21 @@
 
   .RootInnerMainWrapper {
     width: 100%;
-    height: calc(100% - 80px);
+    height: calc(100% - var(--shell-header-height));
     display: flex;
     align-items: flex-start;
     transition: all 0.3s ease-in;
-    &.collapses {
-      .sideToggle {
-        transform: rotate(0deg);
-        transition: all 0.3s ease;
-      }
-    }
-
-    &.expands {
-      .innerLayoutMainWrapper {
-        width: calc(100% - 266px);
-      }
-
-      .sideNav {
-        display: block;
-        width: size(266);
-      }
-    }
-
     .innerLayoutMainWrapper {
-      width: calc(100% - 266px);
-      margin-left: auto;
+      width: 100%;
+      margin-left: 0;
       overflow-y: auto;
-      padding: size(20);
-      background-image: url("src/assets/images/main-bg.png");
-      background-repeat: no-repeat;
-      background-size: cover;
+      padding: 28px 34px 40px 110px;
+      background-image: none;
+      background-color: var(--color-bg-primary);
     }
   }
+}
+
+html[data-compact="true"] .RootPageMainWrapper .RootInnerMainWrapper .innerLayoutMainWrapper {
+  padding: 16px 20px 24px 96px;
 }

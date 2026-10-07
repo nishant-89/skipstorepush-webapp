@@ -1,5 +1,5 @@
 import { Button, Modal } from "@mui/material";
-import { RoolbackModalIcon } from "src/utils/common/constants";
+import { RoolbackModalIcon } from "src/utils/common/constants/constants";
 
 import "./index.scss";
 

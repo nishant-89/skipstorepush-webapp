@@ -15,7 +15,7 @@ jest.mock("@mui/material", () => {
 });
 
 // Mock RoolbackModalIcon import
-jest.mock("src/utils/common/constants", () => ({
+jest.mock("src/utils/common/constants/constants", () => ({
   RoolbackModalIcon: "roolback-modal-icon.svg",
 }));
 

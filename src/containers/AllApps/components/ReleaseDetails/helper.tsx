@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getDataApi, patchDataApi, postDataApi } from "src/apis/api";
-import { apiRoutes, getErrorMessage } from "src/utils/common/constants";
+import { apiRoutes, getErrorMessage } from "src/utils/common/constants/constants";
 import { showAlert } from "src/utils/alert";
 import { setLoading } from "src/redux/slices/globalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "src/redux/rootReducers";
+import ROUTES from "src/routes/routesPaths";
 
 import {
   ApiResponse,
@@ -16,11 +17,33 @@ import {
   UpdateType,
 } from "../../types";
 
+export const releasedByProfilePath = (
+  releasedBy?: RELEASE_RESPONSE_TYPE["releasedBy"] | null,
+  currentUserId?: string | number | null
+) => {
+  if (!releasedBy?.id) {
+    return null;
+  }
+  if (
+    currentUserId != null &&
+    String(releasedBy.id) === String(currentUserId)
+  ) {
+    return ROUTES.MY_ACCOUNT;
+  }
+  return `/users/${releasedBy.id}`;
+};
+
 export const useReleaseDetailsHelper = () => {
   const { releaseId } = useParams();
   const dispatch = useDispatch();
 
   const { loading } = useSelector((state: RootState) => state?.globalState);
+  const envId = useSelector((state: RootState) => state?.release?.envId);
+  const currentUserId = useSelector((state: RootState) => {
+    const profileId = state.profile?.data?.id;
+    const authUser = state.auth?.user;
+    return profileId ?? authUser?.userId ?? authUser?.id ?? null;
+  });
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [notes, setNotes] = useState("");
   const [pauseModal, setPauseModal] = useState(false);
@@ -28,6 +51,9 @@ export const useReleaseDetailsHelper = () => {
   const [promote, setPromoteModal] = useState(false);
   const [rollbackModal, setRollbackModal] = useState(false);
   const [prodId, setProdId] = useState("");
+  const [environments, setEnvironments] = useState<
+    { id: string; name: string }[]
+  >([]);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [rolloutModal, setRolloutModal] = useState(false);
@@ -206,6 +232,9 @@ export const useReleaseDetailsHelper = () => {
       })) as EnvApiResponse;
 
       if (res?.statusCode === 200 && res?.data?.length > 0) {
+        setEnvironments(
+          res.data.map((env) => ({ id: env.id, name: env.name }))
+        );
         const prodEnv = res?.data.find((env) => env?.name === "Production");
         prodEnv?.id && setProdId(prodEnv?.id);
       }
@@ -243,18 +272,25 @@ export const useReleaseDetailsHelper = () => {
   };
 
   const getReleasedByLabel = (
-    released_by?: RELEASE_RESPONSE_TYPE["released_by"] | null
+    releasedBy?: RELEASE_RESPONSE_TYPE["releasedBy"] | null
   ) => {
-    if (!released_by) return "N/A";
+    if (!releasedBy) return "N/A";
 
-    const name = released_by?.fullName?.trim();
-    const email = released_by?.email?.trim();
+    const name = releasedBy?.fullName?.trim();
+    const email = releasedBy?.email?.trim();
 
     if (name && email) return `${name} (${email})`;
     if (name) return name;
     if (email) return email;
     return "N/A";
   };
+
+  const selectedEnvId =
+    typeof envId === "string" || typeof envId === "number" ? String(envId) : "";
+  const selectedEnvName =
+    environments.find((env) => String(env.id) === selectedEnvId)?.name ||
+    release?.environmentName ||
+    "";
 
   return {
     open,
@@ -290,5 +326,7 @@ export const useReleaseDetailsHelper = () => {
     handleSwitchToggle,
     handleRollback,
     getReleasedByLabel,
+    currentUserId,
+    selectedEnvName,
   };
 };

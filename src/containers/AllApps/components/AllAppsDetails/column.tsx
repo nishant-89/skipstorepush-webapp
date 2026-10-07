@@ -1,8 +1,9 @@
-import { Column } from "src/utils/types";
+import { Column } from "src/utils/types/types";
 import { Link } from "react-router-dom";
 import { capitalizeFirstLetter, DateFormatter } from "src/utils/common/helpers";
 import { COLLABRATOR_RESPONSE_TYPE, RELEASE_RESPONSE_TYPE } from "../../types";
-import { TableDeleteIcon } from "src/utils/common/constants";
+import { TableDeleteIcon } from "src/utils/common/constants/constants";
+import ROUTES from "src/routes/routesPaths";
 
 // release table columns
 export const getReleaseColumns = (
@@ -17,7 +18,7 @@ export const getReleaseColumns = (
         <div>
           <Link
             to={`/all-apps/details/${appId}/release/${param?.id}`}
-            className="tableTitle"
+            className="tableTitle codeLink"
           >
             {param?.releaseVersion ?? ""}
           </Link>
@@ -26,7 +27,7 @@ export const getReleaseColumns = (
     },
   },
   {
-    field: "target_version",
+    field: "targetVersion",
     sorting: false,
     headerName: "Target Version",
   },
@@ -35,31 +36,17 @@ export const getReleaseColumns = (
     sorting: false,
     headerName: "Status",
     renderCell: (param: RELEASE_RESPONSE_TYPE) => {
-      const statusColor = param.status === "LIVE" ? "#17B26A" : "#F79009";
-      return (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
-            fontFamily: "inter",
-          }}
-        >
-          <span
-            style={{
-              display: "inline-block",
-              width: 8,
-              height: 8,
-              borderRadius: "50%",
-              backgroundColor: statusColor,
-              marginRight: 8,
-            }}
-          ></span>
-          {param?.status === "ROLLED_BACK"
-            ? capitalizeFirstLetter("Rollback")
-            : capitalizeFirstLetter(param?.status)}
-        </div>
-      );
+      const statusColor =
+        param.status === "LIVE"
+          ? "success"
+          : param.status === "ROLLED_BACK"
+            ? "failed"
+            : "pending";
+      const label =
+        param?.status === "ROLLED_BACK"
+          ? capitalizeFirstLetter("Rollback")
+          : capitalizeFirstLetter(param?.status);
+      return <span className={`ciStatus ${statusColor}`}>{label}</span>;
     },
   },
   {
@@ -96,30 +83,83 @@ export const getReleaseColumns = (
   },
 ];
 
+const MEMBER_STATUSES = new Set(["accepted", "active", "activated"]);
+
+export const canOwnerRemoveCollaborator = (
+  collaborator: COLLABRATOR_RESPONSE_TYPE,
+  isOwner: boolean
+) => {
+  if (!isOwner || collaborator.role === "Owner") {
+    return false;
+  }
+  const status = collaborator.status?.toLowerCase();
+  return status === "pending" || (!!status && MEMBER_STATUSES.has(status));
+};
+
+export const collaboratorProfilePath = (
+  collaborator: COLLABRATOR_RESPONSE_TYPE,
+  currentUserId?: string | number | null
+) => {
+  const status = collaborator.status?.toLowerCase();
+  if (!collaborator.id || status === "pending") {
+    return null;
+  }
+  if (!status || !MEMBER_STATUSES.has(status)) {
+    return null;
+  }
+  if (
+    currentUserId != null &&
+    String(collaborator.id) === String(currentUserId)
+  ) {
+    return ROUTES.MY_ACCOUNT;
+  }
+  return `/users/${collaborator.id}`;
+};
+
 // collaborator table columns
 export const getCollabratorColumns = (
-  handleCollabDel: (id: string) => void,
-  isOwner: boolean
+  handleCollabDel: (collaborator: COLLABRATOR_RESPONSE_TYPE) => void,
+  isOwner: boolean,
+  currentUserId?: string | number | null
 ) => {
   const columns = [
     {
       field: "fullName",
       sorting: false,
       headerName: "Name",
-      renderCell: (param: COLLABRATOR_RESPONSE_TYPE) => (
-        <span className={param.role === "Owner" ? "owner-role" : ""}>
-          {param.status === "pending"
-            ? "Invited Collaborator"
-            : (param.fullName ?? "N/A")}
-        </span>
-      ),
+      renderCell: (param: COLLABRATOR_RESPONSE_TYPE) => {
+        const isPending = param.status?.toLowerCase() === "pending";
+        const label = isPending
+          ? "Invited Collaborator"
+          : (param.fullName ?? "N/A");
+        const className =
+          param.role === "Owner" ? "owner-role tableTitle" : "tableTitle";
+        const href = collaboratorProfilePath(param, currentUserId);
+        if (href) {
+          return (
+            <Link
+              to={href}
+              state={{
+                id: param.id,
+                fullName: param.fullName,
+                email: param.email,
+                profileImage: param.profileImage || param.profile_image,
+              }}
+              className={`${className} codeLink`}
+            >
+              {label}
+            </Link>
+          );
+        }
+        return <span className={className}>{label}</span>;
+      },
     },
     {
       field: "email",
       sorting: true,
       headerName: "Email",
       renderCell: (param: COLLABRATOR_RESPONSE_TYPE) => (
-        <span className={param.role === "Owner" ? "owner-role" : ""}>
+        <span className={param.role === "Owner" ? "owner-role devMeta" : "devMeta"}>
           {param.email ?? "N/A"}
         </span>
       ),
@@ -152,18 +192,17 @@ export const getCollabratorColumns = (
       field: "",
       sorting: false,
       headerName: "",
-      renderCell: (param: COLLABRATOR_RESPONSE_TYPE) => (
-        <span
-          style={{ cursor: "pointer" }}
-          onClick={() =>
-            param?.status === "pending" && handleCollabDel(param?.email)
-          }
-        >
-          {param.status === "pending" && isOwner && (
-            <img src={TableDeleteIcon} alt="Delete Icon" />
-          )}
-        </span>
-      ),
+      renderCell: (param: COLLABRATOR_RESPONSE_TYPE) => {
+        const canRemove = canOwnerRemoveCollaborator(param, isOwner);
+        return (
+          <span
+            style={{ cursor: canRemove ? "pointer" : "default" }}
+            onClick={() => canRemove && handleCollabDel(param)}
+          >
+            {canRemove && <img src={TableDeleteIcon} alt="Delete Icon" />}
+          </span>
+        );
+      },
     },
   ];
 

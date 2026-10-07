@@ -1,5 +1,6 @@
 // Moment import
 import moment from "moment";
+import { getStoredTimeZone } from "src/utils/userSettings";
 
 export const getFirstCharOrDefault = (value?: string | undefined): string => {
   return value ? value?.charAt(0)?.toUpperCase() : "";
@@ -44,21 +45,115 @@ export const capitalizeFirstLetter = (str: string): string => {
   return str?.charAt(0)?.toUpperCase() + str?.slice(1)?.toLowerCase();
 };
 
+const MONTHS_SHORT = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sept",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
+export const getOrdinalDay = (day: number): string => {
+  const remainder = day % 100;
+  if (remainder >= 11 && remainder <= 13) {
+    return `${day}th`;
+  }
+  switch (day % 10) {
+    case 1:
+      return `${day}st`;
+    case 2:
+      return `${day}nd`;
+    case 3:
+      return `${day}rd`;
+    default:
+      return `${day}th`;
+  }
+};
+
+export const formatTimeZoneName = (date: Date, timeZone?: string): string => {
+  if (!timeZone && -date.getTimezoneOffset() === 330) {
+    return "IST";
+  }
+
+  const timeZoneName =
+    new Intl.DateTimeFormat("en-US", {
+      timeZoneName: "short",
+      ...(timeZone ? { timeZone } : {}),
+    })
+      .formatToParts(date)
+      .find((part) => part.type === "timeZoneName")?.value || "";
+
+  if (/^(GMT|UTC)\+0?5:30$/.test(timeZoneName)) {
+    return "IST";
+  }
+
+  return timeZoneName;
+};
+
 export const formatDateTime = (dateStr: string): string => {
   try {
-    if (dateStr) {
-      const date = new Date(dateStr);
-
-      return new Intl.DateTimeFormat("en-US", {
-        month: "2-digit",
-        day: "2-digit",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      }).format(date);
+    if (!dateStr) {
+      return "";
     }
+
+    const date = new Date(dateStr);
+    if (Number.isNaN(date.getTime())) {
+      return "";
+    }
+
+    const storedTimeZone = getStoredTimeZone() || undefined;
+    const month = MONTHS_SHORT[date.getMonth()];
+    const day = getOrdinalDay(date.getDate());
+    const year = date.getFullYear();
+    const time = new Intl.DateTimeFormat("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+      ...(storedTimeZone ? { timeZone: storedTimeZone } : {}),
+    }).format(date);
+    const timeZone = formatTimeZoneName(date, storedTimeZone);
+
+    return `${month} ${day} ${year} ${time}${timeZone ? ` ${timeZone}` : ""}`;
+  } catch (error) {
+    console.log(error);
     return "";
+  }
+};
+
+export const formatOrdinalDate = (dateStr: string): string => {
+  try {
+    if (!dateStr) {
+      return "";
+    }
+
+    const date = new Date(dateStr);
+    if (Number.isNaN(date.getTime())) {
+      return "";
+    }
+
+    const storedTimeZone = getStoredTimeZone() || undefined;
+    const parts = new Intl.DateTimeFormat("en-US", {
+      day: "numeric",
+      month: "numeric",
+      year: "numeric",
+      ...(storedTimeZone ? { timeZone: storedTimeZone } : {}),
+    }).formatToParts(date);
+    const day = Number(parts.find((part) => part.type === "day")?.value);
+    const month = Number(parts.find((part) => part.type === "month")?.value);
+    const year = parts.find((part) => part.type === "year")?.value;
+
+    if (!day || !month || !year) {
+      return "";
+    }
+
+    return `${getOrdinalDay(day)} ${MONTHS_SHORT[month - 1]} ${year}`;
   } catch (error) {
     console.log(error);
     return "";

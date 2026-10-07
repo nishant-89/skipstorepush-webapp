@@ -13,7 +13,6 @@ import store from "src/redux/store";
 import { detectBrowserType, getDeviceId, getDeviceType } from "./apiValidator";
 
 import ROUTES from "src/routes/routesPaths";
-import { apiRoutes } from "src/utils/common/constants";
 
 /**
  * Creates an Axios instance with a base URL, timeout, and default headers.
@@ -27,7 +26,6 @@ interface ResponseData {
 }
 
 const apiBaseUrl = process.env.VITE_BASE_URL;
-const basicAuth = process.env.VITE_BASIC_AUTH;
 const subscriptionKey = process.env.VITE_SUBSCRIPTION_KEY;
 
 // eslint-disable-next-line
@@ -83,8 +81,8 @@ $axios.interceptors.request.use(
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
 
-    if (config.url === `/${apiRoutes.UploadLogo}`) {
-      config.headers.Authorization = `Basic ${basicAuth}`;
+    if (typeof FormData !== "undefined" && config.data instanceof FormData) {
+      config.headers.delete("Content-Type");
     }
     return config;
   },
@@ -93,6 +91,22 @@ $axios.interceptors.request.use(
   }
 );
 
+export const isWebSessionUnauthorized = (
+  error: AxiosError<ResponseData | string>
+): boolean => {
+  if (error.response?.status !== 401) {
+    return false;
+  }
+  const payload = error.response.data;
+  const message =
+    typeof payload === "string" ? payload : payload?.message || "";
+  // CodePush CLI bearer auth (unmatched /api/* fallthrough) must not clear the web session.
+  if (message.includes("skip-store-push login")) {
+    return false;
+  }
+  return true;
+};
+
 $axios.interceptors.response.use(
   (response: AxiosResponse) => {
     return response;
@@ -100,9 +114,13 @@ $axios.interceptors.response.use(
   (error: AxiosError<ResponseData>) => {
     const { response } = error;
     console.log("error", response);
-    if (response?.status === 401) {
+    if (isWebSessionUnauthorized(error)) {
       localStorage.removeItem("persist:root");
-      if (window.location.pathname !== ROUTES.LOGIN) {
+      const onPublicAuthPage =
+        window.location.pathname === ROUTES.LOGIN ||
+        window.location.pathname === ROUTES.REGISTER ||
+        window.location.pathname === ROUTES.FORGOT_PASSWORD;
+      if (!onPublicAuthPage) {
         window.location.href = ROUTES.LOGIN;
       }
     }

@@ -2,81 +2,257 @@
 @use "../../scss/mixin.scss" as *;
 
 .loginWrap {
-  height: 100vh;
-  padding: 20px;
-  background: linear-gradient(45deg, #f4f2f3 0%, #e4edf4 100%);
+  min-height: 100vh;
+  width: 100%;
+  padding: 20px 24px 16px;
+  background: linear-gradient(45deg, var(--color-bg-primary) 0%, var(--color-bg-surface) 100%);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+
+  .authThemeSlot {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+  }
 
   .loginWrapInner {
-    width: size(562);
-    height: size(512);
-    padding: 60px 93px 56px 56px;
-    background-color: #f8f9f9;
-    border-radius: size(12);
-    overflow-y: auto;
-    clip-path: border-box;
+    width: 720px;
+    max-width: 100%;
+    margin: 0;
+    padding: 28px 40px 20px;
+    background-color: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: visible;
   }
 
   .textWrap {
-    height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: flex-start;
 
     .topSection {
+      width: 100%;
+
       .loginLogoSec {
-        width: 121px;
-        margin-bottom: 48px;
+        width: 56px;
+        height: 56px;
+        margin: 0 0 16px;
+        overflow: hidden;
         img {
           width: 100%;
+          height: 100%;
+          display: block;
+          object-fit: contain;
         }
       }
       .mainHeading {
-        margin-bottom: 8px;
+        margin-bottom: 6px;
         font-weight: 700;
-        font-size: 30px;
+        font-size: 26px;
         line-height: 130%;
-        color: #3a4f5f;
+        color: var(--color-text-primary);
       }
       .headingInfo {
         font-weight: 400;
-        font-size: 16px;
+        font-size: 15px;
         line-height: 150%;
-        color: #60707d;
+        color: var(--color-text-secondary);
+
+        strong {
+          font-weight: 700;
+          color: var(--color-text-primary);
+        }
       }
       .buttonSection {
-        margin-top: 36px;
+        margin-top: 8px;
         .githubButton {
-          width: 100% !important;
-          height: 50px !important;
-          gap: 16px !important;
-          padding: 12px 20px !important;
-          background-color: #f8f9f9 !important;
-          border: 1px solid #bdc4ca !important;
-          box-shadow: 0px 1px 2px 0px #1018280d !important;
-          border-radius: 10px !important;
-          font-weight: 600 !important;
-          font-size: 14px !important;
-          line-height: 20px !important;
-          color: #3a4f5f !important;
-          justify-content: flex-start !important;
-          &.Mui-disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
+          img {
+            filter: brightness(0) invert(1);
           }
         }
       }
     }
     .bottomSection {
+      margin-top: 16px;
       .copyRightText {
         font-weight: 400;
-        font-size: 16px;
+        font-size: 14px;
         line-height: 130%;
-        color: #60707d;
+        color: var(--color-text-secondary);
       }
+    }
+  }
+
+  .authForm {
+    width: 100%;
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+
+    .input-field {
+      width: 100%;
+
+      label {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--color-text-primary);
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 18px;
+      }
+
+      .MuiTextField-root {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+
+      .passwordToggle {
+        color: var(--color-text-secondary) !important;
+      }
+    }
+
+    .input-field + .input-field,
+    .fieldError + .input-field {
+      margin-top: 12px;
+    }
+
+    .otpLabel {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--color-text-primary);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .fieldError {
+      margin: 6px 0 0;
+      color: var(--color-error);
+      font-size: 12px;
+      line-height: 18px;
+    }
+
+    .fieldErrorSlot {
+      min-height: 18px;
+      margin: 6px 0 12px;
+    }
+
+    .input-field + .primaryAuthButton,
+    .fieldError + .primaryAuthButton {
+      margin-top: 14px !important;
+    }
+  }
+
+  .otpBoxes {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 0;
+
+    input {
+      width: 56px;
+      height: 56px;
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      background: var(--color-bg-primary);
+      color: var(--color-text-primary);
+      text-align: center;
+      font-size: 22px;
+      font-weight: 600;
+      outline: none;
+
+      &:focus {
+        border-color: var(--color-accent);
+      }
+
+      &.hasError {
+        border-color: var(--color-error);
+      }
+    }
+  }
+
+  .authInlineActions {
+    display: flex;
+    justify-content: flex-end;
+    margin: 6px 0 2px;
+  }
+
+  .authInlineActions + .primaryAuthButton {
+    margin-top: 12px !important;
+  }
+
+  .primaryAuthButton {
+    margin-bottom: 4px !important;
+  }
+
+  .authDivider {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 12px 0;
+
+    &::before,
+    &::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--color-border);
+    }
+
+    span {
+      color: var(--color-text-secondary);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+  }
+
+  .authSwitch {
+    width: 100%;
+    margin: 12px 0 0;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+
+    a,
+    .textLinkBtn {
+      color: var(--color-accent);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .loginWrap {
+    padding: 24px 16px;
+
+    .loginWrapInner {
+      padding: 24px 20px 16px;
+    }
+
+    .otpBoxes {
+      gap: 8px;
+
+      input {
+        width: 44px;
+        height: 48px;
+        font-size: 18px;
+      }
+    }
+  }
+}
+
+html[data-theme="light"] {
+  .githubButton {
+    img {
+      filter: brightness(0) !important;
     }
   }
 }

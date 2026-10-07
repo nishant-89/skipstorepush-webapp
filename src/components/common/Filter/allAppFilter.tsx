@@ -6,8 +6,8 @@ import {
   FormControlLabel,
   FormGroup,
 } from "@mui/material";
-import Button from "../Button";
-import { filter } from "src/utils/common/constants";
+import Button from "../Button/Button";
+import { filter } from "src/utils/common/constants/constants";
 
 import "./filter.scss";
 

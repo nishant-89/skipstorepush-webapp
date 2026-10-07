@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { setLoading } from "src/redux/slices/globalSlice";
 import ROUTES from "src/routes/routesPaths";
 import { getDataApi } from "src/apis/api";
-import { apiRoutes, getErrorMessage } from "src/utils/common/constants";
+import { apiRoutes, getErrorMessage } from "src/utils/common/constants/constants";
 import { showAlert } from "src/utils/alert";
 
 import { ApiResponse } from "../../types";

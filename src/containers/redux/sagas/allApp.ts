@@ -9,8 +9,8 @@ import {
 import { showAlert } from "src/utils/alert";
 
 import { getDataApi } from "src/apis/api";
-import { AllAppResponse, FetchAllAppStatePayload } from "../types";
-import { apiRoutes, getErrorMessage } from "src/utils/common/constants";
+import { AllAppResponse, FetchAllAppStatePayload } from "../types/types";
+import { apiRoutes, getErrorMessage } from "src/utils/common/constants/constants";
 
 function* fetchAllAppSaga(action: PayloadAction<FetchAllAppStatePayload>) {
   try {

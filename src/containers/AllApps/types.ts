@@ -17,7 +17,8 @@ export type COLLABRATOR_RESPONSE_TYPE = {
   fullName: string;
   email: string;
   role: string;
-  profile_image: string;
+  profile_image?: string;
+  profileImage?: string;
   status: string;
 };
 
@@ -29,21 +30,23 @@ export type RELEASE_RESPONSE_TYPE = {
   releaseVersion: string;
   rollbackCount: number;
   status: string;
-  target_version: string;
+  targetVersion: string;
   environmentName: string;
   appName: string;
   createdDate: string;
   appId: string;
   appEnvironment: string;
   osType: string;
+  appIcon?: string | null;
   releaseCount: number;
   isPromoted: boolean;
   rollout: number;
-  released_by: {
+  releasedBy: {
     id: string;
     email: string;
     fullName: string;
-  };
+    profileImage?: string | null;
+  } | null;
 };
 
 export interface Environment {
@@ -87,7 +90,7 @@ export type ReleaseResponse = {
   data: {
     id: string;
     releaseVersion: string;
-    target_version: string;
+    targetVersion: string;
     status: string;
     isMandatory: boolean;
     rollbackCount: number;
@@ -132,6 +135,19 @@ export type AppDetailItem = {
   updatedDate: string;
   ownerName: string;
   isOwner: boolean;
+};
+
+export type UploadFileResponse = {
+  statusCode: number;
+  success: boolean;
+  message: string;
+  data?: {
+    url?: string;
+    fileName?: string;
+    originalName?: string;
+    mimeType?: string;
+    size?: number;
+  };
 };
 
 export type addPayloadType = {

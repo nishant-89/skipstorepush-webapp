@@ -10,6 +10,7 @@ export default defineConfig({
   server: {
     port: 4001,
     strictPort: true,
+    allowedHosts: ['.ngrok-free.dev'] 
   },
   resolve: {
     alias: [{ find: 'src', replacement: '/src' }],

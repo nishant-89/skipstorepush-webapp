@@ -6,8 +6,8 @@ import { resetAccessToken } from "src/containers/redux/slices/auth";
 import { setLoading } from "src/redux/slices/globalSlice";
 import ROUTES from "src/routes/routesPaths";
 import { showAlert } from "src/utils/alert";
-import { apiRoutes, getErrorMessage } from "src/utils/common/constants";
-import { LogoutResponse } from "src/utils/types";
+import { apiRoutes, getErrorMessage } from "src/utils/common/constants/constants";
+import { LogoutResponse } from "src/utils/types/types";
 
 export const useModalHelper = () => {
   const dispatch = useDispatch();

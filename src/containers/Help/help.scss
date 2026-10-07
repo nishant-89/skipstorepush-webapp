@@ -1,0 +1,88 @@
+@use "../../scss/variable.scss" as *;
+@use "../../scss/mixin.scss" as *;
+
+.helpPage {
+  .helpCard {
+    max-width: 860px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .emptyFaqs {
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .faqGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    h3 {
+      margin: 8px 0 0;
+      color: var(--color-accent-secondary);
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+  }
+
+  .faqItem {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: var(--color-bg-primary);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 16px;
+    color: var(--color-text-primary);
+    cursor: pointer;
+
+    &.open {
+      border-color: var(--color-accent);
+    }
+  }
+
+  .faqQuestion {
+    font-weight: 600;
+  }
+
+  .faqAnswer {
+    margin: 12px 0 0;
+    color: var(--color-text-secondary);
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .stillStuck {
+    margin-top: 8px;
+    padding: 16px;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    background: var(--color-bg-primary);
+
+    p {
+      margin: 0 0 8px;
+      color: var(--color-text-primary);
+      font-weight: 600;
+    }
+
+    .stillStuckLinks {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    a {
+      color: var(--color-accent);
+      text-decoration: none;
+      font-weight: 500;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

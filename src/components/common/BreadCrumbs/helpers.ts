@@ -1,5 +1,5 @@
 import { useLocation, matchPath } from "react-router-dom";
-import { sideNavItems } from "src/components/layout/SideNav";
+import { sideNavItems } from "src/components/layout/SideNav/SideNav";
 
 type NavItem = {
   name: string;

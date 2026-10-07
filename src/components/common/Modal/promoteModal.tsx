@@ -1,5 +1,5 @@
 import { Button, Modal } from "@mui/material";
-import { PromoteModalIcon } from "src/utils/common/constants";
+import { PromoteModalIcon } from "src/utils/common/constants/constants";
 
 import "./index.scss";
 

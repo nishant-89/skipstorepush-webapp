@@ -2,10 +2,10 @@
 @use "../../scss/mixin.scss" as *;
 
 .cardBgWrapper {
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 20px;
-  border: 0.5px solid #bdc4ca;
+  padding: 24px;
+  background-color: var(--color-bg-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
 }
 .AllAppsInnerWrapper {
   .TopSection {
@@ -13,7 +13,15 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+    flex-wrap: wrap;
+    .toolbarActions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-left: auto;
+    }
     .searchWrapper {
       .commonSearchWrapper.fullWidth {
         width: 212px !important;
@@ -27,6 +35,33 @@
       width: 120px !important;
     }
   }
+
+  .savedFilterRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    padding: 0 0 16px;
+  }
+
+  .savedFilterChip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-accent-muted);
+    color: var(--color-text-primary);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+
+    &.isSearch {
+      cursor: default;
+    }
+  }
+
   .tableSection {
     .adminAccessTableWrapper {
       &.p00 {
@@ -48,7 +83,16 @@
           white-space: normal !important;
           word-break: break-word !important;
         }
-        &:first-of-type {
+        &:first-of-type,
+        .osCol {
+          width: 1% !important;
+          white-space: nowrap !important;
+          word-break: normal !important;
+          text-align: left !important;
+          padding-left: 12px;
+          padding-right: 8px;
+        }
+        &:nth-of-type(2) {
           width: 45% !important;
           @media screen and (max-width: 1500px) {
             width: 40% !important;
@@ -57,7 +101,7 @@
             width: 30% !important;
           }
         }
-        &:not(first-of-type) {
+        &:not(:first-of-type) {
           text-align: left !important;
         }
       }

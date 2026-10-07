@@ -16,7 +16,7 @@ describe("getReleaseColumns", () => {
   const mockReleaseData: RELEASE_RESPONSE_TYPE = {
     id: "release1",
     releaseVersion: "1.0.0",
-    target_version: "2.0.0",
+    targetVersion: "2.0.0",
     status: "LIVE",
     isMandatory: true,
     rollbackCount: 2,
@@ -31,7 +31,7 @@ describe("getReleaseColumns", () => {
     releaseCount: 0,
     isPromoted: false,
     rollout: 10,
-    released_by: {
+    releasedBy: {
       id: "string",
       email: "string",
       fullName: "string",
@@ -61,11 +61,10 @@ describe("getReleaseColumns", () => {
   it("should render status with correct label and color", () => {
     const columns = getReleaseColumns(appId);
     const StatusCell = columns[2].renderCell!;
-    const { getByText, container } = render(StatusCell(mockReleaseData));
+    const { getByText } = render(StatusCell(mockReleaseData));
 
     expect(getByText("LIVE")).toBeInTheDocument();
-    const dot = container.querySelector("span");
-    expect(dot).toHaveStyle("background-color: #17B26A");
+    expect(getByText("LIVE")).toHaveClass("success");
   });
 
   it("should render status as 'Rollback' if status is ROLLED_BACK", () => {
@@ -220,11 +219,10 @@ describe("getReleaseColumns", () => {
     const columns = getReleaseColumns("testApp");
     const StatusCell = columns[2].renderCell!;
     const data = { status: "PAUSED" } as any;
-    const { getByText, container } = render(StatusCell(data));
+    const { getByText } = render(StatusCell(data));
     // The code will render PAUSED (uppercase)
     expect(getByText("PAUSED")).toBeInTheDocument();
-    const dot = container.querySelector("span");
-    expect(dot).toHaveStyle("background-color: #F79009");
+    expect(getByText("PAUSED")).toHaveClass("pending");
   });
 
   it("should throw if status is undefined (capitalizeFirstLetter called with undefined)", () => {
@@ -284,10 +282,11 @@ describe("getCollabratorColumns", () => {
       true
     );
     const NameCell = columns[0].renderCell!;
-    const { getByText } = render(
-      <>{NameCell({ ...base, status: "pending" })}</>
+    const { getByText, queryByRole } = render(
+      <Router>{NameCell({ ...base, status: "pending" })}</Router>
     );
     expect(getByText("Invited Collaborator")).toBeInTheDocument();
+    expect(queryByRole("link")).not.toBeInTheDocument();
   });
 
   it("renders fullName if not pending", () => {
@@ -296,8 +295,36 @@ describe("getCollabratorColumns", () => {
       true
     );
     const NameCell = columns[0].renderCell!;
-    const { getByText } = render(<>{NameCell(base)}</>);
+    const { getByText } = render(<Router>{NameCell(base)}</Router>);
     expect(getByText("John Doe")).toBeInTheDocument();
+  });
+
+  it("links an accepted collaborator to their public profile", () => {
+    const columns = require("../column").getCollabratorColumns(
+      handleCollabDel,
+      true,
+      "99"
+    );
+    const NameCell = columns[0].renderCell!;
+    const { getByRole } = render(<Router>{NameCell(base)}</Router>);
+    expect(getByRole("link", { name: "John Doe" })).toHaveAttribute(
+      "href",
+      "/users/1"
+    );
+  });
+
+  it("links the current user to My Profile", () => {
+    const columns = require("../column").getCollabratorColumns(
+      handleCollabDel,
+      true,
+      "1"
+    );
+    const NameCell = columns[0].renderCell!;
+    const { getByRole } = render(<Router>{NameCell(base)}</Router>);
+    expect(getByRole("link", { name: "John Doe" })).toHaveAttribute(
+      "href",
+      "/my-account"
+    );
   });
 
   it("renders N/A if fullName is missing and not pending", () => {
@@ -307,7 +334,7 @@ describe("getCollabratorColumns", () => {
     );
     const NameCell = columns[0].renderCell!;
     const { getByText } = render(
-      <>{NameCell({ ...base, fullName: undefined })}</>
+      <Router>{NameCell({ ...base, fullName: undefined })}</Router>
     );
     expect(getByText("N/A")).toBeInTheDocument();
   });
@@ -318,7 +345,9 @@ describe("getCollabratorColumns", () => {
       true
     );
     const NameCell = columns[0].renderCell!;
-    const { container } = render(<>{NameCell({ ...base, role: "Owner" })}</>);
+    const { container } = render(
+      <Router>{NameCell({ ...base, role: "Owner" })}</Router>
+    );
     expect(container.querySelector(".owner-role")).toBeInTheDocument();
   });
 
@@ -422,13 +451,43 @@ describe("getCollabratorColumns", () => {
     ).toBeInTheDocument();
   });
 
-  it("does not render delete icon if status is not pending", () => {
+  it("renders delete icon if status is accepted and isOwner is true", () => {
     const columns = require("../column").getCollabratorColumns(
       handleCollabDel,
       true
     );
     const DeleteCell = columns[4].renderCell!;
-    const { container } = render(<>{DeleteCell(base)}</>);
+    const { container } = render(
+      <>{DeleteCell({ ...base, status: "accepted" })}</>
+    );
+    expect(
+      container.querySelector('img[alt="Delete Icon"]')
+    ).toBeInTheDocument();
+  });
+
+  it("does not render delete icon if status is declined", () => {
+    const columns = require("../column").getCollabratorColumns(
+      handleCollabDel,
+      true
+    );
+    const DeleteCell = columns[4].renderCell!;
+    const { container } = render(
+      <>{DeleteCell({ ...base, status: "declined" })}</>
+    );
+    expect(
+      container.querySelector('img[alt="Delete Icon"]')
+    ).not.toBeInTheDocument();
+  });
+
+  it("does not render delete icon for the owner row", () => {
+    const columns = require("../column").getCollabratorColumns(
+      handleCollabDel,
+      true
+    );
+    const DeleteCell = columns[4].renderCell!;
+    const { container } = render(
+      <>{DeleteCell({ ...base, role: "Owner", status: "accepted" })}</>
+    );
     expect(
       container.querySelector('img[alt="Delete Icon"]')
     ).not.toBeInTheDocument();
@@ -448,32 +507,33 @@ describe("getCollabratorColumns", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("calls handleCollabDel with email if clicked and status is pending", () => {
+  it("calls handleCollabDel with collaborator if clicked and status is pending", () => {
+    const columns = require("../column").getCollabratorColumns(
+      handleCollabDel,
+      true
+    );
+    const DeleteCell = columns[4].renderCell!;
+    const pending = { ...base, status: "pending" };
+    const { container } = render(<>{DeleteCell(pending)}</>);
+    const span = container.querySelector("span");
+    if (span) {
+      span.click();
+      expect(handleCollabDel).toHaveBeenCalledWith(pending);
+    }
+  });
+
+  it("does not call handleCollabDel if clicked and status is declined", () => {
     const columns = require("../column").getCollabratorColumns(
       handleCollabDel,
       true
     );
     const DeleteCell = columns[4].renderCell!;
     const { container } = render(
-      <>{DeleteCell({ ...base, status: "pending" })}</>
+      <>{DeleteCell({ ...base, status: "declined" })}</>
     );
     const span = container.querySelector("span");
     if (span) {
-      span.click();
-      expect(handleCollabDel).toHaveBeenCalledWith("abc@example.com");
-    }
-  });
-
-  it("does not call handleCollabDel if clicked and status is not pending", () => {
-    const columns = require("../column").getCollabratorColumns(
-      handleCollabDel,
-      true
-    );
-    const DeleteCell = columns[4].renderCell!;
-    const { container } = render(<>{DeleteCell(base)}</>);
-    const span = container.querySelector("span");
-    if (span) {
-      handleCollabDel.mockClear(); // reset before click
+      handleCollabDel.mockClear();
       span.click();
       expect(handleCollabDel).not.toHaveBeenCalled();
     }

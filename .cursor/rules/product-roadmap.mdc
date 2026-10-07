@@ -1,0 +1,20 @@
+---
+description: SkipStore product roadmap from AppsAirPush console comparison. Always apply.
+alwaysApply: true
+---
+
+# SkipStore product gaps (AppsAirPush, Oct 2026)
+
+Unsubscribed AppsAirPush account could not open app/release screens. Do not copy their proprietary SDK, license-key model, or paywall-before-first-app.
+
+**Already in SkipStore — keep:** % rollout, mandatory, promote, rollback, environments + deployment keys, collaborators, GitHub + email, notifications, activity, CodePush-compatible API.
+
+**Build order**
+1. Dashboard onboarding: public API URL, Staging/Production keys, CLI snippet, access key. No billing copy. (in progress)
+2. Dashboard usage: apps, releases, device downloads (sum of `releaseCount`), iOS/Android split and usage charts. Platform is free with unlimited storage until billing exists. (in progress)
+3. Later: in-product docs (SDK install, custom server URL, release-react). Public on skipstorepush.tech/docs — not gated. Console Help and dashboard link there.
+4. Last: plans, invoices, quotas. Do not invent meters or prices. Do not add storage bars that imply a cap.
+
+Full console comparison: canvases/appsairpush-console-gap.canvas.tsx
+
+**Do not add now:** subscription paywall, storage bars that imply a cap, Google login unless requested, IP allowlist, crash-guard SDK clone.

@@ -9,8 +9,8 @@ import {
 import { showAlert } from "src/utils/alert";
 
 import { getDataApi } from "src/apis/api";
-import { ReleaseResponse, FetchReleaseStatePayload } from "../types";
-import { apiRoutes, getErrorMessage } from "src/utils/common/constants";
+import { ReleaseResponse, FetchReleaseStatePayload } from "../types/types";
+import { apiRoutes, getErrorMessage } from "src/utils/common/constants/constants";
 
 function* fetchReleaseSaga(action: PayloadAction<FetchReleaseStatePayload>) {
   try {

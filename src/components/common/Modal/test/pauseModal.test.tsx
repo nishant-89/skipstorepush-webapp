@@ -14,7 +14,7 @@ jest.mock("@mui/material", () => {
   };
 });
 
-jest.mock("src/utils/common/constants", () => ({
+jest.mock("src/utils/common/constants/constants", () => ({
   PauseModalIcon: "pause-icon.svg",
 }));
 
