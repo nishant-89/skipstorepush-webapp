@@ -15,7 +15,7 @@ describe("isWebSessionUnauthorized", () => {
         status: 401,
         data: 'The session or access key being used is invalid, please run "skip-store-push login" again.',
       },
-    } as AxiosError;
+    } as AxiosError<string>;
 
     expect(isWebSessionUnauthorized(error)).toBe(false);
   });
@@ -26,7 +26,7 @@ describe("isWebSessionUnauthorized", () => {
         status: 401,
         data: { message: "Token has expired" },
       },
-    } as AxiosError;
+    } as AxiosError<{ message: string }>;
 
     expect(isWebSessionUnauthorized(error)).toBe(true);
   });

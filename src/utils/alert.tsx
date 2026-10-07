@@ -1,4 +1,3 @@
-import React from "react";
 import { toast, Id } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ToastAlert, { ToastKind } from "src/components/common/ToastAlert/ToastAlert";

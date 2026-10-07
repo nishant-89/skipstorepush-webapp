@@ -8,7 +8,6 @@ import {
 import { setLoading } from "src/redux/slices/globalSlice";
 import { useLocation } from "react-router-dom";
 import * as api from "src/apis/api";
-import { showAlert } from "src/utils/alert";
 
 jest.mock("react-redux", () => ({
   useDispatch: jest.fn(),
