@@ -82,7 +82,7 @@ const CollaboratorSection: React.FC<CollaboratorSectionProps> = ({
         {isOwner && (
           <button
             type="button"
-            className="appBtn appBtn--primary appBtn--sm InviteBtn"
+            className="appBtn appBtn--primary InviteBtn"
             onClick={() => setInvite(true)}
           >
             <UserPlus size={15} aria-hidden />

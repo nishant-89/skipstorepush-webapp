@@ -196,7 +196,7 @@ const AllAppsDetails = () => {
               {value === 0 && envList && envList.length > 0 ? (
                 <button
                   type="button"
-                  className="appBtn appBtn--secondary appBtn--sm SettingBtn"
+                  className="appBtn appBtn--secondary SettingBtn"
                   aria-label="Deployment keys"
                   onClick={handleOpenDrawer}
                 >
@@ -208,7 +208,7 @@ const AllAppsDetails = () => {
                 <>
                   <button
                     type="button"
-                    className="appBtn appBtn--secondary appBtn--sm"
+                    className="appBtn appBtn--secondary"
                     onClick={handleSettingsClick}
                   >
                     <Pencil size={15} aria-hidden />
@@ -216,7 +216,7 @@ const AllAppsDetails = () => {
                   </button>
                   <button
                     type="button"
-                    className="appBtn appBtn--secondary appBtn--sm appDetailCta--danger"
+                    className="appBtn appBtn--secondary appDetailCta--danger"
                     onClick={handleDeleteClick}
                   >
                     <Trash2 size={15} aria-hidden />

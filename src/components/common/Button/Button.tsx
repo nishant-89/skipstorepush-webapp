@@ -16,6 +16,7 @@ interface ButtonProps {
   rearIcon?: string;
   variant?: "text" | "outlined" | "contained";
   isActive?: boolean;
+  ariaLabel?: string;
 }
 
 const variantClassName = (variant: ButtonProps["variant"]) => {
@@ -37,10 +38,13 @@ const ButtonComp: React.FC<ButtonProps> = ({
   isRearIcon = false,
   rearIcon = "",
   isActive = false,
+  ariaLabel,
 }) => {
+  const isIconOnly = Boolean(isIcon && !label?.trim());
   const stateClass = [
     isActive ? "active isActive" : "",
     hidden ? "isHidden" : "",
+    isIconOnly ? "appBtn--icon" : "",
   ]
     .filter(Boolean)
     .join(" ");
@@ -52,6 +56,7 @@ const ButtonComp: React.FC<ButtonProps> = ({
       onClick={onClick}
       disabled={disabled}
       disableRipple
+      aria-label={ariaLabel}
       className={`button appBtn ${variantClassName(variant)} ${stateClass} ${className}`.trim()}
     >
       {isIcon ? (

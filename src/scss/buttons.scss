@@ -8,7 +8,7 @@
 //   link      .textLinkBtn          .appBtn--link
 //   danger    .appBtn--danger
 // Sizes
-//   default / .appBtn--sm / .appBtn--lg / .appBtn--block / .addNewBtn
+//   default / .appBtn--lg / .appBtn--block / .addNewBtn
 // States
 //   :hover :active :focus-visible :disabled .Mui-disabled .isActive .active .isHidden
 //
@@ -258,13 +258,16 @@ button.appBtn {
   }
 }
 
-.appBtn--sm,
-.notifyActions .MuiButton-root {
-  --_btn-h: var(--btn-height-sm);
-  --_btn-px: var(--btn-pad-x-sm);
-  --_btn-min: 0;
-  font-size: 11px !important;
-  letter-spacing: 0.05em;
+.appBtn--icon {
+  --_btn-min: var(--_btn-h);
+  width: var(--_btn-h) !important;
+  min-width: var(--_btn-h) !important;
+  padding: 0 !important;
+  gap: 0 !important;
+
+  &::before {
+    display: none;
+  }
 }
 
 .appBtn--lg,
@@ -281,10 +284,6 @@ button.appBtn {
 
 .addNewBtn {
   --_btn-min: 85px;
-}
-
-.appBtn--sm.appBtn--block {
-  width: 100%;
 }
 
 .MuiButton-root.isActive,

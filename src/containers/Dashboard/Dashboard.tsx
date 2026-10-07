@@ -182,6 +182,7 @@ const Dashboard = () => {
                 label=""
                 isIcon
                 icon={CopyIcon}
+                ariaLabel="Copy server URL"
                 disabled={!serverUrl}
                 onClick={() => copyText(serverUrl, "Server URL")}
               />
@@ -204,6 +205,7 @@ const Dashboard = () => {
                 label=""
                 isIcon
                 icon={CopyIcon}
+                ariaLabel="Copy access key"
                 disabled={!accessKey}
                 onClick={() => copyText(accessKey, "Access key")}
               />
@@ -245,6 +247,7 @@ const Dashboard = () => {
                     label=""
                     isIcon
                     icon={CopyIcon}
+                    ariaLabel={`Copy ${env.name} deployment key`}
                     onClick={() => copyText(env.key, `${env.name} key`)}
                   />
                 </div>

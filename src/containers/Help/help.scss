@@ -3,7 +3,6 @@
 
 .helpPage {
   .helpCard {
-    max-width: 860px;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -30,27 +29,77 @@
   }
 
   .faqItem {
-    display: block;
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    text-align: left;
+    min-width: 0;
+    overflow: hidden;
     background: var(--color-bg-primary);
     border: 1px solid var(--color-border);
     border-radius: 12px;
-    padding: 16px;
+    padding: 0;
     color: var(--color-text-primary);
-    cursor: pointer;
+    box-shadow: none;
 
+    &:hover,
     &.open {
       border-color: var(--color-accent);
     }
   }
 
   .faqQuestion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    min-height: 56px;
+    margin: 0;
+    padding: 16px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
+    font-family: var(--font-ui);
+    font-size: 14px;
     font-weight: 600;
+    letter-spacing: normal;
+    line-height: 1.4;
+    text-align: left;
+    text-transform: none;
+    cursor: pointer;
+    box-sizing: border-box;
+
+    &:hover {
+      background: var(--color-bg-surface);
+    }
+
+    &:focus-visible {
+      outline: 2px dashed var(--color-accent-secondary);
+      outline-offset: -4px;
+    }
+  }
+
+  .faqQuestionText {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .faqChevron {
+    flex-shrink: 0;
+    color: var(--color-accent-secondary);
+    transition: transform 160ms ease;
+  }
+
+  .faqItem.open .faqChevron {
+    transform: rotate(180deg);
   }
 
   .faqAnswer {
-    margin: 12px 0 0;
+    margin: 0;
+    padding: 12px 16px 16px;
+    border-top: 1px solid var(--color-border);
+    background: var(--color-bg-primary);
     color: var(--color-text-secondary);
     font-weight: 400;
     line-height: 1.5;

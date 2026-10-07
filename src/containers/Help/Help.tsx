@@ -1,3 +1,4 @@
+import { ChevronDown } from "lucide-react";
 import Breadcrumbs from "src/components/common/BreadCrumbs/BreadCrumbs";
 import DebounceSearch from "src/components/common/Search/Search";
 import { useHelpHelper } from "./helper";
@@ -8,7 +9,7 @@ const Help = () => {
     groups,
     emptyMessage,
     stillStuck,
-    openId,
+    openIds,
     toggleFaq,
     searchTerm,
     setSearchTerm,
@@ -34,19 +35,36 @@ const Help = () => {
           groups.map((group) => (
             <section className="faqGroup" key={group.id}>
               <h3>{group.title}</h3>
-              {group.items.map((faq) => (
-                <button
-                  type="button"
-                  key={faq.id}
-                  className={`faqItem ${openId === faq.id ? "open" : ""}`}
-                  onClick={() => toggleFaq(faq.id)}
-                >
-                  <div className="faqQuestion">{faq.question}</div>
-                  {openId === faq.id ? (
-                    <p className="faqAnswer">{faq.answer}</p>
-                  ) : null}
-                </button>
-              ))}
+              {group.items.map((faq) => {
+                const isOpen = openIds.includes(faq.id);
+                const answerId = `faq-answer-${faq.id}`;
+                return (
+                  <article
+                    key={faq.id}
+                    className={`faqItem ${isOpen ? "open" : ""}`}
+                  >
+                    <button
+                      type="button"
+                      className="faqQuestion"
+                      aria-expanded={isOpen}
+                      aria-controls={answerId}
+                      onClick={() => toggleFaq(faq.id)}
+                    >
+                      <span className="faqQuestionText">{faq.question}</span>
+                      <ChevronDown
+                        size={18}
+                        className="faqChevron"
+                        aria-hidden
+                      />
+                    </button>
+                    {isOpen ? (
+                      <p className="faqAnswer" id={answerId}>
+                        {faq.answer}
+                      </p>
+                    ) : null}
+                  </article>
+                );
+              })}
             </section>
           ))
         )}

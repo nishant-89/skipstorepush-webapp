@@ -202,7 +202,7 @@ const ReleaseDetails = () => {
                 {release?.status === "LIVE" ? (
                   <button
                     type="button"
-                    className="appBtn appBtn--secondary appBtn--sm"
+                    className="appBtn appBtn--secondary"
                     onClick={() => setPauseModal(true)}
                   >
                     <Pause size={15} aria-hidden />
@@ -211,7 +211,7 @@ const ReleaseDetails = () => {
                 ) : (
                   <button
                     type="button"
-                    className="appBtn appBtn--secondary appBtn--sm"
+                    className="appBtn appBtn--secondary"
                     onClick={() => setResumeModal(true)}
                   >
                     <Play size={15} aria-hidden />
@@ -221,7 +221,7 @@ const ReleaseDetails = () => {
                 {canPromote ? (
                   <button
                     type="button"
-                    className="appBtn appBtn--primary appBtn--sm"
+                    className="appBtn appBtn--primary"
                     onClick={openPromote}
                   >
                     <Rocket size={15} aria-hidden />
@@ -230,7 +230,7 @@ const ReleaseDetails = () => {
                 ) : null}
                 <button
                   type="button"
-                  className="appBtn appBtn--secondary appBtn--sm releaseCta--danger"
+                  className="appBtn appBtn--secondary releaseCta--danger"
                   onClick={() => setRollbackModal(true)}
                 >
                   <Undo2 size={15} aria-hidden />
@@ -318,7 +318,7 @@ const ReleaseDetails = () => {
                   {value}% {rolloutComplete ? "rolled out" : "selected"}
                 </span>
                 <ButtonComp
-                  className="updateButton appBtn--sm"
+                  className="updateButton"
                   type="button"
                   label="Update"
                   variant="contained"
@@ -370,7 +370,7 @@ const ReleaseDetails = () => {
               </div>
               <button
                 type="button"
-                className="appBtn appBtn--secondary appBtn--sm"
+                className="appBtn appBtn--secondary"
                 onClick={handleEditOpen}
               >
                 <Pencil size={15} aria-hidden />
