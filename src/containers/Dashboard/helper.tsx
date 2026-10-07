@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { getDataApi } from "src/apis/api";
 import { showAlert } from "src/utils/alert";
 import { apiRoutes, getErrorMessage } from "src/utils/common/constants/constants";
-import { RootReducerType } from "src/redux/rootReducers";
+import { RootReducerType, RootState } from "src/redux/rootReducers";
 
 export type DashboardApp = {
   id: number;
@@ -105,7 +105,7 @@ export const useDashboardHelper = () => {
     (state: RootReducerType) => state.auth.user?.accessKey || ""
   );
   const appsRefresh = useSelector(
-    (state: RootReducerType) => state.allApps?.isRefresh
+    (state: RootState) => state.allApps?.isRefresh
   );
   const [summary, setSummary] = useState<DashboardSummary>(emptySummary);
   const [environments, setEnvironments] = useState<DashboardEnvironment[]>([]);
