@@ -123,6 +123,13 @@
       }
     }
   }
+
+  .MuiTableCell-root.statusCol {
+    width: 140px !important;
+    min-width: 140px !important;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+  }
   .MuiTableRow-head {
     background-color: var(--color-bg-surface) !important;
   }

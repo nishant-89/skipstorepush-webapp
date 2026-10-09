@@ -26,7 +26,7 @@ export const useHelpHelper = () => {
   const [groups, setGroups] = useState<FaqGroup[]>([]);
   const [emptyMessage, setEmptyMessage] = useState<string | null>(null);
   const [stillStuck, setStillStuck] = useState<FaqStillStuck | null>(null);
-  const [openId, setOpenId] = useState<string | null>(null);
+  const [openIds, setOpenIds] = useState<string[]>([]);
 
   const loadFaqs = useCallback(
     async (search: string) => {
@@ -57,14 +57,18 @@ export const useHelpHelper = () => {
   }, [loadFaqs, searchQuery]);
 
   const toggleFaq = (id: string) => {
-    setOpenId((current) => (current === id ? null : id));
+    setOpenIds((current) =>
+      current.includes(id)
+        ? current.filter((openId) => openId !== id)
+        : [...current, id]
+    );
   };
 
   return {
     groups,
     emptyMessage,
     stillStuck,
-    openId,
+    openIds,
     toggleFaq,
     searchTerm,
     setSearchTerm,

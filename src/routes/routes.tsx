@@ -42,6 +42,20 @@ const PublicProfile = LazyLoader(
 const Help = LazyLoader(lazy(() => import("src/containers/Help/Help")));
 const Dashboard = LazyLoader(lazy(() => import("src/containers/Dashboard/Dashboard")));
 const Settings = LazyLoader(lazy(() => import("src/containers/Settings/Settings")));
+const AdminOverview = LazyLoader(
+  lazy(() => import("src/containers/Admin/AdminOverview"))
+);
+const AdminCustomers = LazyLoader(
+  lazy(() => import("src/containers/Admin/AdminCustomers"))
+);
+const AdminCustomer = LazyLoader(
+  lazy(() => import("src/containers/Admin/AdminCustomer"))
+);
+const AdminApps = LazyLoader(lazy(() => import("src/containers/Admin/AdminApps")));
+const AdminApp = LazyLoader(lazy(() => import("src/containers/Admin/AdminApp")));
+const AdminActivities = LazyLoader(
+  lazy(() => import("src/containers/Admin/AdminActivities"))
+);
 
 const routesConfig = [
   { path: ROUTES.DASHBOARD, isPrivate: true, component: Dashboard },
@@ -53,6 +67,12 @@ const routesConfig = [
   { path: ROUTES.USER_PROFILE, isPrivate: true, component: PublicProfile },
   { path: ROUTES.HELP, isPrivate: true, component: Help },
   { path: ROUTES.SETTINGS, isPrivate: true, component: Settings },
+  { path: ROUTES.ADMIN_OVERVIEW, isPrivate: true, component: AdminOverview },
+  { path: ROUTES.ADMIN_CUSTOMERS, isPrivate: true, component: AdminCustomers },
+  { path: ROUTES.ADMIN_CUSTOMER, isPrivate: true, component: AdminCustomer },
+  { path: ROUTES.ADMIN_APPS, isPrivate: true, component: AdminApps },
+  { path: ROUTES.ADMIN_APP, isPrivate: true, component: AdminApp },
+  { path: ROUTES.ADMIN_ACTIVITIES, isPrivate: true, component: AdminActivities },
   { path: ROUTES.INVITATION, isPrivate: true, component: Invite },
   {
     path: ROUTES.LOGIN,

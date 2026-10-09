@@ -35,6 +35,8 @@ export const getReleaseColumns = (
     field: "status",
     sorting: false,
     headerName: "Status",
+    width: 140,
+    className: "statusCol",
     renderCell: (param: RELEASE_RESPONSE_TYPE) => {
       const statusColor =
         param.status === "LIVE"
@@ -179,6 +181,8 @@ export const getCollabratorColumns = (
       field: "status",
       sorting: false,
       headerName: "Status",
+      width: 140,
+      className: "statusCol",
       renderCell: (param: COLLABRATOR_RESPONSE_TYPE) => (
         <span className={param.role === "Owner" ? "owner-role" : ""}>
           {param?.status

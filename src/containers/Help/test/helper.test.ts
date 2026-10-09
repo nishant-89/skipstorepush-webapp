@@ -67,12 +67,20 @@ describe("useHelpHelper", () => {
     act(() => {
       result.current.toggleFaq("publish-ota-release");
     });
-    expect(result.current.openId).toBe("publish-ota-release");
+    expect(result.current.openIds).toEqual(["publish-ota-release"]);
+
+    act(() => {
+      result.current.toggleFaq("another-faq");
+    });
+    expect(result.current.openIds).toEqual([
+      "publish-ota-release",
+      "another-faq",
+    ]);
 
     act(() => {
       result.current.toggleFaq("publish-ota-release");
     });
-    expect(result.current.openId).toBe(null);
+    expect(result.current.openIds).toEqual(["another-faq"]);
   });
 
   it("sends a search query to the FAQ API", async () => {

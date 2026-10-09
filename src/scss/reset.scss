@@ -746,26 +746,7 @@ label {
 }
 
 .filterBtn {
-  min-width: size(96) !important;
-  padding: 0 9px !important;
-  font-size: 14px !important;
-  font-weight: 500 !important;
-  border: 1px solid var(--color-border) !important;
-  border-radius: var(--radius-btn) !important;
-  color: var(--colorSecondary) !important;
-  gap: size(6) !important;
-  &.active {
-    background: var(--color-accent-muted) !important;
-    border: 1px solid var(--color-accent) !important;
-    color: var(--color-accent) !important;
-    img {
-      filter: invert(39%) sepia(86%) saturate(608%) hue-rotate(169deg)
-        brightness(89%) contrast(84%);
-    }
-  }
-  &:hover {
-    background-color: unset;
-  }
+  min-width: 0 !important;
 }
 
 .userGroupDetailsTopView {

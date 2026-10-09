@@ -180,4 +180,8 @@ html[data-theme="light"] {
   --shadow-popover:
     0 1px 2px rgba($light-text-primary, 0.08),
     0 18px 44px rgba($light-text-primary, 0.2);
+  --btn-inset: inset 0 -2px 0 rgba($light-text-primary, 0.1);
+  --btn-press-inset: inset 0 2px 0 rgba($light-text-primary, 0.1);
+  --btn-shadow-hover: 0 0 0 3px rgba($light-accent, 0.16);
+  --on-accent: #ffffff;
 }

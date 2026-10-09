@@ -19,6 +19,12 @@ const ROUTES = {
     USER_PROFILE: "/users/:id",
     HELP: "/help",
   SETTINGS: "/settings",
+  ADMIN_OVERVIEW: "/admin/overview",
+  ADMIN_CUSTOMERS: "/admin/customers",
+  ADMIN_CUSTOMER: "/admin/customers/:id",
+  ADMIN_APPS: "/admin/apps",
+  ADMIN_APP: "/admin/apps/:id",
+  ADMIN_ACTIVITIES: "/admin/activities",
 };
 
 export default ROUTES;

@@ -25,12 +25,16 @@ jest.mock("src/utils/persistUserSettings", () => ({
 const mockStore = configureStore([]);
 
 describe("Header Component", () => {
-  const renderHeader = () =>
+  const renderHeader = (role?: string) =>
     render(
       <Provider
         store={mockStore({
-          profile: { data: null, loading: false, error: "" },
-          auth: { accessToken: "test-token" },
+          profile: {
+            data: role ? { role } : null,
+            loading: false,
+            error: "",
+          },
+          auth: { accessToken: "test-token", user: { role } },
         })}
       >
         <BrowserRouter>
@@ -62,5 +66,19 @@ describe("Header Component", () => {
   it("has the header banner class", () => {
     renderHeader();
     expect(screen.getByRole("banner")).toHaveClass("header");
+  });
+
+  it("hides notifications and links home to overview for admins", () => {
+    renderHeader("ADMIN");
+    expect(screen.queryByLabelText("Notifications")).not.toBeInTheDocument();
+    expect(screen.getByRole("link")).toHaveAttribute("href", "/admin/overview");
+    expect(screen.getByText("Admin")).toBeInTheDocument();
+    expect(screen.getByText("Admin console")).toBeInTheDocument();
+  });
+
+  it("does not show the admin marker for customers", () => {
+    renderHeader("CUSTOMER");
+    expect(screen.queryByText("Admin")).not.toBeInTheDocument();
+    expect(screen.getByText("OTA console")).toBeInTheDocument();
   });
 });

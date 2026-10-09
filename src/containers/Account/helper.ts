@@ -5,6 +5,7 @@ import { fetchProfileDataRequest } from "src/containers/redux/slices/profile";
 import { setLoading } from "src/redux/slices/globalSlice";
 import { RootState } from "src/redux/rootReducers";
 import { showAlert } from "src/utils/alert";
+import { isAdminRole } from "src/utils/userRole";
 import { apiRoutes, getErrorMessage } from "src/utils/common/constants/constants";
 
 export const PROFILE_IMAGE_ACCEPT =
@@ -61,6 +62,7 @@ export const useAccountHelper = () => {
     dispatch(fetchProfileDataRequest());
   }, [dispatch]);
 
+  const isAdmin = isAdminRole(data?.role || user?.role);
   const isGithubAuth = data?.authType === "GITHUB";
   const githubUsername = data?.username?.trim() || "";
   const githubProfileUrl = githubUsername
@@ -112,7 +114,9 @@ export const useAccountHelper = () => {
     data,
     loading,
     error,
-    accessKey: user?.accessKey || "",
+    accessKey: isAdmin ? "" : user?.accessKey || "",
+    isAdmin,
+    showPassword: data?.authType === "BASIC",
     isGithubAuth,
     githubUsername,
     githubProfileUrl,

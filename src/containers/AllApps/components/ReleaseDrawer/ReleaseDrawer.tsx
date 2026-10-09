@@ -101,6 +101,7 @@ const ReleaseDrawer = ({ open, onClose, envList }: ReleaseDrawerProps) => {
                         variant="outlined"
                         isIcon
                         icon={CopyIcon}
+                        ariaLabel={`Copy ${env?.name || "deployment"} key`}
                         onClick={() => copyKey(env?.key)}
                       />
                     </div>

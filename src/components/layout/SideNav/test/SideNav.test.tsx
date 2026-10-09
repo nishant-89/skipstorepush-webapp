@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 import SideNav, {
   checkChildActive,
-  sideNavItems,
+  customerNavItems,
 } from "../SideNav";
 import { persistUserSettings } from "src/utils/persistUserSettings";
 import { NAV_PIN_STORAGE_KEY } from "src/utils/userSettings";
@@ -25,6 +25,12 @@ jest.mock("src/routes/routesPaths", () => ({
   USER_PROFILE: "/users/:id",
   HELP: "/help",
   SETTINGS: "/settings",
+  ADMIN_OVERVIEW: "/admin/overview",
+  ADMIN_CUSTOMERS: "/admin/customers",
+  ADMIN_CUSTOMER: "/admin/customers/:id",
+  ADMIN_APPS: "/admin/apps",
+  ADMIN_APP: "/admin/apps/:id",
+  ADMIN_ACTIVITIES: "/admin/activities",
 }));
 
 jest.mock("src/utils/persistUserSettings", () => ({
@@ -45,10 +51,12 @@ const mockStore = configureStore([]);
 
 const renderSideNav = (
   path = "/all-apps",
-  settings?: { menuPinned?: boolean; preservePinnedState?: boolean }
+  settings?: { menuPinned?: boolean; preservePinnedState?: boolean },
+  role?: string
 ) => {
   const store = mockStore({
-    profile: { data: { profileImage: "", settings } },
+    auth: { user: { role } },
+    profile: { data: { profileImage: "", settings, role } },
   });
   return render(
     <Provider store={store}>
@@ -73,12 +81,13 @@ describe("SideNav Component", () => {
 
   it("renders visible items from sideNavItems", () => {
     renderSideNav();
-    sideNavItems
+    customerNavItems
       .filter((item) => !item.isHidden)
       .forEach((item) => {
         expect(screen.getByLabelText(item.name)).toBeInTheDocument();
         expect(screen.getByText(item.name)).toBeInTheDocument();
       });
+    expect(screen.queryByLabelText("Customers")).not.toBeInTheDocument();
   });
 
   it("expands when the hover strip is entered", () => {
@@ -122,7 +131,7 @@ describe("SideNav Component", () => {
   });
 
   it("places Dashboard above All Apps and Settings below Help", () => {
-    const visibleNames = sideNavItems
+    const visibleNames = customerNavItems
       .filter((item) => !item.isHidden)
       .map((item) => item.name);
     expect(visibleNames.indexOf("Dashboard")).toBeLessThan(
@@ -174,6 +183,21 @@ describe("SideNav Component", () => {
     renderSideNav("/my-account");
     expect(screen.getByLabelText("All Apps")).not.toHaveClass("isActive");
     expect(screen.getByLabelText("My Account")).toHaveClass("isActive");
+  });
+
+  it("renders admin rail items for an admin user", () => {
+    renderSideNav("/admin/overview", undefined, "ADMIN");
+    expect(screen.getByLabelText("Overview")).toBeInTheDocument();
+    expect(screen.getByLabelText("Customers")).toBeInTheDocument();
+    expect(screen.getByLabelText("Apps")).toBeInTheDocument();
+    expect(screen.getByLabelText("Activity")).toBeInTheDocument();
+    expect(screen.queryByLabelText("All Apps")).not.toBeInTheDocument();
+  });
+
+  it("marks Customers active on a customer detail route", () => {
+    renderSideNav("/admin/customers/9", undefined, "ADMIN");
+    expect(screen.getByLabelText("Customers")).toHaveClass("isActive");
+    expect(screen.getByLabelText("Overview")).not.toHaveClass("isActive");
   });
 });
 

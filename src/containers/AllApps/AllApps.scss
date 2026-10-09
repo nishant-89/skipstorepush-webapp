@@ -32,7 +32,7 @@
       }
     }
     .addNewBtns {
-      width: 120px !important;
+      min-width: 0 !important;
     }
   }
 
@@ -103,6 +103,11 @@
         }
         &:not(:first-of-type) {
           text-align: left !important;
+        }
+
+        &.MuiTableCell-head {
+          white-space: nowrap !important;
+          word-break: normal !important;
         }
       }
     }

@@ -158,7 +158,7 @@ const Settings = () => {
             <div className="settingsTheme">
               <button
                 type="button"
-                className={`appBtn appBtn--secondary appBtn--sm${settings.defaultTheme === "DARK" ? " isActive" : ""}`}
+                className={`appBtn appBtn--secondary${settings.defaultTheme === "DARK" ? " isActive" : ""}`}
                 disabled={busy}
                 onClick={() => setTheme("DARK")}
               >
@@ -166,7 +166,7 @@ const Settings = () => {
               </button>
               <button
                 type="button"
-                className={`appBtn appBtn--secondary appBtn--sm${settings.defaultTheme === "LIGHT" ? " isActive" : ""}`}
+                className={`appBtn appBtn--secondary${settings.defaultTheme === "LIGHT" ? " isActive" : ""}`}
                 disabled={busy}
                 onClick={() => setTheme("LIGHT")}
               >

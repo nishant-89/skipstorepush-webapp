@@ -5,14 +5,17 @@ import {
   ListClock,
   CircleHelp,
   LayoutDashboard,
+  LayoutGrid,
   Castle,
   Pin,
   PinOff,
   Settings,
   User,
+  Users,
   type LucideIcon,
 } from "lucide-react";
 import ROUTES from "src/routes/routesPaths";
+import { isAdminRole } from "src/utils/userRole";
 import UserAvatar from "src/components/common/UserAvatar/UserAvatar";
 import { RootState } from "src/redux/rootReducers";
 
@@ -33,7 +36,7 @@ export interface NavItem {
   dockStart?: boolean;
 }
 
-export const sideNavItems: NavItem[] = [
+export const customerNavItems: NavItem[] = [
   {
     name: "Dashboard",
     path: ROUTES.DASHBOARD,
@@ -81,12 +84,65 @@ export const sideNavItems: NavItem[] = [
   },
 ];
 
+export const adminNavItems: NavItem[] = [
+  {
+    name: "Overview",
+    path: ROUTES.ADMIN_OVERVIEW,
+  },
+  {
+    name: "Customers",
+    path: ROUTES.ADMIN_CUSTOMERS,
+    children: [
+      {
+        name: "Customer",
+        path: ROUTES.ADMIN_CUSTOMER,
+        canExpand: false,
+      },
+    ],
+  },
+  {
+    name: "Apps",
+    path: ROUTES.ADMIN_APPS,
+    children: [
+      {
+        name: "App",
+        path: ROUTES.ADMIN_APP,
+        canExpand: false,
+      },
+    ],
+  },
+  {
+    name: "Activity",
+    path: ROUTES.ADMIN_ACTIVITIES,
+  },
+  {
+    name: "Help & FAQ",
+    path: ROUTES.HELP,
+    dockStart: true,
+  },
+  {
+    name: "Settings",
+    path: ROUTES.SETTINGS,
+  },
+  {
+    name: "My Account",
+    path: ROUTES.MY_ACCOUNT,
+    isHidden: true,
+  },
+];
+
+export const sideNavItems: NavItem[] = [...customerNavItems, ...adminNavItems];
+
 const RAIL_ICONS: Record<string, LucideIcon> = {
   [ROUTES.DASHBOARD]: LayoutDashboard,
   [ROUTES.ALL_APPS]: Castle,
   [ROUTES.MY_ACTIVITIES]: ListClock,
   [ROUTES.HELP]: CircleHelp,
   [ROUTES.SETTINGS]: Settings,
+  [ROUTES.ADMIN_OVERVIEW]: LayoutDashboard,
+  [ROUTES.ADMIN_CUSTOMERS]: Users,
+  [ROUTES.ADMIN_APPS]: LayoutGrid,
+  [ROUTES.ADMIN_ACTIVITIES]: Activity,
 };
 
 const ICON_SIZE = 20;
@@ -97,8 +153,12 @@ export const checkChildActive = (path: string, childrens: NavItem[]) => {
   );
 };
 
-const isItemActive = (path: string, item: NavItem) =>
-  path === item.path || checkChildActive(path, item.children ?? []);
+const isItemActive = (path: string, item: NavItem): boolean => {
+  if (path === item.path || path.startsWith(`${item.path}/`)) {
+    return true;
+  }
+  return (item.children ?? []).some((child) => isItemActive(path, child));
+};
 
 const readPinned = () => {
   if (typeof window === "undefined") {
@@ -112,8 +172,12 @@ const SideNav = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const profile = useSelector((state: RootState) => state.profile.data);
+  const authUser = useSelector((state: RootState) => state.auth.user);
+  const admin = isAdminRole(profile?.role || authUser?.role);
 
-  const visibleItems = sideNavItems.filter((item) => !item.isHidden);
+  const visibleItems = (admin ? adminNavItems : customerNavItems).filter(
+    (item) => !item.isHidden
+  );
   const [hovered, setHovered] = useState(false);
   const [pinned, setPinned] = useState(readPinned);
   const expanded = pinned || hovered;

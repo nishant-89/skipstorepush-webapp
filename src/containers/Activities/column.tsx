@@ -60,6 +60,8 @@ export const activityColumns: Column<ActivityItem>[] = [
     field: "status",
     sorting: false,
     headerName: "Status",
+    width: 140,
+    className: "statusCol",
     renderCell: (row: ActivityItem) => {
       const isSuccess = row.status === "SUCCESS";
       return (

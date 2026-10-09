@@ -6,8 +6,19 @@
     justify-content: flex-end;
   }
 
-  .tableSection.appTable .MuiTableCell-root:first-of-type {
-    width: 22% !important;
+  .tableSection.appTable .MuiTableCell-root {
+    &:first-of-type {
+      width: 22% !important;
+    }
+
+    &:last-of-type,
+    &.statusCol {
+      width: 140px !important;
+      min-width: 140px !important;
+      max-width: 160px !important;
+      white-space: nowrap !important;
+      word-break: keep-all !important;
+    }
   }
 
   .activityTitleCell {

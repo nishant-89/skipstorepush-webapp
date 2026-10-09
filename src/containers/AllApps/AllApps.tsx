@@ -104,7 +104,7 @@ const AllApps = () => {
                 isRedIndicator={isRedIndicator}
               />
               <Button
-                className="addNewBtns"
+                className="addNewBtns addNewBtn"
                 variant="contained"
                 label="New App"
                 isIcon

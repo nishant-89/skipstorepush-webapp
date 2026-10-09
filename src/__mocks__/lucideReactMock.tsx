@@ -30,6 +30,8 @@ export const Undo2 = Icon;
 export const Pencil = Icon;
 export const Trash2 = Icon;
 export const UserPlus = Icon;
+export const ChevronDown = Icon;
+export const Users = Icon;
 export default {
   LayoutDashboard,
   LayoutGrid,
@@ -57,4 +59,6 @@ export default {
   Pencil,
   Trash2,
   UserPlus,
+  ChevronDown,
+  Users,
 };

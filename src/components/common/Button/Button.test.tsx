@@ -28,6 +28,20 @@ describe("ButtonComp", () => {
     expect(button).toHaveClass("my-class");
   });
 
+  it("uses an icon-only class and the given aria-label", () => {
+    render(
+      <ButtonComp
+        label=""
+        isIcon
+        icon="/copy.png"
+        variant="outlined"
+        ariaLabel="Copy server URL"
+      />
+    );
+    const button = screen.getByRole("button", { name: "Copy server URL" });
+    expect(button).toHaveClass("appBtn--icon");
+  });
+
   it("renders with icon when isIcon is true", () => {
     const { container } = render(
       <ButtonComp label="Icon Button" isIcon icon="/test-icon.png" />
