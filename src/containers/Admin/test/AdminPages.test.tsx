@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import AdminOverview from "../AdminOverview";
 import AdminCustomers from "../AdminCustomers";
@@ -44,12 +44,22 @@ jest.mock("src/components/common/NoData/NoData", () => ({
 
 jest.mock("../helper", () => ({
   formatAdminLabel: (value?: string) => value || "—",
+  formatAdminRangeLabel: (range?: { from?: string; to?: string } | null) =>
+    range?.from && range?.to ? `${range.from} – ${range.to}` : "Last 7 days",
   useAdminOverviewHelper: jest.fn(),
   useAdminCustomersHelper: jest.fn(),
   useAdminCustomerHelper: jest.fn(),
   useAdminAppsHelper: jest.fn(),
   useAdminAppHelper: jest.fn(),
   useAdminActivitiesHelper: jest.fn(),
+  useClientTable: (rows: unknown[]) => ({
+    pageRows: rows,
+    page: 0,
+    rowsPerPage: 10,
+    count: rows.length,
+    onPageChange: jest.fn(),
+    onRowsPerPageChange: jest.fn(),
+  }),
 }));
 
 const listHelper = {
@@ -140,8 +150,16 @@ describe("admin pages", () => {
   });
 
   it("renders a customer detail", () => {
+    const setPreset = jest.fn();
     (useAdminCustomerHelper as jest.Mock).mockReturnValue({
       loading: false,
+      releasesLoading: false,
+      preset: "last_7_days",
+      from: "",
+      to: "",
+      setPreset,
+      setFrom: jest.fn(),
+      setTo: jest.fn(),
       data: {
         id: 1,
         fullName: "Ada Lovelace",
@@ -150,9 +168,22 @@ describe("admin pages", () => {
         authType: "BASIC",
         createdDate: "2026-01-01T00:00:00.000Z",
         apps: [{ id: 2, name: "Store", osType: "IOS", role: "Owner", envCount: 1 }],
-        collaborations: [],
+        collaborations: [{ id: 3, name: "Billing", osType: "ANDROID", role: "Collaborator", envCount: 1 }],
         accessKeys: [{ id: 9, friendlyName: "CLI", accessKeyId: "ak_***", isSession: false }],
         recentActivity: [],
+        releaseBreakdown: {
+          range: {
+            preset: "last_7_days",
+            timezone: "UTC",
+            from: "2026-10-03",
+            to: "2026-10-09",
+          },
+          total: 5,
+          apps: [
+            { id: 2, name: "Store", count: 4 },
+            { id: 3, name: "Billing", count: 1 },
+          ],
+        },
       },
     });
     render(
@@ -163,11 +194,31 @@ describe("admin pages", () => {
     expect(screen.getByText("Ada Lovelace")).toBeInTheDocument();
     expect(screen.getByText(/ada@example.com/)).toBeInTheDocument();
     expect(screen.getByText(/CLI/)).toBeInTheDocument();
+    const releases = within(screen.getByRole("article", { name: "Releases" }));
+    expect(releases.getByText("5")).toBeInTheDocument();
+    expect(releases.getByText("Store")).toBeInTheDocument();
+    expect(releases.getByText("4")).toBeInTheDocument();
+    expect(releases.getByText("Billing")).toBeInTheDocument();
+    expect(releases.getByText("2026-10-03 – 2026-10-09")).toBeInTheDocument();
+    expect(
+      releases.getByRole("button", { name: "Last 7 days" })
+    ).toHaveAttribute("aria-pressed", "true");
+    fireEvent.click(releases.getByRole("button", { name: "Today" }));
+    expect(setPreset).toHaveBeenCalledWith("today");
+    expect(screen.getAllByRole("group", { name: "Release date range" })).toHaveLength(1);
   });
 
   it("renders an app detail without binary download UI", () => {
+    const setPreset = jest.fn();
     (useAdminAppHelper as jest.Mock).mockReturnValue({
       loading: false,
+      releasesLoading: false,
+      preset: "last_7_days",
+      from: "",
+      to: "",
+      setPreset,
+      setFrom: jest.fn(),
+      setTo: jest.fn(),
       data: {
         id: 2,
         name: "Store",
@@ -177,6 +228,13 @@ describe("admin pages", () => {
         owner: { id: 1, email: "ada@example.com", fullName: "Ada" },
         environments: [{ id: 1, name: "Staging", key: "stg_****", liveVersion: "1.0.0" }],
         collaborators: [{ id: null, email: "dev@example.com", fullName: null, role: "Collaborator", status: "pending" }],
+        counts: { environments: 2, collaborators: 3, releases: 9 },
+        releaseRange: {
+          preset: "last_7_days",
+          timezone: "UTC",
+          from: "2026-10-03",
+          to: "2026-10-09",
+        },
         releases: [{ id: 8, releaseVersion: "1.0.0", targetVersion: "1.0", status: "LIVE", rollout: 100, createdDate: "2026-01-02T00:00:00.000Z" }],
       },
     });
@@ -189,5 +247,15 @@ describe("admin pages", () => {
     expect(screen.getByText(/Release files and download URLs are not shown/)).toBeInTheDocument();
     expect(screen.queryByText(/Pause/)).not.toBeInTheDocument();
     expect(screen.queryByText(/Rollback/)).not.toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Environments 2" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Collaborators 3" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Release metadata 9" })).toBeInTheDocument();
+    expect(screen.getByText("2026-10-03 – 2026-10-09")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Yesterday" }));
+    expect(setPreset).toHaveBeenCalledWith("yesterday");
+    expect(
+      screen.getByRole("group", { name: "Release metadata date range" })
+    ).toBeInTheDocument();
+    expect(screen.queryByRole("group", { name: "Date range" })).not.toBeInTheDocument();
   });
 });

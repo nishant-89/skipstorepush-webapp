@@ -2,11 +2,11 @@ import Breadcrumbs from "src/components/common/BreadCrumbs/BreadCrumbs";
 import TableComponent from "src/components/common/Table/Table";
 import TableDataLoader from "src/components/common/Loader/tableDataLoader";
 import NoData from "src/components/common/NoData/NoData";
-import { useAdminOverviewHelper } from "./helper";
+import AdminDateFilters from "./AdminDateFilters";
+import { formatAdminRangeLabel, useAdminOverviewHelper } from "./helper";
 import { adminAttentionColumns } from "./columns";
 import {
   AdminActionsDay,
-  AdminDatePreset,
   AdminDayPoint,
   AdminDaySeries,
   AdminOverviewData,
@@ -14,18 +14,10 @@ import {
 import "../AllApps/AllApps.scss";
 import "../../scss/table.scss";
 import "../Dashboard/dashboard.scss";
+import { chartTickLabel } from "./chartTicks";
 import "./admin.scss";
 
 const MIX_ORDER = ["App", "Release", "Collab", "Env", "Other"] as const;
-
-const PRESETS: { id: AdminDatePreset; label: string }[] = [
-  { id: "today", label: "Today" },
-  { id: "yesterday", label: "Yesterday" },
-  { id: "last_7_days", label: "Last 7 days" },
-  { id: "this_month", label: "This month" },
-  { id: "last_month", label: "Last month" },
-  { id: "custom", label: "Custom" },
-];
 
 const RANGE_KPIS: {
   key: keyof AdminOverviewData;
@@ -56,15 +48,6 @@ const barHeight = (count: number, max: number) => {
   return Math.max((count / max) * 100, 8);
 };
 
-const tickLabel = (date: string, total: number) => {
-  const day = Number(date.slice(8, 10));
-  const month = Number(date.slice(5, 7));
-  if (total > 16 && day !== 1 && day % 5 !== 0) {
-    return "";
-  }
-  return `${month}/${day}`;
-};
-
 const DayChart = ({
   days,
   label,
@@ -81,7 +64,7 @@ const DayChart = ({
       role="img"
       aria-label={`${label} per day`}
     >
-      {days.map((point) => (
+      {days.map((point, index) => (
         <div className="adminDayCol" key={point.date}>
           <div className="adminDayTrack">
             <span
@@ -90,7 +73,9 @@ const DayChart = ({
               title={`${point.date}: ${point.count}`}
             />
           </div>
-          <span className="adminDayTick">{tickLabel(point.date, days.length)}</span>
+          <span className="adminDayTick">
+            {chartTickLabel(point.date, index, days.length)}
+          </span>
         </div>
       ))}
     </div>
@@ -107,7 +92,7 @@ const StackedDayChart = ({ days }: { days: AdminActionsDay[] }) => {
   );
   return (
     <div className="adminDayChart" role="img" aria-label="Actions by type per day">
-      {days.map((point) => (
+      {days.map((point, index) => (
         <div className="adminDayCol" key={point.date}>
           <div className="adminDayTrack isStack">
             {MIX_ORDER.map((key) => (
@@ -119,7 +104,9 @@ const StackedDayChart = ({ days }: { days: AdminActionsDay[] }) => {
               />
             ))}
           </div>
-          <span className="adminDayTick">{tickLabel(point.date, days.length)}</span>
+          <span className="adminDayTick">
+            {chartTickLabel(point.date, index, days.length)}
+          </span>
         </div>
       ))}
     </div>
@@ -147,9 +134,7 @@ const AdminOverview = () => {
     const row = mix[key];
     return sum + (row?.successful || 0) + (row?.failed || 0);
   }, 0);
-  const rangeLabel = data?.range
-    ? `${data.range.from} – ${data.range.to}`
-    : "Last 7 days";
+  const rangeLabel = formatAdminRangeLabel(data?.range);
 
   return (
     <div className="adminPage dashboardPage">
@@ -169,44 +154,15 @@ const AdminOverview = () => {
         </div>
       </div>
 
-      <div className="adminFilters">
-        <div className="adminPresets" role="group" aria-label="Date range">
-          {PRESETS.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              className={`adminPreset${preset === item.id ? " isActive" : ""}`}
-              aria-pressed={preset === item.id}
-              onClick={() => setPreset(item.id)}
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
-        {preset === "custom" ? (
-          <div className="adminCustomRange">
-            <label>
-              From
-              <input
-                type="date"
-                value={from}
-                max={to || undefined}
-                onChange={(event) => setFrom(event.target.value)}
-              />
-            </label>
-            <label>
-              To
-              <input
-                type="date"
-                value={to}
-                min={from || undefined}
-                onChange={(event) => setTo(event.target.value)}
-              />
-            </label>
-          </div>
-        ) : null}
-        <p className="adminHint">{rangeLabel}</p>
-      </div>
+      <AdminDateFilters
+        preset={preset}
+        from={from}
+        to={to}
+        onPreset={setPreset}
+        onFrom={setFrom}
+        onTo={setTo}
+        hint={rangeLabel}
+      />
 
       <div className="adminKpiGrid">
         {RANGE_KPIS.map((kpi) => {

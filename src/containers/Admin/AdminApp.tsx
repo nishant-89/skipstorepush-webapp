@@ -4,7 +4,14 @@ import TableDataLoader from "src/components/common/Loader/tableDataLoader";
 import NoData from "src/components/common/NoData/NoData";
 import { Column } from "src/utils/types/types";
 import { formatDateTime } from "src/utils/common/helpers";
-import { formatAdminLabel, useAdminAppHelper } from "./helper";
+import AdminDateFilters from "./AdminDateFilters";
+import AdminTableCard from "./AdminTableCard";
+import {
+  formatAdminLabel,
+  formatAdminRangeLabel,
+  useAdminAppHelper,
+  useClientTable,
+} from "./helper";
 import { AdminAppDetail } from "./types";
 import "../AllApps/AllApps.scss";
 import "../../scss/table.scss";
@@ -61,11 +68,33 @@ const releaseColumns: Column<AdminAppDetail["releases"][number]>[] = [
 ];
 
 const AdminApp = () => {
-  const { data, loading } = useAdminAppHelper();
-  const collaborators = (data?.collaborators || []).map((row, index) => ({
-    ...row,
-    id: row.id ?? `pending-${row.email}-${index}`,
-  }));
+  const {
+    data,
+    loading,
+    releasesLoading,
+    preset,
+    from,
+    to,
+    setPreset,
+    setFrom,
+    setTo,
+    releasePage,
+    releaseRowsPerPage,
+    handleReleasePage,
+    handleReleaseRows,
+  } = useAdminAppHelper();
+  const collaborators = useClientTable(
+    (data?.collaborators || []).map((row, index) => ({
+      ...row,
+      id: row.id ?? `pending-${row.email}-${index}`,
+    }))
+  );
+  const environments = useClientTable(data?.environments || []);
+  const environmentCount =
+    data?.counts?.environments ?? environments.count;
+  const collaboratorCount =
+    data?.counts?.collaborators ?? collaborators.count;
+  const releaseCount = data?.counts?.releases ?? data?.releases.length ?? 0;
 
   return (
     <div className="adminPage">
@@ -93,74 +122,69 @@ const AdminApp = () => {
             . Release files and download URLs are not shown.
           </p>
 
-          <section className="cardBgWrapper AllAppsMainWrapper">
-            <div className="AllAppsInnerWrapper">
-              <h2>Environments</h2>
-              <div className="tableSection appTable">
-                <div className="adminAccessTableWrapper tableWrapper bgWhite p00">
-                  {data.environments.length === 0 ? (
-                    <NoData title="No environments" />
-                  ) : (
-                    <TableComponent
-                      tableData={data.environments}
-                      columns={envColumns}
-                      page={0}
-                      rowsPerPage={data.environments.length}
-                      onPageChange={() => undefined}
-                      onRowsPerPageChange={() => undefined}
-                      count={data.environments.length}
-                    />
-                  )}
-                </div>
-              </div>
-            </div>
-          </section>
+          <AdminTableCard title="Environments" count={environmentCount}>
+            {environments.count === 0 ? (
+              <NoData title="No environments" />
+            ) : (
+              <TableComponent
+                tableData={environments.pageRows}
+                columns={envColumns}
+                page={environments.page}
+                rowsPerPage={environments.rowsPerPage}
+                onPageChange={environments.onPageChange}
+                onRowsPerPageChange={environments.onRowsPerPageChange}
+                count={environments.count}
+              />
+            )}
+          </AdminTableCard>
 
-          <section className="cardBgWrapper AllAppsMainWrapper">
-            <div className="AllAppsInnerWrapper">
-              <h2>Collaborators</h2>
-              <div className="tableSection appTable">
-                <div className="adminAccessTableWrapper tableWrapper bgWhite p00">
-                  {collaborators.length === 0 ? (
-                    <NoData title="No collaborators" />
-                  ) : (
-                    <TableComponent
-                      tableData={collaborators}
-                      columns={collabColumns}
-                      page={0}
-                      rowsPerPage={collaborators.length}
-                      onPageChange={() => undefined}
-                      onRowsPerPageChange={() => undefined}
-                      count={collaborators.length}
-                    />
-                  )}
-                </div>
-              </div>
-            </div>
-          </section>
+          <AdminTableCard title="Collaborators" count={collaboratorCount}>
+            {collaborators.count === 0 ? (
+              <NoData title="No collaborators" />
+            ) : (
+              <TableComponent
+                tableData={collaborators.pageRows}
+                columns={collabColumns}
+                page={collaborators.page}
+                rowsPerPage={collaborators.rowsPerPage}
+                onPageChange={collaborators.onPageChange}
+                onRowsPerPageChange={collaborators.onRowsPerPageChange}
+                count={collaborators.count}
+              />
+            )}
+          </AdminTableCard>
 
-          <section className="cardBgWrapper AllAppsMainWrapper">
-            <div className="AllAppsInnerWrapper">
-              <h2>Release metadata</h2>
-              <div className="tableSection appTable">
-                <div className="adminAccessTableWrapper tableWrapper bgWhite p00">
-                  {data.releases.length === 0 ? (
-                    <NoData title="No releases" />
-                  ) : (
-                    <TableComponent
-                      tableData={data.releases}
-                      columns={releaseColumns}
-                      page={0}
-                      rowsPerPage={data.releases.length}
-                      onPageChange={() => undefined}
-                      onRowsPerPageChange={() => undefined}
-                      count={data.releases.length}
-                    />
-                  )}
-                </div>
-              </div>
-            </div>
-          </section>
+          <AdminTableCard
+            title="Release metadata"
+            count={releaseCount}
+            busy={releasesLoading}
+            toolbar={
+              <AdminDateFilters
+                preset={preset}
+                from={from}
+                to={to}
+                onPreset={setPreset}
+                onFrom={setFrom}
+                onTo={setTo}
+                label="Release metadata date range"
+                hint={formatAdminRangeLabel(data.releaseRange)}
+              />
+            }
+          >
+            {releaseCount === 0 ? (
+              <NoData title="No releases" />
+            ) : (
+              <TableComponent
+                tableData={data.releases}
+                columns={releaseColumns}
+                page={releasePage}
+                rowsPerPage={releaseRowsPerPage}
+                onPageChange={handleReleasePage}
+                onRowsPerPageChange={handleReleaseRows}
+                count={releaseCount}
+              />
+            )}
+          </AdminTableCard>
         </>
       )}
     </div>

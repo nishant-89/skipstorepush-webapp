@@ -147,6 +147,21 @@ export interface AdminCustomerDetail {
   collaborations: AdminCustomerApp[];
   accessKeys: AdminAccessKey[];
   recentActivity: AdminActivityRow[];
+  activityPaging?: {
+    total_items: number;
+    page: number;
+    page_limit: number;
+  };
+  releaseBreakdown?: {
+    range: {
+      preset: AdminDatePreset;
+      timezone: string;
+      from: string;
+      to: string;
+    };
+    total: number;
+    apps: { id: number; name: string; count: number }[];
+  };
 }
 
 export interface AdminAppRow {
@@ -184,6 +199,17 @@ export interface AdminAppDetail {
     role: string;
     status: string;
   }[];
+  counts?: {
+    environments: number;
+    collaborators: number;
+    releases: number;
+  };
+  releaseRange?: {
+    preset: AdminDatePreset;
+    timezone: string;
+    from: string;
+    to: string;
+  };
   releases: {
     id: number;
     releaseVersion: string;

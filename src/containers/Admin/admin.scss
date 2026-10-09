@@ -22,6 +22,101 @@
     }
   }
 
+  .adminCustomerStats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    @media (max-width: 960px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .adminReleaseCard {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .adminTableCard {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .adminTableHead {
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.2;
+      font-weight: 600;
+    }
+  }
+
+  .adminCardCount {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 22px;
+    padding: 0 8px;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-bg-primary);
+    color: var(--color-text-secondary);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0;
+  }
+
+  .adminFilterBar {
+    padding: 12px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-primary);
+  }
+
+  .adminInsetTable {
+    margin-top: 0 !important;
+    padding: 0 !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: transparent !important;
+
+    .MuiTableContainer-root {
+      overflow-x: auto;
+    }
+  }
+
+  .adminBreakdown .adminCardCount {
+    flex-shrink: 0;
+  }
+
+  .adminBreakdown {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    max-height: 280px;
+    overflow: auto;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 0;
+      border-top: 1px solid var(--color-border);
+      font-family: var(--font-ui);
+      font-size: 14px;
+      color: var(--color-text-primary);
+    }
+  }
+
   .adminMix {
     display: flex;
     flex-direction: column;
@@ -84,9 +179,11 @@
 
   .adminFilters {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    min-width: 0;
+    width: 100%;
   }
 
   .adminPresets {
@@ -116,7 +213,9 @@
 
   .adminCustomRange {
     display: flex;
+    flex-wrap: wrap;
     gap: 12px;
+    width: 100%;
 
     label {
       display: flex;
@@ -127,11 +226,13 @@
     }
 
     input {
+      width: 168px;
+      max-width: 100%;
       min-height: 32px;
       padding: 0 8px;
       border: 1px solid var(--color-border);
       border-radius: var(--radius-btn);
-      background: var(--color-bg-primary);
+      background: var(--color-bg-surface);
       color: var(--color-text-primary);
       font-family: var(--font-ui);
     }
@@ -156,21 +257,22 @@
 
   .adminDayChart {
     display: flex;
-    align-items: flex-end;
-    gap: 4px;
-    height: 96px;
+    align-items: stretch;
+    gap: 3px;
+    box-sizing: border-box;
+    height: 112px;
     margin-top: 8px;
-    overflow-x: auto;
+    padding: 0 2px 16px;
+    overflow: hidden;
   }
 
   .adminDayCol {
-    flex: 1 0 16px;
-    min-width: 16px;
-    height: 100%;
+    position: relative;
+    flex: 1 1 0;
+    min-width: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 4px;
+    align-items: stretch;
   }
 
   .adminDayTrack {
@@ -198,10 +300,17 @@
   }
 
   .adminDayTick {
-    min-height: 12px;
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+    margin-top: 2px;
+    white-space: nowrap;
+    line-height: 12px;
     font-family: var(--font-mono);
-    font-size: 9px;
+    font-size: 10px;
     color: var(--color-text-secondary);
+    pointer-events: none;
   }
 
   .adminStack {
@@ -249,29 +358,48 @@
     }
   }
 
+  .adminTableCard .tableSection.appTable {
+    overflow: visible;
+  }
+
   .tableSection.appTable {
     overflow-x: auto;
+  }
 
-    .MuiTableCell-root {
-      width: auto !important;
+  .AllAppsInnerWrapper .tableSection.appTable .tableWrapper .MuiTableCell-root,
+  .adminTableCard .tableWrapper .MuiTableCell-root,
+  .cardBgWrapper .tableWrapper .MuiTableCell-root {
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    padding: 12px 16px !important;
+    text-align: left !important;
+    vertical-align: middle !important;
+    white-space: nowrap !important;
+    word-break: normal !important;
+
+    .tableTitle,
+    .codeLink,
+    .devMeta,
+    .devTime {
       white-space: nowrap !important;
       word-break: normal !important;
+      text-align: left !important;
+    }
 
-      .tableTitle,
-      .codeLink {
-        white-space: nowrap !important;
-        word-break: normal !important;
-      }
+    .withChecks {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: auto;
+      margin: 0;
+      text-align: left !important;
 
-      &.nameCol,
-      &:first-of-type {
-        width: 32% !important;
-        min-width: 240px !important;
-      }
-
-      &:nth-of-type(2) {
-        width: auto !important;
-        min-width: 0 !important;
+      span,
+      a,
+      div,
+      p {
+        text-align: left !important;
       }
     }
   }

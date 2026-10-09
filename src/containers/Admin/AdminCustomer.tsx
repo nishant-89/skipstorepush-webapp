@@ -3,7 +3,14 @@ import TableComponent from "src/components/common/Table/Table";
 import TableDataLoader from "src/components/common/Loader/tableDataLoader";
 import NoData from "src/components/common/NoData/NoData";
 import { formatDateTime } from "src/utils/common/helpers";
-import { useAdminCustomerHelper, formatAdminLabel } from "./helper";
+import AdminDateFilters from "./AdminDateFilters";
+import AdminTableCard from "./AdminTableCard";
+import {
+  formatAdminLabel,
+  formatAdminRangeLabel,
+  useAdminCustomerHelper,
+  useClientTable,
+} from "./helper";
 import { adminActivityColumns, adminCustomerAppColumns } from "./columns";
 import "../AllApps/AllApps.scss";
 import "../../scss/table.scss";
@@ -11,8 +18,29 @@ import "../Dashboard/dashboard.scss";
 import "./admin.scss";
 
 const AdminCustomer = () => {
-  const { data, loading } = useAdminCustomerHelper();
-  const apps = [...(data?.apps || []), ...(data?.collaborations || [])];
+  const {
+    data,
+    loading,
+    releasesLoading,
+    preset,
+    from,
+    to,
+    setPreset,
+    setFrom,
+    setTo,
+    activityPage,
+    activityRowsPerPage,
+    handleActivityPage,
+    handleActivityRows,
+  } = useAdminCustomerHelper();
+  const apps = useClientTable([
+    ...(data?.apps || []),
+    ...(data?.collaborations || []),
+  ]);
+  const breakdown = data?.releaseBreakdown;
+  const releaseApps = breakdown?.apps || [];
+  const activityCount =
+    data?.activityPaging?.total_items ?? data?.recentActivity?.length ?? 0;
 
   return (
     <div className="adminPage">
@@ -39,7 +67,7 @@ const AdminCustomer = () => {
               : ""}
           </p>
 
-          <div className="adminStats dashboardStats">
+          <div className="adminStats dashboardStats adminCustomerStats">
             <div className="statCard">
               <p className="statLabel">Owned apps</p>
               <p className="statValue">{data.apps?.length || 0}</p>
@@ -55,28 +83,61 @@ const AdminCustomer = () => {
             </div>
           </div>
 
-          <section className="cardBgWrapper AllAppsMainWrapper">
-            <div className="AllAppsInnerWrapper">
-              <h2>Apps</h2>
-              <div className="tableSection appTable">
-                <div className="adminAccessTableWrapper tableWrapper bgWhite p00">
-                  {apps.length === 0 ? (
-                    <NoData title="No apps" />
-                  ) : (
-                    <TableComponent
-                      tableData={apps}
-                      columns={adminCustomerAppColumns}
-                      page={0}
-                      rowsPerPage={apps.length}
-                      onPageChange={() => undefined}
-                      onRowsPerPageChange={() => undefined}
-                      count={apps.length}
-                    />
-                  )}
-                </div>
-              </div>
+          <article
+            className="cardBgWrapper adminReleaseCard"
+            aria-label="Releases"
+            aria-busy={releasesLoading}
+          >
+            <div className="adminTableHead">
+              <h2>
+                Releases
+                <span className="adminCardCount">{breakdown?.total ?? 0}</span>
+              </h2>
             </div>
-          </section>
+            <p className="adminHint">
+              Per app, all environments, owned and collaborated
+            </p>
+            <div className="adminFilterBar">
+              <AdminDateFilters
+                preset={preset}
+                from={from}
+                to={to}
+                onPreset={setPreset}
+                onFrom={setFrom}
+                onTo={setTo}
+                label="Release date range"
+                hint={formatAdminRangeLabel(breakdown?.range)}
+              />
+            </div>
+            {releaseApps.length === 0 ? (
+              <p className="adminHint">No apps</p>
+            ) : (
+              <ul className="adminBreakdown">
+                {releaseApps.map((app) => (
+                  <li key={app.id}>
+                    <span>{app.name}</span>
+                    <span className="adminCardCount">{app.count}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </article>
+
+          <AdminTableCard title="Apps" count={apps.count}>
+            {apps.count === 0 ? (
+              <NoData title="No apps" />
+            ) : (
+              <TableComponent
+                tableData={apps.pageRows}
+                columns={adminCustomerAppColumns}
+                page={apps.page}
+                rowsPerPage={apps.rowsPerPage}
+                onPageChange={apps.onPageChange}
+                onRowsPerPageChange={apps.onRowsPerPageChange}
+                count={apps.count}
+              />
+            )}
+          </AdminTableCard>
 
           <section className="cardBgWrapper AllAppsMainWrapper">
             <div className="AllAppsInnerWrapper">
@@ -94,28 +155,21 @@ const AdminCustomer = () => {
             </div>
           </section>
 
-          <section className="cardBgWrapper AllAppsMainWrapper">
-            <div className="AllAppsInnerWrapper">
-              <h2>Recent activity</h2>
-              <div className="tableSection appTable">
-                <div className="adminAccessTableWrapper tableWrapper bgWhite p00">
-                  {!data.recentActivity?.length ? (
-                    <NoData title="No activity" />
-                  ) : (
-                    <TableComponent
-                      tableData={data.recentActivity}
-                      columns={adminActivityColumns}
-                      page={0}
-                      rowsPerPage={data.recentActivity.length}
-                      onPageChange={() => undefined}
-                      onRowsPerPageChange={() => undefined}
-                      count={data.recentActivity.length}
-                    />
-                  )}
-                </div>
-              </div>
-            </div>
-          </section>
+          <AdminTableCard title="Recent activity" count={activityCount}>
+            {activityCount === 0 ? (
+              <NoData title="No activity" />
+            ) : (
+              <TableComponent
+                tableData={data.recentActivity}
+                columns={adminActivityColumns}
+                page={activityPage}
+                rowsPerPage={activityRowsPerPage}
+                onPageChange={handleActivityPage}
+                onRowsPerPageChange={handleActivityRows}
+                count={activityCount}
+              />
+            )}
+          </AdminTableCard>
         </>
       )}
     </div>
