@@ -33,6 +33,7 @@ const Account = () => {
   const {
     data,
     accessKey,
+    showPassword,
     isGithubAuth,
     githubUsername,
     githubProfileUrl,
@@ -47,7 +48,6 @@ const Account = () => {
     handleProfileImageChange,
   } = useAccountHelper();
   const [isLogoutOpen, setIsLogoutOpen] = useState(false);
-  const isBasicAuth = data?.authType === "BASIC";
 
   return (
     <div className="accountPage">
@@ -63,7 +63,7 @@ const Account = () => {
               <User size={16} aria-hidden />
               Profile
             </button>
-            {isBasicAuth ? (
+            {showPassword ? (
               <button
                 type="button"
                 className="accountNavItem"
@@ -174,9 +174,6 @@ const Account = () => {
                 label="Sign-in method"
                 value={authLabel(data?.authType)}
               />
-              {isBasicAuth ? (
-                <AccountField label="Password" value="••••••" mono />
-              ) : null}
               <AccountField
                 label="Account active since"
                 value={
@@ -185,7 +182,7 @@ const Account = () => {
               />
             </div>
             <div className="accountPanelActions">
-              {isBasicAuth ? (
+              {showPassword ? (
                 <Button
                   label="Change password"
                   variant="outlined"

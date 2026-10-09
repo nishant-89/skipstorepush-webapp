@@ -38,4 +38,8 @@ export const apiRoutes = {
   ForgotPassword: "api/user/forgot-password",
   ForgotPasswordResend: "api/user/forgot-password/resend",
   ForgotPasswordVerify: "api/user/forgot-password/verify",
+  AdminOverview: "api/admin/overview",
+  AdminCustomers: "api/admin/customers",
+  AdminApps: "api/admin/apps",
+  AdminActivities: "api/admin/activities",
 };

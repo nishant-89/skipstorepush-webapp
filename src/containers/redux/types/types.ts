@@ -1,3 +1,5 @@
+export type UserRole = "CUSTOMER" | "ADMIN";
+
 export type UserData = {
   userId: number;
   email: string;
@@ -9,6 +11,7 @@ export type UserData = {
   id: string;
   accessKeyId: string;
   accessKey: string;
+  role?: UserRole;
 };
 
 export type AuthData = {
@@ -76,6 +79,8 @@ export interface Profile {
   username?: string;
   profileImage?: string;
   authType: AuthType;
+  role?: UserRole;
+  status?: string;
   createdDate: string;
   lastLogin?: string;
   session?: ProfileSession | null;

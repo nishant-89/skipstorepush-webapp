@@ -1,0 +1,278 @@
+@use "../../scss/variable.scss" as *;
+@use "../../scss/mixin.scss" as *;
+
+.adminPage {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .adminHint {
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: 13px;
+  }
+
+  .adminStats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+
+    @media (max-width: 960px) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .adminMix {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .adminMixRow {
+    display: grid;
+    grid-template-columns: 88px 1fr 72px;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .adminMixTrack {
+    height: 10px;
+    border-radius: 999px;
+    background: var(--color-bg-primary);
+    overflow: hidden;
+    display: flex;
+  }
+
+  .adminMixOk {
+    height: 100%;
+    background: var(--color-accent);
+  }
+
+  .adminMixFail {
+    height: 100%;
+    background: var(--color-error);
+  }
+
+  .adminSection {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .adminDetailHead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+
+    h1 {
+      margin: 0;
+      font-size: 22px;
+    }
+  }
+
+  .adminMeta {
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+  }
+
+  .adminSnapshot {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 640px;
+  }
+
+  .adminFilters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .adminPresets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .adminPreset {
+    min-height: 32px;
+    padding: 0 12px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-btn);
+    background: var(--color-bg-surface);
+    color: var(--color-text-secondary);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+
+    &.isActive {
+      border-color: var(--color-accent);
+      color: var(--color-text-primary);
+      background: var(--color-accent-muted);
+    }
+  }
+
+  .adminCustomRange {
+    display: flex;
+    gap: 12px;
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--color-text-secondary);
+      font-size: 13px;
+    }
+
+    input {
+      min-height: 32px;
+      padding: 0 8px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-btn);
+      background: var(--color-bg-primary);
+      color: var(--color-text-primary);
+      font-family: var(--font-ui);
+    }
+  }
+
+  .adminKpiGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+
+    @media (max-width: 860px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .adminKpi {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .adminDayChart {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 96px;
+    margin-top: 8px;
+    overflow-x: auto;
+  }
+
+  .adminDayCol {
+    flex: 1 0 16px;
+    min-width: 16px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .adminDayTrack {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+
+    &.isStack {
+      flex-direction: column-reverse;
+      align-items: stretch;
+      justify-content: flex-start;
+    }
+  }
+
+  .adminDayBar {
+    display: block;
+    width: 100%;
+    border-radius: 3px 3px 0 0;
+    background: var(--color-accent);
+
+    &.isFail {
+      background: var(--color-error);
+    }
+  }
+
+  .adminDayTick {
+    min-height: 12px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--color-text-secondary);
+  }
+
+  .adminStack {
+    display: block;
+    width: 100%;
+    min-height: 0;
+
+    &--app {
+      background: var(--color-accent);
+    }
+    &--release {
+      background: var(--color-accent-secondary);
+    }
+    &--collab {
+      background: var(--color-warn);
+    }
+    &--env {
+      background: var(--color-accent-success);
+    }
+    &--other {
+      background: var(--color-text-secondary);
+    }
+  }
+
+  .adminLegend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--color-text-secondary);
+    font-size: 12px;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .adminStack {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+    }
+  }
+
+  .tableSection.appTable {
+    overflow-x: auto;
+
+    .MuiTableCell-root {
+      width: auto !important;
+      white-space: nowrap !important;
+      word-break: normal !important;
+
+      .tableTitle,
+      .codeLink {
+        white-space: nowrap !important;
+        word-break: normal !important;
+      }
+
+      &.nameCol,
+      &:first-of-type {
+        width: 32% !important;
+        min-width: 240px !important;
+      }
+
+      &:nth-of-type(2) {
+        width: auto !important;
+        min-width: 0 !important;
+      }
+    }
+  }
+}

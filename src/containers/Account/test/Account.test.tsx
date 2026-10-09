@@ -50,6 +50,8 @@ describe("Account", () => {
       data: { fullName: "Ada", email: "ada@example.com", authType: "BASIC" },
       loading: false,
       accessKey: "",
+      showPassword: true,
+      isAdmin: false,
       isGithubAuth: false,
       githubUsername: "",
       githubProfileUrl: "",
@@ -82,6 +84,7 @@ describe("Account", () => {
     expect(
       screen.getAllByRole("button", { name: "Change password" }).length
     ).toBeGreaterThan(0);
+    expect(screen.queryByText("Password")).not.toBeInTheDocument();
   });
 
   it("opens the logout modal from the profile page", () => {
@@ -104,6 +107,8 @@ describe("Account", () => {
       },
       loading: false,
       accessKey: "key",
+      showPassword: false,
+      isAdmin: false,
       isGithubAuth: true,
       githubUsername: "octocat",
       githubProfileUrl: "https://github.com/octocat",
@@ -126,5 +131,44 @@ describe("Account", () => {
     expect(screen.getByText("@octocat")).toBeInTheDocument();
     expect(screen.getByText("GitHub username")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "GitHub" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Change password" })).not.toBeInTheDocument();
+    expect(screen.getAllByRole("button", { name: "Access key" }).length).toBeGreaterThan(0);
+  });
+
+  it("keeps change password for an admin and hides the access key", () => {
+    (useAccountHelper as jest.Mock).mockReturnValue({
+      data: {
+        fullName: "Ada",
+        email: "ada@example.com",
+        authType: "BASIC",
+        role: "ADMIN",
+      },
+      loading: false,
+      accessKey: "",
+      showPassword: true,
+      isAdmin: true,
+      isGithubAuth: false,
+      githubUsername: "",
+      githubProfileUrl: "",
+      isPasswordModalOpen: false,
+      isAccessKeyModalOpen: false,
+      fileInputRef: { current: null },
+      openAccessKeyModal: jest.fn(),
+      closeAccessKeyModal: jest.fn(),
+      openPasswordModal: jest.fn(),
+      closePasswordModal: jest.fn(),
+      openProfileImagePicker: jest.fn(),
+      handleProfileImageChange: jest.fn(),
+    });
+    render(
+      <MemoryRouter>
+        <Account />
+      </MemoryRouter>
+    );
+    expect(
+      screen.getAllByRole("button", { name: "Change password" }).length
+    ).toBeGreaterThan(0);
+    expect(screen.queryByText("Password")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Access key" })).not.toBeInTheDocument();
   });
 });

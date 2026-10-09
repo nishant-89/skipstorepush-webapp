@@ -38,6 +38,8 @@ module.exports = {
     "<rootDir>/src/containers/**/*.test.{ts,tsx,js,jsx}",
     "<rootDir>/src/components/**/*.test.{ts,tsx,js,jsx}",
     "<rootDir>/src/apis/**/*.test.{ts,tsx,js,jsx}",
+    "<rootDir>/src/utils/**/*.test.{ts,tsx,js,jsx}",
+    "<rootDir>/src/routes/**/*.test.{ts,tsx,js,jsx}",
   ],
   testPathIgnorePatterns: [
     "/node_modules/",
